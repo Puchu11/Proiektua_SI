@@ -28,6 +28,6 @@ public class MatrizeKudeatzailea extends Observable{
     }
 
     public void MatrizeaSortu() {
-    	Espaziontzia espaziontzia = new Espaziontzia(0,0);
+    	Espaziontzia espaziontzia = new Espaziontzia(30,40);
     }
 }
