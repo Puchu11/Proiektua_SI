@@ -38,14 +38,14 @@ public class Matrizea extends JFrame implements Observer {
 		getContentPane().add(getLblZutabeak(), BorderLayout.NORTH);
 		getContentPane().add(getPanel(), BorderLayout.CENTER);
 
-		// construir la matriz visual
+
 		matrizeaSortu();
 
 		// observer
 		MatrizeKudeatzailea.getEma().addObserver(this);
 		
 		
-		// controller (teclado)
+		// controller 
 		addKeyListener(getController());
 		setFocusable(true);
 		requestFocusInWindow();
@@ -130,7 +130,6 @@ public class Matrizea extends JFrame implements Observer {
 		return controller;
 	}
 
-	// ✅ Controller interno (como en las diapositivas)
 	private class Controller implements KeyListener {
 		@Override
 		public void keyPressed(KeyEvent e) {

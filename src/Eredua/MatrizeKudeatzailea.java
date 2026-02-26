@@ -16,14 +16,13 @@ public class MatrizeKudeatzailea extends Observable {
     private ArrayList<Tiro> tiroak = new ArrayList<Tiro>();
 
     private MatrizeKudeatzailea() {
-        // Inicializar matriz
+
         for (int i = 0; i < altuera; i++) {
             for (int j = 0; j < zabalera; j++) {
                 matrizea[i][j] = null;
             }
         }
 
-        // Crear nave inicial en (50,55)
         espaziontzia = new Espaziontzia(50, 55);
         matrizea[55][50] = espaziontzia;
         
@@ -36,7 +35,6 @@ public class MatrizeKudeatzailea extends Observable {
         return ema;
     }
 
-    // 🔥 MÉTODO PARA MOVER LA NAVE
     public void Mugitu(int dx, int dy) {
 
         int x = espaziontzia.getPosizioa().getX();
@@ -45,14 +43,12 @@ public class MatrizeKudeatzailea extends Observable {
         int nx = x + dx;
         int ny = y + dy;
 
-        // Comprobar límites
         if (nx < 0 || nx >= zabalera) return;
         if (ny < 0 || ny >= altuera) return;
 
-        // Actualizar posición
+
         espaziontzia.setPosizioa(new Posizioa(nx, ny));
 
-        // Notificar a la vista
         setChanged();
         notifyObservers(espaziontzia);
     }
