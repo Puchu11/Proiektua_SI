@@ -7,8 +7,8 @@ public class MatrizeKudeatzailea extends Observable {
 
     private static MatrizeKudeatzailea ema;
 
-    private static int zabalera = 100;  // columnas (X)
-    private static int altuera = 60;    // filas (Y)
+    private static int zabalera = 100;  
+    private static int altuera = 60;   
 
     private Entitatea matrizea[][] = new Entitatea[altuera][zabalera];
     private Espaziontzia espaziontzia;
@@ -48,7 +48,9 @@ public class MatrizeKudeatzailea extends Observable {
 
 
         espaziontzia.setPosizioa(new Posizioa(nx, ny));
-
+        matrizea[y][x] = null;
+        matrizea[ny][nx] = espaziontzia;
+        
         setChanged();
         notifyObservers(espaziontzia);
     }
@@ -56,4 +58,7 @@ public class MatrizeKudeatzailea extends Observable {
     public Espaziontzia getEspaziontzia() {
         return espaziontzia;
     }
+    public Entitatea[][] getMatrizea() {
+		return matrizea;
+	}
 }

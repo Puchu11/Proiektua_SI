@@ -15,13 +15,12 @@ import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 
 import Eredua.Espaziontzia;
+import Eredua.Etsaia;
 import Eredua.MatrizeKudeatzailea;
 
 public class Matrizea extends JFrame implements Observer {
 	private static final long serialVersionUID = 1L;
 
-	private JLabel lblLerroak;
-	private JLabel lblZutabeak;
 	private JPanel panel;
 
 	private JLabel labelN[][] = new JLabel[60][100];
@@ -34,8 +33,6 @@ public class Matrizea extends JFrame implements Observer {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
 		getContentPane().setLayout(new BorderLayout());
-		getContentPane().add(getLblLerroak(), BorderLayout.WEST);
-		getContentPane().add(getLblZutabeak(), BorderLayout.NORTH);
 		getContentPane().add(getPanel(), BorderLayout.CENTER);
 
 
@@ -54,10 +51,21 @@ public class Matrizea extends JFrame implements Observer {
 	}
 
 	public void matrizeaSortu() {
+		MatrizeKudeatzailea Eredua = MatrizeKudeatzailea.getEma(); // espaziontzia sortu eta matrizean jarri
 		for (int i = 0; i < 60; i++) {
 			for (int j = 0; j < 100; j++) {
-				labelN[i][j] = getLabelN(i, j);
-				panel.add(labelN[i][j]);
+				if(Eredua.getMatrizea()[i][j] instanceof Espaziontzia) {
+					labelN[i][j] = getLabelN(i, j, Color.RED);
+					panel.add(labelN[i][j]);	
+				}else if(Eredua.getMatrizea()[i][j] instanceof Etsaia) {
+					labelN[i][j] = getLabelN(i, j, Color.GREEN);
+					panel.add(labelN[i][j]);
+					
+				}
+				else {
+					labelN[i][j] = getLabelN(i, j, Color.WHITE);
+					panel.add(labelN[i][j]);
+				}
 			}
 		}
 		panel.revalidate();
@@ -87,26 +95,11 @@ public class Matrizea extends JFrame implements Observer {
 			if(x-1 >= 0 && labelN[y][x-1].getBackground().equals(Color.RED)) {
 				labelN[y][x-1].setBackground(Color.WHITE);
 			}
-			System.out.println("Espaziontzia posizio berria: (" + x + ", " + y + ")");
 		}
 
 		panel.repaint();
 	
 		}
-	}
-	private JLabel getLblLerroak() {
-		if (lblLerroak == null) {
-			lblLerroak = new JLabel("");
-		}
-		return lblLerroak;
-	}
-
-	private JLabel getLblZutabeak() {
-		if (lblZutabeak == null) {
-			lblZutabeak = new JLabel("");
-			lblZutabeak.setHorizontalAlignment(SwingConstants.CENTER);
-		}
-		return lblZutabeak;
 	}
 
 	private JPanel getPanel() {
@@ -117,12 +110,12 @@ public class Matrizea extends JFrame implements Observer {
 		return panel;
 	}
 
-	private JLabel getLabelN(int ler, int zut) {
+	private JLabel getLabelN(int ler, int zut, Color kolorea) {
 		JLabel label = new JLabel("");
 		label.setOpaque(true);
 		label.setHorizontalAlignment(SwingConstants.CENTER);
 		label.setBorder(BorderFactory.createLineBorder(Color.LIGHT_GRAY, 1));
-		label.setBackground(Color.WHITE);
+		label.setBackground(kolorea);
 		return label;
 	}
 
