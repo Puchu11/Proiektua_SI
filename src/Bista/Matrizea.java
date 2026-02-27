@@ -71,26 +71,27 @@ public class Matrizea extends JFrame implements Observer {
 		Espaziontzia e = (Espaziontzia) arg;
 		int x = e.getPosizioa().getX();
 		int y = e.getPosizioa().getY();
-
-		// pintar nave
+		
 		if (y >= 0 && y < 60 && x >= 0 && x < 100) {
 			labelN[y][x].setBackground(Color.RED);
-			if(labelN[y+1][x].getBackground() == Color.RED) {
+			
+			if(y + 1 < 60 && labelN[y+1][x].getBackground().equals(Color.RED)) {
 				labelN[y+1][x].setBackground(Color.WHITE);
-			}else if(labelN[y-1][x].getBackground() == Color.RED) {
+			}
+			if(y-1 >=0 && labelN[y-1][x].getBackground().equals(Color.RED)) {
 				labelN[y-1][x].setBackground(Color.WHITE);
-			}else if(labelN[y][x+1].getBackground() == Color.RED) {
+			}
+			if(x+1 < 100 && labelN[y][x+1].getBackground().equals(Color.RED)) {
 				labelN[y][x+1].setBackground(Color.WHITE);
-			}else if(labelN[y][x-1].getBackground() == Color.RED) {
+			}
+			if(x-1 >= 0 && labelN[y][x-1].getBackground().equals(Color.RED)) {
 				labelN[y][x-1].setBackground(Color.WHITE);
 			}
+			System.out.println("Espaziontzia posizio berria: (" + x + ", " + y + ")");
 		}
 
 		panel.repaint();
 	
-		}else {
-			// Si el argumento no es una nave, se puede manejar de otra manera o ignorar
-			System.out.println("Update recibido con argumento no reconocido: " + arg);
 		}
 	}
 	private JLabel getLblLerroak() {
