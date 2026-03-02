@@ -10,24 +10,25 @@ public class MatrizeKudeatzailea extends Observable {
     private static int zabalera = 100;  
     private static int altuera = 60;   
 
-    private Entitatea matrizea[][] = new Entitatea[altuera][zabalera];
+    private Gelaxka matrizea[][] = new Gelaxka[altuera][zabalera];
     private Espaziontzia espaziontzia;
     private ArrayList<Etsaia> etsaiak = new ArrayList<Etsaia>();
     private ArrayList<Tiro> tiroak = new ArrayList<Tiro>();
 
     private MatrizeKudeatzailea() {
 
-        for (int i = 0; i < altuera; i++) {
+    	espaziontzia = new Espaziontzia(50, 55);
+    	
+    	for (int i = 0; i < altuera; i++) {
             for (int j = 0; j < zabalera; j++) {
-                matrizea[i][j] = null;
-            }
-        }
-
-        espaziontzia = new Espaziontzia(50, 55);
-        matrizea[55][50] = espaziontzia;
-        
+					matrizea[i][j] = new Gelaxka(j, i, EntitateMota.HUTSA);
+				
+            }   
+    	}
+    
+    	matrizea[espaziontzia.getPosizioa().getY()][espaziontzia.getPosizioa().getX()].gelaxkaEguneratu(EntitateMota.ESPAZIONTZIA);
+    	
     }
-
     public static MatrizeKudeatzailea getEma() {
         if (ema == null) {
             ema = new MatrizeKudeatzailea();
@@ -35,30 +36,22 @@ public class MatrizeKudeatzailea extends Observable {
         return ema;
     }
 
-    public void Mugitu(int dx, int dy) {
-
-        int x = espaziontzia.getPosizioa().getX();
-        int y = espaziontzia.getPosizioa().getY();
-
-        int nx = x + dx;
-        int ny = y + dy;
-
-        if (nx < 0 || nx >= zabalera) return;
-        if (ny < 0 || ny >= altuera) return;
-
-
-        espaziontzia.setPosizioa(new Posizioa(nx, ny));
-        matrizea[y][x] = null;
-        matrizea[ny][nx] = espaziontzia;
+    public void mugitu(String norabidea) {
         
-        setChanged();
-        notifyObservers(espaziontzia);
     }
 
     public Espaziontzia getEspaziontzia() {
         return espaziontzia;
     }
-    public Entitatea[][] getMatrizea() {
+    
+    public Gelaxka[][] getMatrizea() {
 		return matrizea;
+	}
+    
+    public Gelaxka getGelaxka(int x, int y) {
+		if (x >= 0 && x < zabalera && y >= 0 && y < altuera) {
+			return matrizea[y][x];
+		}
+		return null;
 	}
 }

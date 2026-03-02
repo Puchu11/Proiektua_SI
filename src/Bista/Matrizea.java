@@ -23,7 +23,7 @@ public class Matrizea extends JFrame implements Observer {
 
 	private JPanel panel;
 
-	private JLabel labelN[][] = new JLabel[60][100];
+	private GelaxkaB labelN[][] = new GelaxkaB[60][100];
 
 	private Controller controller = null;
 
@@ -34,12 +34,11 @@ public class Matrizea extends JFrame implements Observer {
 
 		getContentPane().setLayout(new BorderLayout());
 		getContentPane().add(getPanel(), BorderLayout.CENTER);
-
-
+		
+		MatrizeKudeatzailea Eredua = MatrizeKudeatzailea.getEma(); 
+		Eredua.addObserver(this);
+		
 		matrizeaSortu();
-
-		// observer
-		MatrizeKudeatzailea.getEma().addObserver(this);
 		
 		
 		// controller 
@@ -51,55 +50,20 @@ public class Matrizea extends JFrame implements Observer {
 	}
 
 	public void matrizeaSortu() {
-		MatrizeKudeatzailea Eredua = MatrizeKudeatzailea.getEma(); // espaziontzia sortu eta matrizean jarri
+		MatrizeKudeatzailea Eredua = MatrizeKudeatzailea.getEma(); 
 		for (int i = 0; i < 60; i++) {
 			for (int j = 0; j < 100; j++) {
-				if(Eredua.getMatrizea()[i][j] instanceof Espaziontzia) {
-					labelN[i][j] = getLabelN(i, j, Color.RED);
-					panel.add(labelN[i][j]);	
-				}else if(Eredua.getMatrizea()[i][j] instanceof Etsaia) {
-					labelN[i][j] = getLabelN(i, j, Color.GREEN);
-					panel.add(labelN[i][j]);
-					
-				}
-				else {
-					labelN[i][j] = getLabelN(i, j, Color.WHITE);
-					panel.add(labelN[i][j]);
-				}
+				GelaxkaB gelaxkaB = new GelaxkaB();
+				Eredua.getGelaxka(j, i).addObserver(gelaxkaB);
+				labelN[i][j] = gelaxkaB;
+				getPanel().add(gelaxkaB);
 			}
 		}
-		panel.revalidate();
-		panel.repaint();
 	}
 
 	@Override
 	public void update(Observable o, Object arg) {
-		if (arg instanceof Espaziontzia) {
-
-		Espaziontzia e = (Espaziontzia) arg;
-		int x = e.getPosizioa().getX();
-		int y = e.getPosizioa().getY();
-		
-		if (y >= 0 && y < 60 && x >= 0 && x < 100) {
-			labelN[y][x].setBackground(Color.RED);
 			
-			if(y + 1 < 60 && labelN[y+1][x].getBackground().equals(Color.RED)) {
-				labelN[y+1][x].setBackground(Color.WHITE);
-			}
-			if(y-1 >=0 && labelN[y-1][x].getBackground().equals(Color.RED)) {
-				labelN[y-1][x].setBackground(Color.WHITE);
-			}
-			if(x+1 < 100 && labelN[y][x+1].getBackground().equals(Color.RED)) {
-				labelN[y][x+1].setBackground(Color.WHITE);
-			}
-			if(x-1 >= 0 && labelN[y][x-1].getBackground().equals(Color.RED)) {
-				labelN[y][x-1].setBackground(Color.WHITE);
-			}
-		}
-
-		panel.repaint();
-	
-		}
 	}
 
 	private JPanel getPanel() {
@@ -128,13 +92,13 @@ public class Matrizea extends JFrame implements Observer {
 		@Override
 		public void keyPressed(KeyEvent e) {
 			if (e.getKeyCode() == KeyEvent.VK_LEFT) {
-				MatrizeKudeatzailea.getEma().Mugitu(-1, 0);
+				MatrizeKudeatzailea.getEma().mugitu("ezkerrera");
 			} else if (e.getKeyCode() == KeyEvent.VK_RIGHT) {
-				MatrizeKudeatzailea.getEma().Mugitu(1, 0);
+				MatrizeKudeatzailea.getEma().mugitu("eskuinera");
 			} else if (e.getKeyCode() == KeyEvent.VK_UP) {
-				MatrizeKudeatzailea.getEma().Mugitu(0, -1);
+				MatrizeKudeatzailea.getEma().mugitu("gora");
 			} else if (e.getKeyCode() == KeyEvent.VK_DOWN) {
-				MatrizeKudeatzailea.getEma().Mugitu(0, 1);
+				MatrizeKudeatzailea.getEma().mugitu("behera");
 			}
 		}
 
