@@ -16,18 +16,18 @@ import javax.swing.SwingConstants;
 
 import Eredua.Espaziontzia;
 import Eredua.Etsaia;
-import Eredua.MatrizeKudeatzailea;
+import Eredua.MatrizeE;
 
-public class Matrizea extends JFrame implements Observer {
+public class MatrizeB extends JFrame implements Observer {
 	private static final long serialVersionUID = 1L;
 
 	private JPanel panel;
-
+	
 	private GelaxkaB labelN[][] = new GelaxkaB[60][100];
 
 	private Controller controller = null;
 
-	public Matrizea() {
+	public MatrizeB() {
 		setTitle("Space Invaders");
 		setBounds(100, 100, 900, 600);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -35,7 +35,8 @@ public class Matrizea extends JFrame implements Observer {
 		getContentPane().setLayout(new BorderLayout());
 		getContentPane().add(getPanel(), BorderLayout.CENTER);
 		
-		MatrizeKudeatzailea Eredua = MatrizeKudeatzailea.getEma(); 
+		MatrizeE Eredua = MatrizeE.getEma(); 
+		
 		Eredua.addObserver(this);
 		
 		matrizeaSortu();
@@ -50,13 +51,22 @@ public class Matrizea extends JFrame implements Observer {
 	}
 
 	public void matrizeaSortu() {
-		MatrizeKudeatzailea Eredua = MatrizeKudeatzailea.getEma(); 
+		MatrizeE Eredua = MatrizeE.getEma(); 
 		for (int i = 0; i < 60; i++) {
 			for (int j = 0; j < 100; j++) {
 				GelaxkaB gelaxkaB = new GelaxkaB();
 				Eredua.getGelaxka(j, i).addObserver(gelaxkaB);
 				labelN[i][j] = gelaxkaB;
 				getPanel().add(gelaxkaB);
+				if (Eredua.getGelaxka(j, i).getEntitateMota().equals("espaziontzia")) {
+					labelN[i][j].setBackground(Color.RED);
+				}else if (Eredua.getGelaxka(j, i).getEntitateMota().equals("etsaia")) {
+					labelN[i][j].setBackground(Color.GREEN);
+				}else if (Eredua.getGelaxka(j, i).getEntitateMota().equals("tiroa")) {
+					labelN[i][j].setBackground(Color.GRAY);
+				} else {
+					labelN[i][j].setBackground(Color.WHITE);
+				}
 			}
 		}
 	}
@@ -74,15 +84,6 @@ public class Matrizea extends JFrame implements Observer {
 		return panel;
 	}
 
-	private JLabel getLabelN(int ler, int zut, Color kolorea) {
-		JLabel label = new JLabel("");
-		label.setOpaque(true);
-		label.setHorizontalAlignment(SwingConstants.CENTER);
-		label.setBorder(BorderFactory.createLineBorder(Color.LIGHT_GRAY, 1));
-		label.setBackground(kolorea);
-		return label;
-	}
-
 	private Controller getController() {
 		if (controller == null) controller = new Controller();
 		return controller;
@@ -92,13 +93,13 @@ public class Matrizea extends JFrame implements Observer {
 		@Override
 		public void keyPressed(KeyEvent e) {
 			if (e.getKeyCode() == KeyEvent.VK_LEFT) {
-				MatrizeKudeatzailea.getEma().mugitu("ezkerrera");
+				MatrizeE.getEma().mugituEspaziontzia("ezkerrera");
 			} else if (e.getKeyCode() == KeyEvent.VK_RIGHT) {
-				MatrizeKudeatzailea.getEma().mugitu("eskuinera");
+				MatrizeE.getEma().mugituEspaziontzia("eskuinera");
 			} else if (e.getKeyCode() == KeyEvent.VK_UP) {
-				MatrizeKudeatzailea.getEma().mugitu("gora");
+				MatrizeE.getEma().mugituEspaziontzia("gora");
 			} else if (e.getKeyCode() == KeyEvent.VK_DOWN) {
-				MatrizeKudeatzailea.getEma().mugitu("behera");
+				MatrizeE.getEma().mugituEspaziontzia("behera");
 			}
 		}
 

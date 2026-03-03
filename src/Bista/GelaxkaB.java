@@ -19,17 +19,15 @@ public class GelaxkaB extends JLabel implements Observer {
 	
 	@Override
 	public void update(Observable o, Object arg) {
-		if(arg instanceof String) {
-			if(arg.equals("etsaia")) {
-				this.label.setBackground(Color.RED);
-			}else if(arg.equals("espaziontzia")) {
-				this.label.setBackground(Color.BLUE);
-			}else if(arg.equals("tiro")) {
-				this.label.setBackground(Color.YELLOW);
-			}else {
-				this.label.setBackground(Color.WHITE);
-			}
-		}
+		if (arg instanceof String entitate) {
+            switch (entitate) {
+                case "etsaia" -> setBackground(Color.GREEN);
+                case "espaziontzia" -> setBackground(Color.RED);
+                case "tiro" -> setBackground(Color.YELLOW);
+                default -> setBackground(Color.WHITE);
+            }
+            repaint(); 
+        }
 	}
 		
 }
