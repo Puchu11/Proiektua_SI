@@ -1,0 +1,5 @@
+1.Etsaiak kudeatu
+2.JokoKudeatzaile egin
+3.hasierako panela egin
+4. Joko amaitzeko logika egin
+
