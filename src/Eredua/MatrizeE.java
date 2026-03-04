@@ -77,14 +77,6 @@ public class MatrizeE extends Observable {
     	return Mugitu;
     }
     	
-    public synchronized void tiroEgin() {
-        Tiro tiroa = new Tiro(
-            espaziontzia.getPosizioa().getX(),
-            espaziontzia.getPosizioa().getY() - 1
-        );
-        
-        tiroa.start();
-
-    }
+    public synchronized void tiroEgin() {espaziontzia.tiroEgin();  }
     
 }
