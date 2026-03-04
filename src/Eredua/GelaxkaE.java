@@ -12,6 +12,7 @@ public class GelaxkaE extends Observable{
 	}
 	
 	public void gelaxkaEguneratu(EntitateMota entitate) {
+		
 		this.entitate=entitate;
 		if(entitate==EntitateMota.ETSAIA) {
 			this.setChanged();

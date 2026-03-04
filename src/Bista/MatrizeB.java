@@ -8,6 +8,7 @@ import java.awt.event.KeyListener;
 import java.util.Observable;
 import java.util.Observer;
 
+
 import javax.swing.BorderFactory;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -17,6 +18,7 @@ import javax.swing.SwingConstants;
 import Eredua.Espaziontzia;
 import Eredua.Etsaia;
 import Eredua.MatrizeE;
+import javax.swing.Timer;
 
 public class MatrizeB extends JFrame implements Observer {
 	private static final long serialVersionUID = 1L;
@@ -35,7 +37,7 @@ public class MatrizeB extends JFrame implements Observer {
 		getContentPane().setLayout(new BorderLayout());
 		getContentPane().add(getPanel(), BorderLayout.CENTER);
 		
-		MatrizeE Eredua = MatrizeE.getEma(); 
+		MatrizeE Eredua = MatrizeE.getEma();
 		
 		Eredua.addObserver(this);
 		
@@ -48,6 +50,8 @@ public class MatrizeB extends JFrame implements Observer {
 		requestFocusInWindow();
 
 		setVisible(true);
+		
+		new Timer(16, e -> panel.repaint()).start();
 	}
 
 	public void matrizeaSortu() {
@@ -65,7 +69,7 @@ public class MatrizeB extends JFrame implements Observer {
 				}else if (Eredua.getGelaxka(j, i).getEntitateMota().equals("tiroa")) {
 					labelN[i][j].setBackground(Color.GRAY);
 				} else {
-					labelN[i][j].setBackground(Color.WHITE);
+					labelN[i][j].setBackground(Color.BLACK);
 				}
 			}
 		}
@@ -100,6 +104,8 @@ public class MatrizeB extends JFrame implements Observer {
 				MatrizeE.getEma().mugituEspaziontzia("gora");
 			} else if (e.getKeyCode() == KeyEvent.VK_DOWN) {
 				MatrizeE.getEma().mugituEspaziontzia("behera");
+			} if (e.getKeyCode() == KeyEvent.VK_SPACE) {
+				MatrizeE.getEma().tiroEgin();
 			}
 		}
 

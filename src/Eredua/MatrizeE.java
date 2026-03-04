@@ -13,7 +13,7 @@ public class MatrizeE extends Observable {
     private GelaxkaE matrizea[][] = new GelaxkaE[altuera][zabalera];
     private Espaziontzia espaziontzia;
     private ArrayList<Etsaia> etsaiak = new ArrayList<Etsaia>();
-    private ArrayList<Tiro> tiroak = new ArrayList<Tiro>();
+    
 
     private MatrizeE() {
 
@@ -67,9 +67,24 @@ public class MatrizeE extends Observable {
 		}
 		return null;
 	}
-    
+    public void gelaxkaEguneratu(int x, int y, EntitateMota mota) {
+		if (x >= 0 && x < zabalera && y >= 0 && y < altuera) {
+			matrizea[y][x].gelaxkaEguneratu(mota);
+		}
+	}
     private Boolean mugituDaiteke(String norabidea, Entitatea entitatea) {
     	boolean Mugitu = entitatea.mugituDaiteke(norabidea);
     	return Mugitu;
     }
+    	
+    public synchronized void tiroEgin() {
+        Tiro tiroa = new Tiro(
+            espaziontzia.getPosizioa().getX(),
+            espaziontzia.getPosizioa().getY() - 1
+        );
+        
+        tiroa.start();
+
+    }
+    
 }
