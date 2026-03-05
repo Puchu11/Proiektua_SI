@@ -1,7 +1,15 @@
 package Eredua;
 
 public class Etsaia extends Entitatea {
-	Etsaia(int x, int y) {
+	
+	private int indizea;
+	Etsaia(int x, int y, int indizea) {
 		super(x, y);
+		this.indizea = indizea;
 	}
+	
+	public int getIndizea() {
+		return indizea;
+	}
+	
 }

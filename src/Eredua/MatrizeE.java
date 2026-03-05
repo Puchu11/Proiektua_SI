@@ -2,6 +2,7 @@ package Eredua;
 
 import java.util.ArrayList;
 import java.util.Observable;
+import java.util.Random;
 
 public class MatrizeE extends Observable {
 
@@ -14,10 +15,9 @@ public class MatrizeE extends Observable {
     private Espaziontzia espaziontzia;
     private ArrayList<Etsaia> etsaiak = new ArrayList<Etsaia>();
     
+    private Random rnd = new Random();
 
     private MatrizeE() {
-
-    	espaziontzia = new Espaziontzia(50, 55);
     	
     	for (int i = 0; i < altuera; i++) {
             for (int j = 0; j < zabalera; j++) {
@@ -25,9 +25,9 @@ public class MatrizeE extends Observable {
 				
             }   
     	}
-    
+       	espaziontzia = new Espaziontzia(50, 55);
     	matrizea[espaziontzia.getPosizioa().getY()][espaziontzia.getPosizioa().getX()].gelaxkaEguneratu(EntitateMota.ESPAZIONTZIA);
-    	
+    	etsaiakSortu();
     }
     public static MatrizeE getEma() {
         if (ema == null) {
@@ -78,5 +78,23 @@ public class MatrizeE extends Observable {
     }
     	
     public synchronized void tiroEgin() {espaziontzia.tiroEgin();  }
+    
+    private void etsaiakSortu() {
+    	for (int i=0; i<4+rnd.nextInt(4); i++) {
+			int x = rnd.nextInt(zabalera);
+			boolean okupatuta = false;
+			for (Etsaia e : etsaiak) {
+	            if (e.getPosizioa().getX() == x) {
+	                okupatuta = true;
+	                break;
+	            }
+	        }
+	        if (!okupatuta) {
+	            Etsaia etsaia = new Etsaia(x, 5, i);
+	            etsaiak.add(etsaia);
+	            matrizea[etsaia.getPosizioa().getY()][etsaia.getPosizioa().getX()].gelaxkaEguneratu(EntitateMota.ETSAIA);
+	        }
+    	}
+    }
     
 }
