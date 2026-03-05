@@ -19,7 +19,11 @@ import Eredua.Espaziontzia;
 import Eredua.Etsaia;
 import Eredua.MatrizeE;
 import javax.swing.Timer;
-
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import javax.swing.Timer;
 public class MatrizeB extends JFrame implements Observer {
 	private static final long serialVersionUID = 1L;
 
@@ -94,6 +98,18 @@ public class MatrizeB extends JFrame implements Observer {
 	}
 
 	private class Controller implements KeyListener {
+		
+		 private Timer shootTimer;
+
+		    public Controller() {
+		        shootTimer = new Timer(300, new ActionListener() {
+		            @Override
+		            public void actionPerformed(ActionEvent e) {
+		                MatrizeE.getEma().tiroEgin();
+		            }
+		        });
+		    }
+		
 		@Override
 		public void keyPressed(KeyEvent e) {
 			if (e.getKeyCode() == KeyEvent.VK_LEFT) {
@@ -104,12 +120,21 @@ public class MatrizeB extends JFrame implements Observer {
 				MatrizeE.getEma().mugituEspaziontzia("gora");
 			} else if (e.getKeyCode() == KeyEvent.VK_DOWN) {
 				MatrizeE.getEma().mugituEspaziontzia("behera");
-			} if (e.getKeyCode() == KeyEvent.VK_SPACE) {
-				MatrizeE.getEma().tiroEgin();
-			}
+			}  
+			
+			if (e.getKeyCode() == KeyEvent.VK_SPACE) {
+	            if (!shootTimer.isRunning()) {
+	                MatrizeE.getEma().tiroEgin();
+	            	shootTimer.start();
+	            }
+	        }
 		}
 
-		@Override public void keyReleased(KeyEvent e) {}
+		@Override public void keyReleased(KeyEvent e) {
+			if (e.getKeyCode() == KeyEvent.VK_SPACE) {
+	            shootTimer.stop();
+	        }
+		}
 		@Override public void keyTyped(KeyEvent e) {}
 	}
 }
