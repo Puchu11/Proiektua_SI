@@ -66,7 +66,7 @@ public class MatrizeB extends JFrame implements Observer {
 					labelN[i][j].setBackground(Color.RED);
 				}else if (Eredua.getGelaxka(j, i).getEntitateMota().equals("etsaia")) {
 					labelN[i][j].setBackground(Color.GREEN);
-				}else if (Eredua.getGelaxka(j, i).getEntitateMota().equals("tiroa")) {
+				}else if (Eredua.getGelaxka(j, i).getEntitateMota().equals("tiro")) {
 					labelN[i][j].setBackground(Color.GRAY);
 				} else {
 					labelN[i][j].setBackground(Color.BLACK);
