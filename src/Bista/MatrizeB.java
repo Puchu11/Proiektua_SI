@@ -98,43 +98,76 @@ public class MatrizeB extends JFrame implements Observer {
 	}
 
 	private class Controller implements KeyListener {
-		
-		 private Timer shootTimer;
 
-		    public Controller() {
-		        shootTimer = new Timer(300, new ActionListener() {
-		            @Override
-		            public void actionPerformed(ActionEvent e) {
-		                MatrizeE.getEma().tiroEgin();
-		            }
-		        });
-		    }
-		
-		@Override
-		public void keyPressed(KeyEvent e) {
-			if (e.getKeyCode() == KeyEvent.VK_LEFT) {
-				MatrizeE.getEma().mugituEspaziontzia("ezkerrera");
-			} else if (e.getKeyCode() == KeyEvent.VK_RIGHT) {
-				MatrizeE.getEma().mugituEspaziontzia("eskuinera");
-			} else if (e.getKeyCode() == KeyEvent.VK_UP) {
-				MatrizeE.getEma().mugituEspaziontzia("gora");
-			} else if (e.getKeyCode() == KeyEvent.VK_DOWN) {
-				MatrizeE.getEma().mugituEspaziontzia("behera");
-			}  
-			
-			if (e.getKeyCode() == KeyEvent.VK_SPACE) {
-	            if (!shootTimer.isRunning()) {
-	                MatrizeE.getEma().tiroEgin();
-	            	shootTimer.start();
+	    private static final int MUGITU_TICK_MS = 100;
+	    private static final int TIRO_DELAY_MS = 300;
+
+	    private final Timer EzkerTimer  = new Timer(MUGITU_TICK_MS, e -> MatrizeE.getEma().mugituEspaziontzia("ezkerrera"));
+	    private final Timer EskuinTimer = new Timer(MUGITU_TICK_MS, e -> MatrizeE.getEma().mugituEspaziontzia("eskuinera"));
+	    private final Timer GoraTimer    = new Timer(MUGITU_TICK_MS, e -> MatrizeE.getEma().mugituEspaziontzia("gora"));
+	    private final Timer BeheraTimer  = new Timer(MUGITU_TICK_MS, e -> MatrizeE.getEma().mugituEspaziontzia("behera"));
+
+	    private final Timer TiroTimer = new Timer(TIRO_DELAY_MS, e -> MatrizeE.getEma().tiroEgin());
+	    
+	    private void GeldituMugimenduTimerrak() {
+	        EzkerTimer.stop();
+	        EskuinTimer.stop();
+	        GoraTimer.stop();
+	        BeheraTimer.stop();	
+	    }
+	    
+	    @Override
+	    public void keyPressed(KeyEvent e) {
+	        switch (e.getKeyCode()) {
+	            case KeyEvent.VK_LEFT -> {
+	                if (!EzkerTimer.isRunning()) {
+	                	GeldituMugimenduTimerrak();
+	                    MatrizeE.getEma().mugituEspaziontzia("ezkerrera");
+	                    EzkerTimer.start();
+	                }
+	            }
+	            case KeyEvent.VK_RIGHT -> {
+	                if (!EskuinTimer.isRunning()) {
+	                	GeldituMugimenduTimerrak();
+	                    MatrizeE.getEma().mugituEspaziontzia("eskuinera");
+	                    EskuinTimer.start();
+	                }
+	            }
+	            case KeyEvent.VK_UP -> {
+	                if (!GoraTimer.isRunning()) {
+	                	GeldituMugimenduTimerrak();
+	                    MatrizeE.getEma().mugituEspaziontzia("gora");
+	                    GoraTimer.start();
+	                }
+	            }
+	            case KeyEvent.VK_DOWN -> {
+	                if (!BeheraTimer.isRunning()) {
+	                	GeldituMugimenduTimerrak();
+	                    MatrizeE.getEma().mugituEspaziontzia("behera");
+	                    BeheraTimer.start();
+	                }
+	            }
+	            case KeyEvent.VK_SPACE -> {
+	                if (!TiroTimer.isRunning()) {
+	                    MatrizeE.getEma().tiroEgin();
+	                    TiroTimer.start();
+	                }
 	            }
 	        }
-		}
+	    }
 
-		@Override public void keyReleased(KeyEvent e) {
-			if (e.getKeyCode() == KeyEvent.VK_SPACE) {
-	            shootTimer.stop();
+	    @Override
+	    public void keyReleased(KeyEvent e) {
+	        switch (e.getKeyCode()) {
+	            case KeyEvent.VK_LEFT  -> EzkerTimer.stop();
+	            case KeyEvent.VK_RIGHT -> EskuinTimer.stop();
+	            case KeyEvent.VK_UP    -> GoraTimer.stop();
+	            case KeyEvent.VK_DOWN  -> BeheraTimer.stop();
+	            case KeyEvent.VK_SPACE -> TiroTimer.stop();
 	        }
-		}
-		@Override public void keyTyped(KeyEvent e) {}
+	    }
+
+	    @Override
+	    public void keyTyped(KeyEvent e) {}
 	}
 }
