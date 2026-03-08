@@ -97,4 +97,19 @@ public class MatrizeE extends Observable {
     	}
     }
     
+    public void etsaiakMugitu() {
+    	for (Etsaia e: etsaiak) {
+    		int x=e.getPosizioa().getX();
+    		int y=e.getPosizioa().getY();
+    		
+    		matrizea[y][x].gelaxkaEguneratu(EntitateMota.HUTSA);
+    		e.mugituRandom();
+    		
+    		int xBerria=e.getPosizioa().getX();
+    		int yBerria=e.getPosizioa().getY();
+    		
+    		matrizea[yBerria][xBerria].gelaxkaEguneratu(EntitateMota.ETSAIA);
+    	}
+
+    }
 }
