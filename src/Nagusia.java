@@ -1,11 +1,9 @@
-import Bista.Matrizea;
-import Eredua.MatrizeKudeatzailea;
+import Bista.MatrizeB;
+import Eredua.MatrizeE;
 
 public class Nagusia {
 	public static void main(String[] args) {
-		MatrizeKudeatzailea matrizeKudeatzailea = MatrizeKudeatzailea.getEma();
-		matrizeKudeatzailea.MatrizeaSortu();
-		Matrizea matrizea = new Matrizea();		
-		
+		MatrizeE matrizeKudeatzailea = MatrizeE.getEma();
+		MatrizeB matrizea = new MatrizeB();		
 	}
 }

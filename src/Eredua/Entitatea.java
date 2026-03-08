@@ -15,4 +15,17 @@ public abstract class Entitatea {
 		this.posizioa = posizioa;
 	}
 	
+	public boolean mugituDaiteke(String norabidea) {
+		int posX=this.getPosizioa().getX();
+		int posY=this.getPosizioa().getY();
+		
+		return switch (norabidea) {
+			case "gora" -> posY-1 >= 0;
+			case "behera" -> posY+1 < 60;
+			case "ezkerrera" -> posX-1 >= 0;
+			case "eskuinera" -> posX +1 < 100;
+			default -> false;
+		};
+	}
+	
 }
