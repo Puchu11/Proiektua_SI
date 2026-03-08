@@ -1,6 +1,6 @@
 package Bista;
 
-import java.awt.BorderLayout;
+import java.awt.CardLayout;
 import java.awt.Color;
 import java.awt.GridLayout;
 import java.awt.event.KeyEvent;
@@ -8,30 +8,20 @@ import java.awt.event.KeyListener;
 import java.util.Observable;
 import java.util.Observer;
 
-
-import javax.swing.BorderFactory;
 import javax.swing.JFrame;
-import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.SwingConstants;
+import javax.swing.Timer;
 
-import Eredua.Espaziontzia;
-import Eredua.Etsaia;
 import Eredua.JokoKudeatzailea;
 import Eredua.MatrizeE;
-import javax.swing.Timer;
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import javax.swing.Timer;
 public class MatrizeB extends JFrame implements Observer {
 	private static final long serialVersionUID = 1L;
 	private JPanel kontenedorea; 
 	private CardLayout nabegadorea; 
     private JPanel jokoPanela;
     private HasierakoPantaila hasierakoPantaila; 
-	
+    private IrabaziPantaila irabaziPantaila; 
+    private GalduPantaila galduPantaila; 
 	private GelaxkaB labelN[][] = new GelaxkaB[60][100];
 
 	private Controller controller = null;
@@ -42,13 +32,16 @@ public class MatrizeB extends JFrame implements Observer {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
 		nabegadorea = new CardLayout();
-		kontenedorea = new Jpanel (nabegadorea); 
+		kontenedorea = new JPanel (nabegadorea); 
 		
 		hasierakoPantaila = new HasierakoPantaila();
 		jokoPanela = getPanel();
-		
+		irabaziPantaila=new IrabaziPantaila();
+		galduPantaila=new GalduPantaila();
 		kontenedorea.add(hasierakoPantaila, "HASIERA");
 		kontenedorea.add(jokoPanela, "JOKOA");
+	    kontenedorea.add(irabaziPantaila,"IRABAZI_PANTAILA");
+		kontenedorea.add(galduPantaila,"GALDU_PANTAILA");
 		getContentPane().add(kontenedorea);
 		
 		
@@ -67,7 +60,7 @@ public class MatrizeB extends JFrame implements Observer {
 		setFocusable(true);
 		setVisible(true);
 		
-		new Timer(16, e -> panel.repaint()).start();
+		new Timer(16, e -> kontenedorea.repaint()).start();
 	}
 
 	public void matrizeaSortu() {
@@ -94,10 +87,14 @@ public class MatrizeB extends JFrame implements Observer {
 
 	@Override
 	public void update(Observable o, Object arg) {
+		String mezua= arg.toString();
 		if ("HASI".equals(arg)) {
-			navegador.show(kontenedorea, "JOKOA")
-			this.rewuestFocusInWindow();
-
+			nabegadorea.show(kontenedorea, "JOKOA");
+			this.requestFocusInWindow();
+		}else if("IRABAZI".equals(arg)) {
+			nabegadorea.show(kontenedorea, "IRABAZI_PANTAILA");
+		}else if("GALDU".equals(arg)) {
+			nabegadorea.show(kontenedorea, "GALDU_PANTAILA");
 		}
 			
 	}
