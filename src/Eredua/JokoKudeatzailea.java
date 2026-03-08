@@ -17,5 +17,11 @@ public class JokoKudeatzailea extends Observable {
 		return ema;
 	}
 	
+	public void hasiJokoa() {
+		this.egoera = Egoera.JOKATZEN;
+		setChanged();
+		notifyObservers("HASI"); 
+	}
+	
 	
 }

@@ -17,6 +17,7 @@ import javax.swing.SwingConstants;
 
 import Eredua.Espaziontzia;
 import Eredua.Etsaia;
+import Eredua.JokoKudeatzailea;
 import Eredua.MatrizeE;
 import javax.swing.Timer;
 import java.awt.event.KeyEvent;
@@ -26,8 +27,10 @@ import java.awt.event.ActionListener;
 import javax.swing.Timer;
 public class MatrizeB extends JFrame implements Observer {
 	private static final long serialVersionUID = 1L;
-
-	private JPanel panel;
+	private JPanel kontenedorea; 
+	private CardLayout nabegadorea; 
+    private JPanel jokoPanela;
+    private HasierakoPantaila hasierakoPantaila; 
 	
 	private GelaxkaB labelN[][] = new GelaxkaB[60][100];
 
@@ -37,13 +40,24 @@ public class MatrizeB extends JFrame implements Observer {
 		setTitle("Space Invaders");
 		setBounds(100, 100, 900, 600);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-
-		getContentPane().setLayout(new BorderLayout());
-		getContentPane().add(getPanel(), BorderLayout.CENTER);
+		
+		nabegadorea = new CardLayout();
+		kontenedorea = new Jpanel (nabegadorea); 
+		
+		hasierakoPantaila = new HasierakoPantaila();
+		jokoPanela = getPanel();
+		
+		kontenedorea.add(hasierakoPantaila, "HASIERA");
+		kontenedorea.add(jokoPanela, "JOKOA");
+		getContentPane().add(kontenedorea);
+		
 		
 		MatrizeE Eredua = MatrizeE.getEma();
 		
 		Eredua.addObserver(this);
+		
+		JokoKudeatzailea.getNireJokoKudeatzailea().addObserver(this);
+		
 		
 		matrizeaSortu();
 		
@@ -51,8 +65,6 @@ public class MatrizeB extends JFrame implements Observer {
 		// controller 
 		addKeyListener(getController());
 		setFocusable(true);
-		requestFocusInWindow();
-
 		setVisible(true);
 		
 		new Timer(16, e -> panel.repaint()).start();
@@ -65,7 +77,8 @@ public class MatrizeB extends JFrame implements Observer {
 				GelaxkaB gelaxkaB = new GelaxkaB();
 				Eredua.getGelaxka(j, i).addObserver(gelaxkaB);
 				labelN[i][j] = gelaxkaB;
-				getPanel().add(gelaxkaB);
+				jokoPanela.add(gelaxkaB);
+				
 				if (Eredua.getGelaxka(j, i).getEntitateMota().equals("espaziontzia")) {
 					labelN[i][j].setBackground(Color.RED);
 				}else if (Eredua.getGelaxka(j, i).getEntitateMota().equals("etsaia")) {
@@ -81,15 +94,20 @@ public class MatrizeB extends JFrame implements Observer {
 
 	@Override
 	public void update(Observable o, Object arg) {
+		if ("HASI".equals(arg)) {
+			navegador.show(kontenedorea, "JOKOA")
+			this.rewuestFocusInWindow();
+
+		}
 			
 	}
 
 	private JPanel getPanel() {
-		if (panel == null) {
-			panel = new JPanel();
-			panel.setLayout(new GridLayout(60, 100, 0, 0));
+		if (jokoPanela == null) {
+			jokoPanela = new JPanel();
+			jokoPanela.setLayout(new GridLayout(60, 100, 0, 0));
 		}
-		return panel;
+		return jokoPanela;
 	}
 
 	private Controller getController() {
@@ -118,6 +136,9 @@ public class MatrizeB extends JFrame implements Observer {
 	    
 	    @Override
 	    public void keyPressed(KeyEvent e) {
+	    	if (e.getKeyCode()== KeyEvent.VK_ENTER) {
+	    		JokoKudeatzailea.getNireJokoKudeatzailea().hasiJokoa();
+	    	}
 	        switch (e.getKeyCode()) {
 	            case KeyEvent.VK_LEFT -> {
 	                if (!EzkerTimer.isRunning()) {
