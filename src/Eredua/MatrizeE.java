@@ -3,6 +3,8 @@ package Eredua;
 import java.util.ArrayList;
 import java.util.Observable;
 import java.util.Random;
+import java.util.Timer;
+import java.util.TimerTask;
 
 public class MatrizeE extends Observable {
 
@@ -107,16 +109,16 @@ public class MatrizeE extends Observable {
     	}
     }
     public void hasieratuEtsaienMugimendua() {
-    	new Thread(()->{
-    		while(true) {
-    			etsaiakMugitu();
-    			try {
-    				Thread.sleep(500);
-    			}catch (InterruptedException ex) {
-    				ex.printStackTrace();
-    			}
-    		}
-    	}).start(); 
+        Timer timer = new Timer();
+        TimerTask ataza = new TimerTask() {
+            public void run() {
+                etsaiakMugitu();
+            }
+        };
+
+        timer.schedule(ataza, 0, 200);
+    }
+    
     public synchronized boolean talkaEginDu(int x, int y) {
     	if(matrizea[y][x].getEntitateMota().equals("etsaia")) {
     		Etsaia hilda=null;
@@ -140,7 +142,7 @@ public class MatrizeE extends Observable {
     
     public synchronized void jokoaAmaituDa() {
     	for(Etsaia e: etsaiak) {
-    		if(e.getPosizioa().getY()<=0) {
+    		if(e.getPosizioa().getY()>=altuera-1) {
     			JokoKudeatzailea.getNireJokoKudeatzailea().egoeraAldatu(Egoera.GALDU);
     		}
     	}
@@ -165,7 +167,7 @@ public class MatrizeE extends Observable {
     			yBerria=y+1;
     		}
     		
-    		if (matrizea[yBerria][xBerria].getMota() == EntitateMota.HUTSA) {
+    		if (!matrizea[yBerria][xBerria].getEntitateMota().equals("etsaia")) {
     			matrizea[y][x].gelaxkaEguneratu(EntitateMota.HUTSA);
     			e.getPosizioa().setX(xBerria);
     			e.getPosizioa().setY(yBerria);
@@ -173,8 +175,7 @@ public class MatrizeE extends Observable {
     		}
 
     	}
-    	setChanged();
-    	notifyObservers();
+    	jokoaAmaituDa();
     }
     
     
