@@ -28,6 +28,7 @@ public class MatrizeE extends Observable {
        	espaziontzia = new Espaziontzia(50, 55);
     	matrizea[espaziontzia.getPosizioa().getY()][espaziontzia.getPosizioa().getX()].gelaxkaEguneratu(EntitateMota.ESPAZIONTZIA);
     	etsaiakSortu();
+    	hasieratuEtsaienMugimendua();
     }
     public static MatrizeE getEma() {
         if (ema == null) {
@@ -108,6 +109,17 @@ public class MatrizeE extends Observable {
 	        }
     	}
     }
+    public void hasieratuEtsaienMugimendua() {
+    	new Thread(()->{
+    		while(true) {
+    			etsaiakMugitu();
+    			try {
+    				Thread.sleep(500);
+    			}catch (InterruptedException ex) {
+    				ex.printStackTrace();
+    			}
+    		}
+    	}).start(); 
     public synchronized boolean talkaEginDu(int x, int y) {
     	if(matrizea[y][x].getEntitateMota().equals("etsaia")) {
     		Etsaia hilda=null;
@@ -139,19 +151,36 @@ public class MatrizeE extends Observable {
     	}
     }
     
-    public void etsaiakMugitu() {
+    public synchronized void etsaiakMugitu() {
     	for (Etsaia e: etsaiak) {
     		int x=e.getPosizioa().getX();
     		int y=e.getPosizioa().getY();
+    		int aukera= rnd.nextInt(3);
     		
-    		matrizea[y][x].gelaxkaEguneratu(EntitateMota.HUTSA);
-    		e.mugituRandom();
+    		int xBerria=x;
+    		int yBerria=y;
     		
-    		int xBerria=e.getPosizioa().getX();
-    		int yBerria=e.getPosizioa().getY();
+    		if (aukera==0 && e.mugituDaiteke("ezkerrera")) {
+    			xBerria=x-1;
+    		}
+    		else if (aukera==1 && e.mugituDaiteke("eskuinera")) {
+    			xBerria=x+1;
+    		}
+    		else if (aukera==2 && e.mugituDaiteke("behera")) {
+    			yBerria=y+1;
+    		}
     		
-    		matrizea[yBerria][xBerria].gelaxkaEguneratu(EntitateMota.ETSAIA);
-    	}
+    		if (matrizea[yBerria][xBerria].getMota() == EntitateMota.HUTSA) {
+    			matrizea[y][x].gelaxkaEguneratu(EntitateMota.HUTSA);
+    			e.getPosizioa().setX(xBerria);
+    			e.getPosizioa().setY(yBerria);
+    			matrizea[yBerria][xBerria].gelaxkaEguneratu(EntitateMota.ETSAIA);
+    		}
 
+    	}
+    	setChanged();
+    	notifyObservers();
     }
+    
+    
 }
