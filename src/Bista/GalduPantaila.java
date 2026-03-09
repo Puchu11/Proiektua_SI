@@ -8,21 +8,15 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 
-public class HasierakoPantaila extends JPanel {
-	public HasierakoPantaila() {
+public class GalduPantaila extends JPanel {
+	public GalduPantaila() {
 		this.setBackground(Color.BLACK);
 		this.setLayout(new GridLayout(2,1));
 		
-		JLabel titulua = new JLabel ("SPACE INVADERS", SwingConstants.CENTER);
+		JLabel titulua = new JLabel ("GALDU DOZU", SwingConstants.CENTER);
 		titulua.setForeground(Color.WHITE);
 		titulua.setFont(new Font("Arial", Font.BOLD, 40)); 
-		
-		JLabel azpititulua = new JLabel ("Sakatu ENTER hasteko", SwingConstants.CENTER);
-		azpititulua.setForeground(Color.YELLOW);
-		azpititulua.setFont(new Font("Arial", Font.PLAIN, 18));
-		
 		this.add(titulua);
-		this.add(azpititulua);
 	}
 	
 }

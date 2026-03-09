@@ -23,5 +23,9 @@ public class JokoKudeatzailea extends Observable {
 		notifyObservers("HASI"); 
 	}
 	
-	
+	public void egoeraAldatu(Egoera berria) {
+		this.egoera=berria;
+		this.setChanged();
+		this.notifyObservers(this.egoera);
+	}
 }

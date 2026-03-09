@@ -30,7 +30,12 @@ public class Tiro extends Thread {
             if (pos.getY() < 0) {
                 bizirik = false;             
             }else {
-            	m.gelaxkaEguneratu(pos.getX(), pos.getY(), EntitateMota.TIROA);
+            	if(m.talkaEginDu(pos.getX(), pos.getY())) {
+            		this.hil();
+            	}else {
+            		m.gelaxkaEguneratu(pos.getX(), pos.getY(), EntitateMota.TIROA);
+            
+            	}
             }
         }
     }
