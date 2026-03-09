@@ -56,11 +56,7 @@ public class MatrizeE extends Observable {
     		}	
     		int berriaX = espaziontzia.getPosizioa().getX();
     		int berriaY = espaziontzia.getPosizioa().getY();
-    		for(Etsaia e : etsaiak) {
-	    		if (e.getPosizioa().getX()==berriaX && e.getPosizioa().getY()==berriaY) {
-	    			JokoKudeatzailea.getNireJokoKudeatzailea().egoeraAldatu(Egoera.GALDU);
-	    		}
-    		}
+    		kolizioa(berriaX, berriaY);
     		gelaxkaEguneratu(berriaX,berriaY, EntitateMota.ESPAZIONTZIA);
     	}
     }
@@ -140,8 +136,12 @@ public class MatrizeE extends Observable {
     	return false;
     }
     
-    public synchronized void jokoaAmaituDa() {
+    public synchronized void jokoaAmaituDa(int x, int y) {
     	for(Etsaia e: etsaiak) {
+    		if (e.getPosizioa().getX()==x && e.getPosizioa().getY()==y) {
+    			JokoKudeatzailea.getNireJokoKudeatzailea().egoeraAldatu(Egoera.GALDU);
+    			break;
+    		}
     		if(e.getPosizioa().getY()>=altuera-1) {
     			JokoKudeatzailea.getNireJokoKudeatzailea().egoeraAldatu(Egoera.GALDU);
     		}
@@ -173,10 +173,16 @@ public class MatrizeE extends Observable {
     			e.getPosizioa().setY(yBerria);
     			matrizea[yBerria][xBerria].gelaxkaEguneratu(EntitateMota.ETSAIA);
     		}
-
     	}
-    	jokoaAmaituDa();
+    	jokoaAmaituDa(this.espaziontzia.getPosizioa().getX(),this.espaziontzia.getPosizioa().getY());
     }
-    
+    private void kolizioa(int x, int y) {
+    	for(Etsaia e: etsaiak) {
+    		if (e.getPosizioa().getX()==x && e.getPosizioa().getY()==y) {
+    			JokoKudeatzailea.getNireJokoKudeatzailea().egoeraAldatu(Egoera.GALDU);
+    			break;
+    		}
+    	}
+    }
     
 }

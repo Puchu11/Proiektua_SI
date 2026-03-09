@@ -7,3 +7,4 @@ public class Nagusia {
 		JokoKudeatzailea.getNireJokoKudeatzailea().hasiJokoa();
 	}
 }
+
