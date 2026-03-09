@@ -2,6 +2,9 @@ package Eredua;
 
 import java.util.Observable;
 
+import Bista.HasierakoPantaila;
+import Bista.MatrizeB;
+
 public class JokoKudeatzailea extends Observable {
 	private Egoera egoera= Egoera.HASIERA;
 	
@@ -18,13 +21,18 @@ public class JokoKudeatzailea extends Observable {
 	}
 	
 	public void hasiJokoa() {
-		this.egoera = Egoera.JOKATZEN;
+		HasierakoPantaila hasierakoPantaila = new HasierakoPantaila();
+		this.egoera = Egoera.HASIERA;
 		setChanged();
-		notifyObservers("HASI"); 
+		notifyObservers(Egoera.HASIERA); 
 	}
 	
 	public void egoeraAldatu(Egoera berria) {
 		this.egoera=berria;
+		if(this.egoera==Egoera.JOKATZEN) {
+			MatrizeE.getEma();
+			new MatrizeB();
+		}
 		this.setChanged();
 		this.notifyObservers(this.egoera);
 	}

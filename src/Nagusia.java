@@ -1,9 +1,9 @@
 import Bista.MatrizeB;
+import Eredua.JokoKudeatzailea;
 import Eredua.MatrizeE;
 
 public class Nagusia {
 	public static void main(String[] args) {
-		MatrizeE matrizeKudeatzailea = MatrizeE.getEma();
-		MatrizeB matrizea = new MatrizeB();		
+		JokoKudeatzailea.getNireJokoKudeatzailea().hasiJokoa();
 	}
 }

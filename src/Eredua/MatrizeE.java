@@ -55,10 +55,7 @@ public class MatrizeE extends Observable {
     		int berriaY = espaziontzia.getPosizioa().getY();
     		for(Etsaia e : etsaiak) {
 	    		if (e.getPosizioa().getX()==berriaX && e.getPosizioa().getY()==berriaY) {
-	    			System.out.println("!!!DETECTADO");
-	    			this.setChanged();
-	    			this.notifyObservers("GALDU");
-	    			break;
+	    			JokoKudeatzailea.getNireJokoKudeatzailea().egoeraAldatu(Egoera.GALDU);
 	    		}
     		}
     		gelaxkaEguneratu(berriaX,berriaY, EntitateMota.ESPAZIONTZIA);
@@ -122,19 +119,17 @@ public class MatrizeE extends Observable {
     		}
     		gelaxkaEguneratu(x,y,EntitateMota.HUTSA);
     		if (etsaiak.isEmpty()) {
-    			setChanged();
-    			notifyObservers("IRABAZI");
+    			JokoKudeatzailea.getNireJokoKudeatzailea().egoeraAldatu(Egoera.IRABAZI);
     		}
     		return true;
     	}
     	return false;
     }
+    
     public synchronized void jokoaAmaituDa() {
     	for(Etsaia e: etsaiak) {
-    		if(e.getPosizioa().getY()>= espaziontzia.getPosizioa().getY()) {
-    			this.setChanged();
-    			this.notifyObservers("GALDU");
-    			break;
+    		if(e.getPosizioa().getY()<=0) {
+    			JokoKudeatzailea.getNireJokoKudeatzailea().egoeraAldatu(Egoera.GALDU);
     		}
     	}
     }
