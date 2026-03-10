@@ -1,6 +1,5 @@
 package Eredua;
 
-import java.util.Random;
 
 public class Etsaia extends Entitatea {
 	

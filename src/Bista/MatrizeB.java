@@ -15,6 +15,7 @@ import javax.swing.Timer;
 import Eredua.Egoera;
 import Eredua.JokoKudeatzailea;
 import Eredua.MatrizeE;
+
 public class MatrizeB extends JFrame implements Observer {
 	
 	private static final long serialVersionUID = 1L;
@@ -41,24 +42,9 @@ public class MatrizeB extends JFrame implements Observer {
 		kontenedorea.add(jokoPanela, "JOKOA");
 	    kontenedorea.add(irabaziPantaila,"IRABAZI_PANTAILA");
 		kontenedorea.add(galduPantaila,"GALDU_PANTAILA");
-		getContentPane().add(kontenedorea);
-		
-		
-		MatrizeE Eredua = MatrizeE.getEma();
-		
+		getContentPane().add(kontenedorea);	
 		
 		JokoKudeatzailea.getNireJokoKudeatzailea().addObserver(this);
-		
-		
-		matrizeaSortu();
-		
-		
-		// controller 
-		addKeyListener(getController());
-		setFocusable(true);
-		setVisible(true);
-		
-		new Timer(16, e -> kontenedorea.repaint()).start();
 	}
 
 	public void matrizeaSortu() {
@@ -68,8 +54,7 @@ public class MatrizeB extends JFrame implements Observer {
 				GelaxkaB gelaxkaB = new GelaxkaB();
 				Eredua.getGelaxka(j, i).addObserver(gelaxkaB);
 				labelN[i][j] = gelaxkaB;
-				jokoPanela.add(gelaxkaB);
-				
+				jokoPanela.add(gelaxkaB);	
 				if (Eredua.getGelaxka(j, i).getEntitateMota().equals("espaziontzia")) {
 					labelN[i][j].setBackground(Color.RED);
 				}else if (Eredua.getGelaxka(j, i).getEntitateMota().equals("etsaia")) {
@@ -86,6 +71,14 @@ public class MatrizeB extends JFrame implements Observer {
 	@Override
 	public void update(Observable o, Object arg) {
 		if (arg == Egoera.JOKATZEN) {
+			matrizeaSortu();
+			
+			// controller 
+			addKeyListener(getController());
+			setFocusable(true);
+			setVisible(true);
+			
+			new Timer(16, e -> kontenedorea.repaint()).start();
 			nabegadorea.show(kontenedorea, "JOKOA");
 			this.requestFocusInWindow();
 		} else if (arg == Egoera.IRABAZI) {

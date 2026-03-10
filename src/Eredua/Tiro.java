@@ -34,7 +34,6 @@ public class Tiro extends Thread {
             		this.hil();
             	}else {
             		m.gelaxkaEguneratu(pos.getX(), pos.getY(), EntitateMota.TIROA);
-            
             	}
             }
         }
@@ -44,11 +43,11 @@ public class Tiro extends Thread {
         return pos;
     }
 
-    public void mugituGora() {
+    private void mugituGora() {
         pos.setY(pos.getY() - 1);
     }
 
-    public void hil() {
+    private void hil() {
         bizirik = false;
     }
 }

@@ -21,7 +21,6 @@ public class JokoKudeatzailea extends Observable {
 	}
 	
 	public void hasiJokoa() {
-		HasierakoPantaila hasierakoPantaila = new HasierakoPantaila();
 		this.egoera = Egoera.HASIERA;
 		setChanged();
 		notifyObservers(Egoera.HASIERA); 
@@ -30,8 +29,7 @@ public class JokoKudeatzailea extends Observable {
 	public void egoeraAldatu(Egoera berria) {
 		this.egoera=berria;
 		if(this.egoera==Egoera.JOKATZEN) {
-			MatrizeE.getEma();
-			new MatrizeB();
+			MatrizeE.getEma().matrizeaSortu();
 		}
 		this.setChanged();
 		this.notifyObservers(this.egoera);

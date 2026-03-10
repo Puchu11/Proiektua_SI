@@ -21,6 +21,15 @@ public class MatrizeE extends Observable {
 
     private MatrizeE() {
     	
+    }
+    public static MatrizeE getEma() {
+        if (ema == null) {
+            ema = new MatrizeE();
+        }
+        return ema;
+    }
+    
+    public void matrizeaSortu() {
     	for (int i = 0; i < altuera; i++) {
             for (int j = 0; j < zabalera; j++) {
 					matrizea[i][j] = new GelaxkaE(j, i, EntitateMota.HUTSA);
@@ -32,13 +41,6 @@ public class MatrizeE extends Observable {
     	etsaiakSortu();
     	hasieratuEtsaienMugimendua();
     }
-    public static MatrizeE getEma() {
-        if (ema == null) {
-            ema = new MatrizeE();
-        }
-        return ema;
-    }
-
     public void mugituEspaziontzia(String norabidea) {
         
     	if(mugituDaiteke(norabidea, espaziontzia)) {
@@ -88,7 +90,7 @@ public class MatrizeE extends Observable {
     public synchronized void tiroEgin() {espaziontzia.tiroEgin();  }
     
     private void etsaiakSortu() {
-    	for (int i=0; i<4+rnd.nextInt(4); i++) {
+    	for (int i=0; i<6+rnd.nextInt(4); i++) {
 			int x = rnd.nextInt(zabalera);
 			boolean okupatuta = false;
 			for (Etsaia e : etsaiak) {

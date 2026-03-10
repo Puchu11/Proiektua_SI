@@ -19,36 +19,37 @@ public class HasierakoPantaila extends JFrame implements Observer{
 	private Controller controller = null;
 
 	public HasierakoPantaila() {
-		setTitle("Space Invaders");
-		setBounds(100, 100, 900, 600);
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		getContentPane().setBackground(Color.BLACK);
-		setLayout(new GridLayout(2, 1));
-		setFocusable(true);
-
-		JLabel titulua = new JLabel("SPACE INVADERS", SwingConstants.CENTER);
-		titulua.setForeground(Color.WHITE);
-		titulua.setFont(new Font("Arial", Font.BOLD, 40));
-
-		JLabel azpititulua = new JLabel("Sakatu ENTER hasteko", SwingConstants.CENTER);
-		azpititulua.setForeground(Color.YELLOW);
-		azpititulua.setFont(new Font("Arial", Font.PLAIN, 18));
-
-		add(titulua);
-		add(azpititulua);
-
 		JokoKudeatzailea.getNireJokoKudeatzailea().addObserver(this);
-		addKeyListener(getController());
-
 	}
 	
 	public void update(java.util.Observable o, Object arg) {
 		if (arg instanceof Egoera egoera) {
 			if (egoera == Egoera.HASIERA) {
+				setTitle("Space Invaders");
+				setBounds(100, 100, 900, 600);
+				setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+				getContentPane().setBackground(Color.BLACK);
+				setLayout(new GridLayout(2, 1));
+				setFocusable(true);
+
+				JLabel titulua = new JLabel("SPACE INVADERS", SwingConstants.CENTER);
+				titulua.setForeground(Color.WHITE);
+				titulua.setFont(new Font("Arial", Font.BOLD, 40));
+
+				JLabel azpititulua = new JLabel("Sakatu ENTER hasteko", SwingConstants.CENTER);
+				azpititulua.setForeground(Color.YELLOW);
+				azpititulua.setFont(new Font("Arial", Font.PLAIN, 18));
+
+				add(titulua);
+				add(azpititulua);
+
+				addKeyListener(getController());
+				
 				setVisible(true);
 				requestFocusInWindow();
 			}else {
 				setVisible(false);
+				dispose();
 			}
 		}
 	}
