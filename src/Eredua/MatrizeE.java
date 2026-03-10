@@ -19,9 +19,8 @@ public class MatrizeE extends Observable {
     
     private Random rnd = new Random();
 
-    private MatrizeE() {
-    	
-    }
+    private MatrizeE() {}
+    
     public static MatrizeE getEma() {
         if (ema == null) {
             ema = new MatrizeE();
