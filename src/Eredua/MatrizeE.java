@@ -168,6 +168,17 @@ public class MatrizeE extends Observable {
     			yBerria=y+1;
     		}
     		
+    		if(getGelaxka(xBerria, yBerria).getEntitateMota().equals("tiro")) {
+				etsaiak.remove(e);
+				e=null;
+				matrizea[y][x].gelaxkaEguneratu(EntitateMota.HUTSA);
+				if (etsaiak.isEmpty()) {
+	    			JokoKudeatzailea.getNireJokoKudeatzailea().egoeraAldatu(Egoera.IRABAZI);
+	    		}
+				return;
+    			
+    		}
+   
     		if (!matrizea[yBerria][xBerria].getEntitateMota().equals("etsaia")) {
     			matrizea[y][x].gelaxkaEguneratu(EntitateMota.HUTSA);
     			e.getPosizioa().setX(xBerria);

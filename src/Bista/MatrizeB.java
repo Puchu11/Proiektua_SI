@@ -45,6 +45,10 @@ public class MatrizeB extends JFrame implements Observer {
 		getContentPane().add(kontenedorea);	
 		
 		JokoKudeatzailea.getNireJokoKudeatzailea().addObserver(this);
+		
+		// controller 
+		addKeyListener(getController());
+		setFocusable(true);
 	}
 
 	public void matrizeaSortu() {
@@ -72,15 +76,11 @@ public class MatrizeB extends JFrame implements Observer {
 	public void update(Observable o, Object arg) {
 		if (arg == Egoera.JOKATZEN) {
 			matrizeaSortu();
-			
-			// controller 
-			addKeyListener(getController());
-			setFocusable(true);
-			setVisible(true);
-			
+			setVisible(true);			
 			new Timer(16, e -> kontenedorea.repaint()).start();
 			nabegadorea.show(kontenedorea, "JOKOA");
 			this.requestFocusInWindow();
+			getController().hasi();
 		} else if (arg == Egoera.IRABAZI) {
 			nabegadorea.show(kontenedorea, "IRABAZI_PANTAILA");
 		} else if (arg == Egoera.GALDU) {
@@ -102,72 +102,68 @@ public class MatrizeB extends JFrame implements Observer {
 	}
 
 	private class Controller implements KeyListener {
+		
+	    private static final int JOLAS_TICK_MS = 16;   
+	    private static final int MUGIMENDU_DELAY_MS = 100; 
+	    private static final int TIRO_DELAY_MS = 300; 
 
-	    private static final int MUGITU_TICK_MS = 100;
-	    private static final int TIRO_DELAY_MS = 300;
+	    private boolean ezkerra = false;
+	    private boolean eskuma = false;
+	    private boolean gora = false;
+	    private boolean behera = false;
+	    private boolean tiro = false;
 
-	    private final Timer EzkerTimer  = new Timer(MUGITU_TICK_MS, e -> MatrizeE.getEma().mugituEspaziontzia("ezkerrera"));
-	    private final Timer EskuinTimer = new Timer(MUGITU_TICK_MS, e -> MatrizeE.getEma().mugituEspaziontzia("eskuinera"));
-	    private final Timer GoraTimer    = new Timer(MUGITU_TICK_MS, e -> MatrizeE.getEma().mugituEspaziontzia("gora"));
-	    private final Timer BeheraTimer  = new Timer(MUGITU_TICK_MS, e -> MatrizeE.getEma().mugituEspaziontzia("behera"));
+	    private long azkenMugimenduKontrola = 0;
+	    private long azkenTiroKontrola = 0;
 
-	    private final Timer TiroTimer = new Timer(TIRO_DELAY_MS, e -> MatrizeE.getEma().tiroEgin());
-	    
-	    private void GeldituMugimenduTimerrak() {
-	        EzkerTimer.stop();
-	        EskuinTimer.stop();
-	        GoraTimer.stop();
-	        BeheraTimer.stop();	
+	    private final Timer mugimenduaEguneratu = new Timer(JOLAS_TICK_MS, e -> jolasEguneratu());
+
+	    private void hasi() {
+	    	mugimenduaEguneratu.start();
 	    }
-	    
+
+	    private void jolasEguneratu() {
+	        long orain = System.currentTimeMillis();
+
+	        if (orain - azkenMugimenduKontrola >= MUGIMENDU_DELAY_MS) {
+	            if (ezkerra) {
+	                MatrizeE.getEma().mugituEspaziontzia("ezkerrera");
+	            } else if (eskuma) {
+	                MatrizeE.getEma().mugituEspaziontzia("eskuinera");
+	            } else if (gora) {
+	                MatrizeE.getEma().mugituEspaziontzia("gora");
+	            } else if (behera) {
+	                MatrizeE.getEma().mugituEspaziontzia("behera");
+	            }
+
+	            azkenMugimenduKontrola = orain;
+	        }
+
+	        if (tiro && orain - azkenTiroKontrola >= TIRO_DELAY_MS) {
+	            MatrizeE.getEma().tiroEgin();
+	            azkenTiroKontrola = orain;
+	        }
+	    }
+
 	    @Override
 	    public void keyPressed(KeyEvent e) {
 	        switch (e.getKeyCode()) {
-	            case KeyEvent.VK_LEFT -> {
-	                if (!EzkerTimer.isRunning()) {
-	                	GeldituMugimenduTimerrak();
-	                    MatrizeE.getEma().mugituEspaziontzia("ezkerrera");
-	                    EzkerTimer.start();
-	                }
-	            }
-	            case KeyEvent.VK_RIGHT -> {
-	                if (!EskuinTimer.isRunning()) {
-	                	GeldituMugimenduTimerrak();
-	                    MatrizeE.getEma().mugituEspaziontzia("eskuinera");
-	                    EskuinTimer.start();
-	                }
-	            }
-	            case KeyEvent.VK_UP -> {
-	                if (!GoraTimer.isRunning()) {
-	                	GeldituMugimenduTimerrak();
-	                    MatrizeE.getEma().mugituEspaziontzia("gora");
-	                    GoraTimer.start();
-	                }
-	            }
-	            case KeyEvent.VK_DOWN -> {
-	                if (!BeheraTimer.isRunning()) {
-	                	GeldituMugimenduTimerrak();
-	                    MatrizeE.getEma().mugituEspaziontzia("behera");
-	                    BeheraTimer.start();
-	                }
-	            }
-	            case KeyEvent.VK_SPACE -> {
-	                if (!TiroTimer.isRunning()) {
-	                    MatrizeE.getEma().tiroEgin();
-	                    TiroTimer.start();
-	                }
-	            }
+	            case KeyEvent.VK_LEFT  -> ezkerra = true;
+	            case KeyEvent.VK_RIGHT -> eskuma = true;
+	            case KeyEvent.VK_UP    -> gora = true;
+	            case KeyEvent.VK_DOWN  -> behera = true;
+	            case KeyEvent.VK_SPACE -> tiro = true;
 	        }
 	    }
 
 	    @Override
 	    public void keyReleased(KeyEvent e) {
 	        switch (e.getKeyCode()) {
-	            case KeyEvent.VK_LEFT  -> EzkerTimer.stop();
-	            case KeyEvent.VK_RIGHT -> EskuinTimer.stop();
-	            case KeyEvent.VK_UP    -> GoraTimer.stop();
-	            case KeyEvent.VK_DOWN  -> BeheraTimer.stop();
-	            case KeyEvent.VK_SPACE -> TiroTimer.stop();
+	            case KeyEvent.VK_LEFT  -> ezkerra = false;
+	            case KeyEvent.VK_RIGHT -> eskuma = false;
+	            case KeyEvent.VK_UP    -> gora = false;
+	            case KeyEvent.VK_DOWN  -> behera = false;
+	            case KeyEvent.VK_SPACE -> tiro = false;
 	        }
 	    }
 

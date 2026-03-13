@@ -18,7 +18,7 @@ public class Espaziontzia extends Entitatea {
 	    this.getPosizioa().setX(this.getPosizioa().getX() + 1);
 	}
 	public void tiroEgin() {
-        Tiro tiroa = new Tiro(this.getPosizioa().getX(), this.getPosizioa().getY() - 2);
+        Tiro tiroa = new Tiro(this.getPosizioa().getX(), this.getPosizioa().getY() - 1);
         tiroa.start();
     }
 }
