@@ -1,7 +1,7 @@
 package Eredua;
 
 public abstract class Entitatea {
-	private Posizioa posizioa;
+	protected Posizioa posizioa;
 	
 	public Entitatea(int x, int y) {
 		this.posizioa=new Posizioa(x, y);

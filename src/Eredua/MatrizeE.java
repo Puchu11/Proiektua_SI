@@ -66,16 +66,13 @@ public class MatrizeE extends Observable {
         return espaziontzia;
     }
     
-    public GelaxkaE[][] getMatrizea() {
-		return matrizea;
-	}
-    
     public GelaxkaE getGelaxka(int x, int y) {
 		if (x >= 0 && x < zabalera && y >= 0 && y < altuera) {
 			return matrizea[y][x];
 		}
 		return null;
 	}
+    
     public void gelaxkaEguneratu(int x, int y, EntitateMota mota) {
 		if (x >= 0 && x < zabalera && y >= 0 && y < altuera) {
 			matrizea[y][x].gelaxkaEguneratu(mota);
@@ -105,7 +102,7 @@ public class MatrizeE extends Observable {
 	        }
     	}
     }
-    public void hasieratuEtsaienMugimendua() {
+    private void hasieratuEtsaienMugimendua() {
         Timer timer = new Timer();
         TimerTask ataza = new TimerTask() {
             public void run() {
@@ -137,7 +134,7 @@ public class MatrizeE extends Observable {
     	return false;
     }
     
-    public synchronized void jokoaAmaituDa(int x, int y) {
+    private synchronized void jokoaAmaituDa(int x, int y) {
     	for(Etsaia e: etsaiak) {
     		if (e.getPosizioa().getX()==x && e.getPosizioa().getY()==y) {
     			JokoKudeatzailea.getNireJokoKudeatzailea().egoeraAldatu(Egoera.GALDU);
@@ -149,7 +146,7 @@ public class MatrizeE extends Observable {
     	}
     }
     
-    public synchronized void etsaiakMugitu() {
+    private synchronized void etsaiakMugitu() {
     	for (Etsaia e: etsaiak) {
     		int x=e.getPosizioa().getX();
     		int y=e.getPosizioa().getY();

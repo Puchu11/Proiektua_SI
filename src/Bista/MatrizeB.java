@@ -51,7 +51,7 @@ public class MatrizeB extends JFrame implements Observer {
 		setFocusable(true);
 	}
 
-	public void matrizeaSortu() {
+	private void matrizeaSortu() {
 		MatrizeE Eredua = MatrizeE.getEma(); 
 		for (int i = 0; i < 60; i++) {
 			for (int j = 0; j < 100; j++) {
