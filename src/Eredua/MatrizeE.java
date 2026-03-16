@@ -16,7 +16,7 @@ public class MatrizeE extends Observable {
     private GelaxkaE matrizea[][] = new GelaxkaE[altuera][zabalera];
     private Espaziontzia espaziontzia;
     private ArrayList<Etsaia> etsaiak = new ArrayList<Etsaia>();
-    
+    private java.util.Timer etsaienTimer;
     private Random rnd = new Random();
 
     private MatrizeE() {}
@@ -103,7 +103,8 @@ public class MatrizeE extends Observable {
     	}
     }
     private void hasieratuEtsaienMugimendua() {
-        Timer timer = new Timer();
+    	etsaienTimer = new java.util.Timer();
+    	Timer timer = new Timer();
         TimerTask ataza = new TimerTask() {
             public void run() {
                 etsaiakMugitu();
@@ -193,5 +194,13 @@ public class MatrizeE extends Observable {
     		}
     	}
     }
-    
+    public void jokoaAmaitu() {
+    	if (etsaienTimer != null) {
+            etsaienTimer.cancel();
+            etsaienTimer.purge();
+        }
+    	etsaiak.clear();
+        
+        System.out.println("Juego detenido: Timers apagados.");
+    }
 }

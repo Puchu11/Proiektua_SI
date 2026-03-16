@@ -31,6 +31,9 @@ public class JokoKudeatzailea extends Observable {
 		if(this.egoera==Egoera.JOKATZEN) {
 			MatrizeE.getEma().matrizeaSortu();
 		}
+		if(this.egoera==Egoera.IRABAZI||this.egoera==Egoera.GALDU) {
+			MatrizeE.getEma().jokoaAmaitu();
+		}
 		this.setChanged();
 		this.notifyObservers(this.egoera);
 	}
