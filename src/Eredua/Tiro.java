@@ -11,8 +11,6 @@ public class Tiro extends Thread {
 
     @Override
     public void run() {
-        MatrizeE m = MatrizeE.getEma();
-
         while (bizirik) {
             int x = pos.getX();
             int y = pos.getY();         
@@ -25,15 +23,15 @@ public class Tiro extends Thread {
             } catch (InterruptedException e) {
                 break;
             }           
-            m.gelaxkaEguneratu(x, y, EntitateMota.HUTSA);    
+            MatrizeE.getEma().gelaxkaEguneratu(x, y, EntitateMota.HUTSA);    
             mugituGora();            
             if (pos.getY() < 0) {
                 bizirik = false;             
             }else {
-            	if(m.talkaEginDu(pos.getX(), pos.getY())) {
+            	if(MatrizeE.getEma().talkaEginDu(pos.getX(), pos.getY())) {
             		this.hil();
             	}else {
-            		m.gelaxkaEguneratu(pos.getX(), pos.getY(), EntitateMota.TIROA);
+            		MatrizeE.getEma().gelaxkaEguneratu(pos.getX(), pos.getY(), EntitateMota.TIROA);
             	}
             }
         }

@@ -67,7 +67,6 @@ public class HasierakoPantaila extends JFrame implements Observer{
 		public void keyPressed(KeyEvent e) {
 			if (e.getKeyCode() == KeyEvent.VK_ENTER) {
 				JokoKudeatzailea.getNireJokoKudeatzailea().egoeraAldatu(Egoera.JOKATZEN);
-				setVisible(false);
 			}
 		}
 

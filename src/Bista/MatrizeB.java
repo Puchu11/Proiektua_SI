@@ -52,18 +52,17 @@ public class MatrizeB extends JFrame implements Observer {
 	}
 
 	private void matrizeaSortu() {
-		MatrizeE Eredua = MatrizeE.getEma(); 
 		for (int i = 0; i < 60; i++) {
 			for (int j = 0; j < 100; j++) {
 				GelaxkaB gelaxkaB = new GelaxkaB();
-				Eredua.getGelaxka(j, i).addObserver(gelaxkaB);
+				MatrizeE.getEma().getGelaxka(j, i).addObserver(gelaxkaB);
 				labelN[i][j] = gelaxkaB;
 				jokoPanela.add(gelaxkaB);	
-				if (Eredua.getGelaxka(j, i).getEntitateMota().equals("espaziontzia")) {
+				if (MatrizeE.getEma().getGelaxka(j, i).getEntitateMota().equals("espaziontzia")) {
 					labelN[i][j].setBackground(Color.RED);
-				}else if (Eredua.getGelaxka(j, i).getEntitateMota().equals("etsaia")) {
+				}else if (MatrizeE.getEma().getGelaxka(j, i).getEntitateMota().equals("etsaia")) {
 					labelN[i][j].setBackground(Color.GREEN);
-				}else if (Eredua.getGelaxka(j, i).getEntitateMota().equals("tiro")) {
+				}else if (MatrizeE.getEma().getGelaxka(j, i).getEntitateMota().equals("tiro")) {
 					labelN[i][j].setBackground(Color.GRAY);
 				} else {
 					labelN[i][j].setBackground(Color.BLACK);
@@ -77,7 +76,7 @@ public class MatrizeB extends JFrame implements Observer {
 		if (arg == Egoera.JOKATZEN) {
 			matrizeaSortu();
 			setVisible(true);			
-			new Timer(16, e -> kontenedorea.repaint()).start();
+			//new Timer(16, e -> kontenedorea.repaint()).start();
 			nabegadorea.show(kontenedorea, "JOKOA");
 			this.requestFocusInWindow();
 			getController().hasi();
