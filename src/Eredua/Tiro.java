@@ -3,10 +3,12 @@ package Eredua;
 public class Tiro extends Thread {
 
     private Posizioa pos;
+    private MugimenduEstrategia estrategia;
     private volatile boolean bizirik = true;
-
-    public Tiro(int x, int y) {
+    
+    public Tiro(int x, int y, MugimenduEstrategia est) {
         this.pos = new Posizioa(x, y);
+        this.estrategia=est;
     }
 
     @Override
@@ -24,9 +26,11 @@ public class Tiro extends Thread {
                 break;
             }           
             MatrizeE.getEma().gelaxkaEguneratu(x, y, EntitateMota.HUTSA);    
-            mugituGora();            
-            if (pos.getY() < 0) {
+            estrategia.mugitu(pos);            
+            //zig zag tiroa egiterakoan es agertzeko matriz-etik kanpo
+            if (pos.getY() < 0 || pos.getX()<0 || pos.getX()>= 100) {
                 bizirik = false;             
+                break;
             }else {
             	if(MatrizeE.getEma().talkaEginDu(pos.getX(), pos.getY())) {
             		this.hil();
@@ -41,9 +45,9 @@ public class Tiro extends Thread {
         return pos;
     }
 
-    private void mugituGora() {
-        pos.setY(pos.getY() - 1);
-    }
+ //   private void mugituGora() {
+ //       pos.setY(pos.getY() - 1);
+ //   }
 
     private void hil() {
         bizirik = false;
