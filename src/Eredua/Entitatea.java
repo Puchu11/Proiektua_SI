@@ -27,5 +27,29 @@ public abstract class Entitatea {
 			default -> false;
 		};
 	}
+	public void mugitu(String norabidea) {
+		switch (norabidea) {
+        case "behera":
+            mugituBehera();
+            break;
+        case "ezkerrera":
+            mugituEzkerra();
+            break;
+        case "eskuinera":
+            mugituEskuina();
+            break;
+        default:
+            break;
+    }
+	}
+	private void mugituBehera() {
+	    this.getPosizioa().setY(this.getPosizioa().getY() + 1);
+	}
+	private void mugituEzkerra() {
+	    this.getPosizioa().setX(this.getPosizioa().getX() - 1);
+	}
+	private void mugituEskuina() {
+	    this.getPosizioa().setX(this.getPosizioa().getX() + 1);
+	}  
 	
 }

@@ -1,2 +1,8 @@
-quitar un setvisible de hasierakopantaila
-cambiar egoera a jokokudeatzailea
+Patroiak:
+	Factory --> Jokalaria
+	Composite --> Etsaiak, Jokalaria, Tiroa (Iago)
+	Strategy --> Tiroa
+	State --> Gelaxkak
+	
+Implementar los patrones.
+Estan hechos los de Factory y Composite en el visualParadigm. Falta el strategy.

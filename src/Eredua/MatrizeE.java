@@ -46,15 +46,11 @@ public class MatrizeE extends Observable {
     		int zaharX= espaziontzia.getPosizioa().getX();
     		int zaharY = espaziontzia.getPosizioa().getY();
     		gelaxkaEguneratu(zaharX, zaharY, EntitateMota.HUTSA);
-    		if (norabidea.equals("gora")) {
+    		if(norabidea.equals("gora")) {
     			espaziontzia.mugituGora();
-    		} else if (norabidea.equals("behera")) {
-    			espaziontzia.mugituBehera();
-    		} else if (norabidea.equals("ezkerrera")) {
-    			espaziontzia.mugituEzkerra();
-    		} else if (norabidea.equals("eskuinera")) {
-    			espaziontzia.mugituEskuina();
-    		}	
+    		}else {
+    			espaziontzia.mugitu(norabidea);
+    		}
     		int berriaX = espaziontzia.getPosizioa().getX();
     		int berriaY = espaziontzia.getPosizioa().getY();
     		kolizioa(berriaX, berriaY);
@@ -83,7 +79,7 @@ public class MatrizeE extends Observable {
     	return Mugitu;
     }
     	
-    public synchronized void tiroEgin() {espaziontzia.tiroEgin();  }
+    public void tiroEgin() {espaziontzia.tiroEgin();  }
     
     private void etsaiakSortu() {
     	for (int i=0; i<6+rnd.nextInt(4); i++) {
@@ -103,18 +99,17 @@ public class MatrizeE extends Observable {
     	}
     }
     private void hasieratuEtsaienMugimendua() {
-    	etsaienTimer = new java.util.Timer();
-    	Timer timer = new Timer();
+    	etsaienTimer = new Timer();
         TimerTask ataza = new TimerTask() {
             public void run() {
                 etsaiakMugitu();
             }
         };
 
-        timer.schedule(ataza, 0, 200);
+        etsaienTimer.schedule(ataza, 0, 200);
     }
     
-    public synchronized boolean talkaEginDu(int x, int y) {
+    public boolean talkaEginDu(int x, int y) {
     	if(matrizea[y][x].getEntitateMota().equals("etsaia")) {
     		Etsaia hilda=null;
     		for(Etsaia e: etsaiak) {
@@ -135,7 +130,7 @@ public class MatrizeE extends Observable {
     	return false;
     }
     
-    private synchronized void jokoaAmaituDa(int x, int y) {
+    private void jokoaAmaituDa(int x, int y) {
     	for(Etsaia e: etsaiak) {
     		if (e.getPosizioa().getX()==x && e.getPosizioa().getY()==y) {
     			JokoKudeatzailea.getNireJokoKudeatzailea().egoeraAldatu(Egoera.GALDU);
@@ -147,26 +142,24 @@ public class MatrizeE extends Observable {
     	}
     }
     
-    private synchronized void etsaiakMugitu() {
+    private void etsaiakMugitu() {
     	for (Etsaia e: etsaiak) {
     		int x=e.getPosizioa().getX();
     		int y=e.getPosizioa().getY();
     		int aukera= rnd.nextInt(3);
-    		
-    		int xBerria=x;
-    		int yBerria=y;
-    		
+
+		
     		if (aukera==0 && e.mugituDaiteke("ezkerrera")) {
-    			xBerria=x-1;
+    			e.mugitu("ezkerrera");
     		}
     		else if (aukera==1 && e.mugituDaiteke("eskuinera")) {
-    			xBerria=x+1;
+    			e.mugitu("eskuinera");
     		}
     		else if (aukera==2 && e.mugituDaiteke("behera")) {
-    			yBerria=y+1;
+    			e.mugitu("behera");
     		}
     		
-    		if(getGelaxka(xBerria, yBerria).getEntitateMota().equals("tiro")) {
+    		if(getGelaxka(e.getPosizioa().getX(),e.getPosizioa().getY()).getEntitateMota().equals("tiro")) {
 				etsaiak.remove(e);
 				e=null;
 				matrizea[y][x].gelaxkaEguneratu(EntitateMota.HUTSA);
@@ -177,11 +170,9 @@ public class MatrizeE extends Observable {
     			
     		}
    
-    		if (!matrizea[yBerria][xBerria].getEntitateMota().equals("etsaia")) {
+    		if (!matrizea[e.getPosizioa().getY()][e.getPosizioa().getX()].getEntitateMota().equals("etsaia")) {
     			matrizea[y][x].gelaxkaEguneratu(EntitateMota.HUTSA);
-    			e.getPosizioa().setX(xBerria);
-    			e.getPosizioa().setY(yBerria);
-    			matrizea[yBerria][xBerria].gelaxkaEguneratu(EntitateMota.ETSAIA);
+    			matrizea[e.getPosizioa().getY()][e.getPosizioa().getX()].gelaxkaEguneratu(EntitateMota.ETSAIA);
     		}
     	}
     	jokoaAmaituDa(this.espaziontzia.getPosizioa().getX(),this.espaziontzia.getPosizioa().getY());
@@ -198,9 +189,8 @@ public class MatrizeE extends Observable {
     	if (etsaienTimer != null) {
             etsaienTimer.cancel();
             etsaienTimer.purge();
-        }
-    	etsaiak.clear();
+        }  	
+        System.out.println("Matrize amatatuta");
         
-        System.out.println("Juego detenido: Timers apagados.");
     }
 }

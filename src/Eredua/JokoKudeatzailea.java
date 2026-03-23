@@ -2,6 +2,8 @@ package Eredua;
 
 import java.util.Observable;
 
+import javax.swing.Timer;
+
 import Bista.HasierakoPantaila;
 import Bista.MatrizeB;
 

@@ -3,6 +3,7 @@ package Bista;
 import java.awt.CardLayout;
 import java.awt.Color;
 import java.awt.GridLayout;
+import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.util.Observable;
@@ -50,7 +51,7 @@ public class MatrizeB extends JFrame implements Observer {
 		addKeyListener(getController());
 		setFocusable(true);
 	}
-
+	
 	private void matrizeaSortu() {
 		for (int i = 0; i < 60; i++) {
 			for (int j = 0; j < 100; j++) {
@@ -75,8 +76,8 @@ public class MatrizeB extends JFrame implements Observer {
 	public void update(Observable o, Object arg) {
 		if (arg == Egoera.JOKATZEN) {
 			matrizeaSortu();
-			setVisible(true);			
-			//new Timer(16, e -> kontenedorea.repaint()).start();
+			setVisible(true);	
+			new Timer(16, e -> {jokoPanela.repaint();}).start();
 			nabegadorea.show(kontenedorea, "JOKOA");
 			this.requestFocusInWindow();
 			getController().hasi();
@@ -115,7 +116,7 @@ public class MatrizeB extends JFrame implements Observer {
 	    private long azkenMugimenduKontrola = 0;
 	    private long azkenTiroKontrola = 0;
 
-	    private final Timer mugimenduaEguneratu = new Timer(JOLAS_TICK_MS, e -> jolasEguneratu());
+	    private final Timer mugimenduaEguneratu = new Timer(JOLAS_TICK_MS, e -> jolasEguneratu());   
 
 	    private void hasi() {
 	    	mugimenduaEguneratu.start();

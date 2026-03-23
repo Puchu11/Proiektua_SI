@@ -11,22 +11,10 @@ public class GelaxkaE extends Observable{
 		this.entitate=entitate;
 	}
 	
-	public void gelaxkaEguneratu(EntitateMota entitate) {
-		
+	public void gelaxkaEguneratu(EntitateMota entitate) {	
 		this.entitate=entitate;
-		if(entitate==EntitateMota.ETSAIA) {
-			this.setChanged();
-			this.notifyObservers("etsaia");
-		}else if(entitate==EntitateMota.ESPAZIONTZIA) {
-			this.setChanged();
-			this.notifyObservers("espaziontzia");	
-		}else if(entitate==EntitateMota.TIROA) {
-			this.setChanged();
-			this.notifyObservers("tiro");
-		}else {
-			this.setChanged();
-			this.notifyObservers("hutsa");
-		}
+		setChanged();
+		this.notifyObservers(entitate);
 	}
 
 	public String getEntitateMota() {
