@@ -1,7 +1,7 @@
 Patroiak:
 	Factory --> Jokalaria
 	Composite --> Etsaiak, Jokalaria, Tiroa (Iago)
-	Strategy --> Tiroa
+	Strategy --> Tiroa (Ugatz)
 	State --> Gelaxkak
 	
 Implementar los patrones.
