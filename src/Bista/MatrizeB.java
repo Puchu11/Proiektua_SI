@@ -15,6 +15,7 @@ import javax.swing.JPanel;
 import javax.swing.Timer;
 
 import Eredua.Egoera;
+import Eredua.GelaxkaE;
 import Eredua.JokoKudeatzailea;
 import Eredua.MatrizeE;
 
@@ -57,18 +58,11 @@ public class MatrizeB extends JFrame implements Observer {
 		for (int i = 0; i < 60; i++) {
 			for (int j = 0; j < 100; j++) {
 				GelaxkaB gelaxkaB = new GelaxkaB();
-				MatrizeE.getEma().getGelaxka(j, i).addObserver(gelaxkaB);
+				GelaxkaE gelaxkaE = MatrizeE.getEma().getGelaxka(j, i);
+				gelaxkaE.addObserver(gelaxkaB);
 				labelN[i][j] = gelaxkaB;
 				jokoPanela.add(gelaxkaB);	
-				if (MatrizeE.getEma().getGelaxka(j, i).getEntitateMota().equals("espaziontzia")) {
-					labelN[i][j].setBackground(Color.RED);
-				}else if (MatrizeE.getEma().getGelaxka(j, i).getEntitateMota().equals("etsaia")) {
-					labelN[i][j].setBackground(Color.GREEN);
-				}else if (MatrizeE.getEma().getGelaxka(j, i).getEntitateMota().equals("tiro")) {
-					labelN[i][j].setBackground(Color.GRAY);
-				} else {
-					labelN[i][j].setBackground(Color.BLACK);
-				}
+				gelaxkaB.setBackground(gelaxkaE.getEgoera().lortuKolorea());
 			}
 		}
 	}

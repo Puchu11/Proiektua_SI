@@ -25,7 +25,7 @@ public class Tiro extends Thread {
             } catch (InterruptedException e) {
                 break;
             }           
-            MatrizeE.getEma().gelaxkaEguneratu(x, y, EntitateMota.HUTSA);    
+            MatrizeE.getEma().gelaxkaEguneratu(x, y, new HutsaEgoera());    
             estrategia.mugitu(pos);            
             //zig zag tiroa egiterakoan es agertzeko matriz-etik kanpo
             if (pos.getY() < 0 || pos.getX()<0 || pos.getX()>= 100) {
@@ -35,7 +35,7 @@ public class Tiro extends Thread {
             	if(MatrizeE.getEma().talkaEginDu(pos.getX(), pos.getY())) {
             		this.hil();
             	}else {
-            		MatrizeE.getEma().gelaxkaEguneratu(pos.getX(), pos.getY(), EntitateMota.TIROA);
+            		MatrizeE.getEma().gelaxkaEguneratu(pos.getX(), pos.getY(), new TiroaEgoera());
             	}
             }
         }

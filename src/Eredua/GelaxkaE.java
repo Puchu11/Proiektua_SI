@@ -4,28 +4,36 @@ import java.util.Observable;
 
 public class GelaxkaE extends Observable{
 	private Posizioa posizioa;
-	private EntitateMota entitate;
+	private GelaxkaEgoera egoera; 
 	
-	public GelaxkaE(int x, int y, EntitateMota entitate) {
-		this.posizioa=new Posizioa(x, y);
-		this.entitate=entitate;
+	public GelaxkaE(int x, int y, GelaxkaEgoera hasierakoEgoera) {
+		this.posizioa = new Posizioa(x,y);
+		if (hasierakoEgoera != null) {
+			this.egoera = hasierakoEgoera;
+			
+		}else {
+			this.egoera = new HutsaEgoera();
+			
+		}
+		
 	}
 	
-	public void gelaxkaEguneratu(EntitateMota entitate) {	
-		this.entitate=entitate;
+	public void gelaxkaEguneratu(GelaxkaEgoera berria) {	
+		this.egoera = berria;
 		setChanged();
-		this.notifyObservers(entitate);
+		this.notifyObservers(this.egoera);
 	}
 
 	public String getEntitateMota() {
-		if(this.entitate==EntitateMota.ETSAIA) {
-			return "etsaia";
-		}else if(this.entitate==EntitateMota.ESPAZIONTZIA) {
-			return "espaziontzia";
-		}else if(this.entitate==EntitateMota.TIROA) {
-			return "tiro";
-		}else {
-			return "hutsa";
-		}
+		return egoera.lortuMota();
+		
+		
+	}
+	public GelaxkaEgoera getEgoera() {
+		return this.egoera; 
+		
+	}
+	public Posizioa getPosizioa() {
+		return posizioa; 
 	}
 }
