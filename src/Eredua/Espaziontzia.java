@@ -14,8 +14,7 @@ public abstract class Espaziontzia extends Entitatea {
 		this.getPosizioa().setY(this.getPosizioa().getY()-1);
 	}
 	
-
-	public void tiroEgin(int tiroMota) {
+	public void tiroEgin() {
 		if(tiroMota==1) {
 			if(geziMunizioa>0) {
 				geziMunizioa--;
@@ -43,7 +42,7 @@ public abstract class Espaziontzia extends Entitatea {
 	}
 	private void sortuTiroGezi() {
 		int x =this.getPosizioa().getX();
-		int y = this.getPosizioa().getY()-2;
+		int y = this.getPosizioa().getY()-3;
 		
 		TiroNodoa gezia = new TiroNodoa (x,y);
 		gezia.gehituTiroa(new Tiro(x,y));
@@ -53,7 +52,7 @@ public abstract class Espaziontzia extends Entitatea {
 	private void sortuTiroNormala(){
 		int x=this.getPosizioa().getX();
 		int y=this.getPosizioa().getY();
-		new Tiro(x,y-1).start();
+		new Tiro(x,y-2).start();
 	}
 	private void sortuTiroErronboa() {
 		int x =this.getPosizioa().getX();
@@ -84,6 +83,7 @@ public abstract class Espaziontzia extends Entitatea {
     public void setTiroMota(int pMota) {
     	if(pMota>=0 && pMota<=2) {
     		this.tiroMota=pMota;
+    		System.out.print("tiro mota: "+ this.tiroMota);
     	}
     }
 }

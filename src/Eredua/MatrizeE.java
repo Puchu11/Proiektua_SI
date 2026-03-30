@@ -14,10 +14,12 @@ public class MatrizeE extends Observable {
     private static int altuera = 60;   
 
     private GelaxkaE matrizea[][] = new GelaxkaE[altuera][zabalera];
-    private Espaziontzia espaziontzia;
+    private EntitateNodo espaziontzia= new EntitateNodo();
+    private Espaziontzia espaziontziaIm;
     private ArrayList<Etsaia> etsaiak = new ArrayList<Etsaia>();
     private java.util.Timer etsaienTimer;
     private Random rnd = new Random();
+
     private MatrizeE() {}
     
     public static MatrizeE getEma() {
@@ -26,7 +28,6 @@ public class MatrizeE extends Observable {
         }
         return ema;
     }
-   
     
     public void matrizeaSortu() {
     	for (int i = 0; i < altuera; i++) {
@@ -35,32 +36,19 @@ public class MatrizeE extends Observable {
 				
             }   
     	}
-    	String espaziontziMota= JokoKudeatzailea.getNireJokoKudeatzailea().getEspaziontziMota();
-       	espaziontzia = EspaziontziaFactory.getEspaziontziaFactory().sortuEspaziontzia(espaziontziMota, 50, 55);
-    	matrizea[espaziontzia.getPosizioa().getY()][espaziontzia.getPosizioa().getX()].gelaxkaEguneratu(new EspaziontziaEgoera());
+    	String espaziontziMota= JokoKudeatzailea.getNireJokoKudeatzailea().getEspaziontziMota(); 
+    	espaziontziaSortu(espaziontziMota);
     	etsaiakSortu();
     	hasieratuEtsaienMugimendua();
     }
     public void mugituEspaziontzia(String norabidea) {
-        
-    	if(mugituDaiteke(norabidea, espaziontzia)) {
-    		int zaharX= espaziontzia.getPosizioa().getX();
-    		int zaharY = espaziontzia.getPosizioa().getY();
-    		gelaxkaEguneratu(zaharX, zaharY, new HutsaEgoera());
-    		if(norabidea.equals("gora")) {
-    			espaziontzia.mugituGora();
-    		}else {
-    			espaziontzia.mugitu(norabidea);
-    		}
-    		int berriaX = espaziontzia.getPosizioa().getX();
-    		int berriaY = espaziontzia.getPosizioa().getY();
-    		kolizioa(berriaX, berriaY);
-    		gelaxkaEguneratu(berriaX,berriaY, new EspaziontziaEgoera());
-    	}
+    	
+    	espaziontzia.mugitu(norabidea);
+    	
     }
-
-    public Espaziontzia getEspaziontzia() {
-        return espaziontzia;
+    
+    public GelaxkaE[][] getMatrizea(){
+    	return matrizea;
     }
     
     public GelaxkaE getGelaxka(int x, int y) {
@@ -75,16 +63,15 @@ public class MatrizeE extends Observable {
 			matrizea[y][x].gelaxkaEguneratu(mota);
 		}
 	}
-    private Boolean mugituDaiteke(String norabidea, Entitatea entitatea) {
-    	boolean Mugitu = entitatea.mugituDaiteke(norabidea);
-    	return Mugitu;
-    }
+    
+    public void tiroEgin() {
     	
-    public void tiroEgin() {if(espaziontzia !=null ) {
-    	espaziontzia.tiroEgin(espaziontzia.getTiroMota()); 
-    	}else {
-    		System.out.println("ADI: Espaziontzia oraindik ez da sortu");
-    	}
+    	Espaziontzia erdikoa = (Espaziontzia) espaziontzia.getLista().get(0);
+    	erdikoa.tiroEgin();
+    }
+    
+    public Espaziontzia getEspaziontzia() {
+    	return espaziontziaIm;
     }
     
     private void etsaiakSortu() {
@@ -165,7 +152,10 @@ public class MatrizeE extends Observable {
     			e.mugitu("behera");
     		}
     		
-    		if(getGelaxka(e.getPosizioa().getX(),e.getPosizioa().getY()).getEntitateMota().equals("tiro")) {
+    		matrizea[y][x].gelaxkaEguneratu(new HutsaEgoera());
+			matrizea[e.getPosizioa().getY()][e.getPosizioa().getX()].gelaxkaEguneratu(new EtsaiaEgoera());
+    		
+			if(getGelaxka(e.getPosizioa().getX(),e.getPosizioa().getY()).getEntitateMota().equals("tiro")) {
 				etsaiak.remove(e);
 				e=null;
 				matrizea[y][x].gelaxkaEguneratu(new HutsaEgoera());
@@ -175,13 +165,7 @@ public class MatrizeE extends Observable {
 				return;
     			
     		}
-  
-    		if (!matrizea[e.getPosizioa().getY()][e.getPosizioa().getX()].getEntitateMota().equals("etsaia")) {
-    			matrizea[y][x].gelaxkaEguneratu(new HutsaEgoera());
-    			matrizea[e.getPosizioa().getY()][e.getPosizioa().getX()].gelaxkaEguneratu(new EtsaiaEgoera());
-    		}
     	}
-    	jokoaAmaituDa(this.espaziontzia.getPosizioa().getX(),this.espaziontzia.getPosizioa().getY());
     }
     private void kolizioa(int x, int y) {
     	for(Etsaia e: etsaiak) {
@@ -199,5 +183,34 @@ public class MatrizeE extends Observable {
         System.out.println("Matrize amatatuta");
         
     }
-
+    
+    public ArrayList<Etsaia> getEtsaiak(){
+    	return etsaiak;
+    }
+    
+    private void espaziontziaSortu(String mota) {
+    	espaziontziaIm = EspaziontziaFactory.getEspaziontziaFactory().sortuEspaziontzia(mota, 50, 55);    	
+    	
+    	Espaziontzia pixel1 = EspaziontziaFactory.getEspaziontziaFactory().sortuEspaziontzia(mota, 50, 55);
+        matrizea[pixel1.getPosizioa().getY()][pixel1.getPosizioa().getX()].gelaxkaEguneratu(new EspaziontziaEgoera());
+        
+        Espaziontzia pixel2 = EspaziontziaFactory.getEspaziontziaFactory().sortuEspaziontzia(mota, 51, 55);
+        matrizea[pixel2.getPosizioa().getY()][pixel2.getPosizioa().getX()].gelaxkaEguneratu(new EspaziontziaEgoera());
+        
+        Espaziontzia pixel3 = EspaziontziaFactory.getEspaziontziaFactory().sortuEspaziontzia(mota, 49, 55);
+        matrizea[pixel3.getPosizioa().getY()][pixel3.getPosizioa().getX()].gelaxkaEguneratu(new EspaziontziaEgoera());
+        
+        Espaziontzia pixel4 = EspaziontziaFactory.getEspaziontziaFactory().sortuEspaziontzia(mota, 49, 54);
+        matrizea[pixel4.getPosizioa().getY()][pixel4.getPosizioa().getX()].gelaxkaEguneratu(new EspaziontziaEgoera());
+        
+        Espaziontzia pixel5 = EspaziontziaFactory.getEspaziontziaFactory().sortuEspaziontzia(mota, 51, 54);
+        matrizea[pixel5.getPosizioa().getY()][pixel5.getPosizioa().getX()].gelaxkaEguneratu(new EspaziontziaEgoera());
+    	
+        espaziontzia.gehituEntitate(pixel1);
+        espaziontzia.gehituEntitate(pixel2);
+        espaziontzia.gehituEntitate(pixel3);
+        espaziontzia.gehituEntitate(pixel4);
+        espaziontzia.gehituEntitate(pixel5);
+        
+    }
 }

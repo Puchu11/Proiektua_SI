@@ -1,6 +1,6 @@
 package Eredua;
 
-public abstract class Entitatea {
+public abstract class Entitatea implements EntitateInterfazea {
 	protected Posizioa posizioa;
 	
 	public Entitatea(int x, int y) {
@@ -25,10 +25,14 @@ public abstract class Entitatea {
 			case "ezkerrera" -> posX-1 >= 0;
 			case "eskuinera" -> posX +1 < 100;
 			default -> false;
-		};
+		}
+		;
 	}
 	public void mugitu(String norabidea) {
 		switch (norabidea) {
+		case "gora":
+            mugituGora();
+            break;
         case "behera":
             mugituBehera();
             break;
@@ -40,7 +44,10 @@ public abstract class Entitatea {
             break;
         default:
             break;
-    }
+		}
+	}
+	private void mugituGora() {
+		 this.getPosizioa().setY(this.getPosizioa().getY() - 1);
 	}
 	private void mugituBehera() {
 	    this.getPosizioa().setY(this.getPosizioa().getY() + 1);

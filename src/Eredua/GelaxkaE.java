@@ -26,12 +26,9 @@ public class GelaxkaE extends Observable{
 
 	public String getEntitateMota() {
 		return egoera.lortuMota();
-		
-		
 	}
 	public GelaxkaEgoera getEgoera() {
-		return this.egoera; 
-		
+		return this.egoera; 		
 	}
 	public Posizioa getPosizioa() {
 		return posizioa; 
