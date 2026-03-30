@@ -75,15 +75,12 @@ public class HasierakoPantaila extends JFrame implements Observer{
 			}
 			if (e.getKeyCode() == KeyEvent.VK_G) {
 				JokoKudeatzailea.getNireJokoKudeatzailea().setEspaziontziMota("green");
-				System.out.println("Green aukeratuta");
 			}
 			if (e.getKeyCode() == KeyEvent.VK_B) {
 				JokoKudeatzailea.getNireJokoKudeatzailea().setEspaziontziMota("blue");
-				System.out.println("Blue aukeratuta");
 			}
 			if (e.getKeyCode() == KeyEvent.VK_R) {
 				JokoKudeatzailea.getNireJokoKudeatzailea().setEspaziontziMota("red");
-				System.out.println("Red aukeratuta");
 			}
 		}
 
