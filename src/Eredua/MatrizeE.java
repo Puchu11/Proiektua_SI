@@ -35,7 +35,8 @@ public class MatrizeE extends Observable {
 				
             }   
     	}
-       	espaziontzia = new Espaziontzia(50, 55);
+    	String espaziontziMota= JokoKudeatzailea.getNireJokoKudeatzailea().getEspaziontziMota();
+       	espaziontzia = EspaziontziaFactory.getEspaziontziaFactory().sortuEspaziontzia(espaziontziMota, 50, 55);
     	matrizea[espaziontzia.getPosizioa().getY()][espaziontzia.getPosizioa().getX()].gelaxkaEguneratu(new EspaziontziaEgoera());
     	etsaiakSortu();
     	hasieratuEtsaienMugimendua();

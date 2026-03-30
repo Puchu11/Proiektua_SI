@@ -14,12 +14,19 @@ public class JokoKudeatzailea extends Observable {
 	
 	private JokoKudeatzailea() {}
 	
+	private String espaziontziMota = "green";
 	
 	public static JokoKudeatzailea getNireJokoKudeatzailea() {
 		if(ema==null) {
 			ema=new JokoKudeatzailea();
 		}
 		return ema;
+	}
+	public void setEspaziontziMota(String motaBerria) {
+		this.espaziontziMota = motaBerria;
+	}
+	public void getEspaziontziMota() {
+		return this.espaziontziMota;
 	}
 	
 	public void hasiJokoa() {
