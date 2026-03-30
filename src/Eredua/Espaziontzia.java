@@ -44,9 +44,12 @@ public abstract class Espaziontzia extends Entitatea {
 	private void sortuTiroGezi() {
 		int x =this.getPosizioa().getX();
 		int y = this.getPosizioa().getY()-2;
-		new Tiro(x,y).start();
-		new Tiro(x-1, y+1).start();
-		new Tiro(x+1, y+1).start();
+		TiroNodoa gezia= new TiroNodoa(x,y);
+		gezia.gehituTiroa(new Tiro(x,y));
+		gezia.gehituTiroa(new Tiro(x-1, y+1));
+		gezia.gehituTiroa(new Tiro(x+1, y+1));
+		
+		gezia.start();
 	}
 	private void sortuTiroNormala(){
 		int x=this.getPosizioa().getX();
