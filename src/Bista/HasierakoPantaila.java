@@ -42,7 +42,7 @@ public class HasierakoPantaila extends JFrame implements Observer{
 				
 				JLabel aukerak = new JLabel("Hautatu ontzia: [G] Berdea - [B] Urdina - [R] Gorria", SwingConstants.CENTER);
 				aukerak.setForeground(Color.CYAN);
-				aukerak.setFont(new Font("Arial", Font.PLAIN, 16))
+				aukerak.setFont(new Font("Arial", Font.PLAIN, 16));
 
 				add(titulua);
 				add(aukerak);
