@@ -44,7 +44,7 @@ class EspaziontziaEgoera implements GelaxkaEgoera{
 	public Color lortuKolorea() {
 		return MatrizeE.getEma().getEspaziontzia().getKolorea();
 		
-	}
+	} 
 	@Override
 	public String lortuMota() {
 		return "espaziontzia";
