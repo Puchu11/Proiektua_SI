@@ -26,7 +26,7 @@ public abstract class Espaziontzia extends Entitatea {
 				// Muniziorik gabe, tiro zuzen bat botako du automatikoki
 				sortuTiroNormala();
 				
-			}
+			} 
 		}else if(tiroMota==2) {
 			if(erronboMunizioa>0) {
 				erronboMunizioa--;
@@ -44,12 +44,9 @@ public abstract class Espaziontzia extends Entitatea {
 	private void sortuTiroGezi() {
 		int x =this.getPosizioa().getX();
 		int y = this.getPosizioa().getY()-2;
-		TiroNodoa gezia= new TiroNodoa(x,y);
-		gezia.gehituTiroa(new Tiro(x,y));
-		gezia.gehituTiroa(new Tiro(x-1, y+1));
-		gezia.gehituTiroa(new Tiro(x+1, y+1));
-		
-		gezia.start();
+		new Tiro(x,y).start();
+		new Tiro(x-1, y+1).start();
+		new Tiro(x+1, y+1).start();
 	}
 	private void sortuTiroNormala(){
 		int x=this.getPosizioa().getX();
@@ -59,19 +56,24 @@ public abstract class Espaziontzia extends Entitatea {
 	private void sortuTiroErronboa() {
 		int x =this.getPosizioa().getX();
 		int y = this.getPosizioa().getY()-2;
-		new Tiro(x,y-5).start();
-		new Tiro(x-1, y-4).start();
-		new Tiro(x+1, y-4).start();
-		new Tiro(x, y-4).start();
-		new Tiro(x-1, y-3).start();
-		new Tiro(x+1, y-3).start();
-		new Tiro(x, y-3).start();
-		new Tiro(x-2, y-3).start();
-		new Tiro(x+2, y-3).start();
-		new Tiro(x-1, y-2).start();
-		new Tiro(x+1, y-2).start();
-		new Tiro(x, y-2).start();
-		new Tiro(x, y-1).start();
+		
+		TiroNodoa erronboa=new TiroNodoa(x,y);
+		
+		erronboa.gehituTiroa(new Tiro(x,y-5));
+		erronboa.gehituTiroa(new Tiro(x-1, y-4));
+		erronboa.gehituTiroa(new Tiro(x+1, y-4));
+		erronboa.gehituTiroa(new Tiro(x, y-4));
+		erronboa.gehituTiroa(new Tiro(x-1, y-3));
+		erronboa.gehituTiroa(new Tiro(x+1, y-3));
+		erronboa.gehituTiroa(new Tiro(x, y-3));
+		erronboa.gehituTiroa(new Tiro(x-2, y-3));
+		erronboa.gehituTiroa(new Tiro(x+2, y-3));
+		erronboa.gehituTiroa(new Tiro(x-1, y-2));
+		erronboa.gehituTiroa(new Tiro(x+1, y-2));
+		erronboa.gehituTiroa(new Tiro(x, y-2));
+		erronboa.gehituTiroa(new Tiro(x, y-1));
+		
+		erronboa.start();
 	}
  
     public int getTiroMota() {

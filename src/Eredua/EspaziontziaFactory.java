@@ -20,7 +20,7 @@ public class EspaziontziaFactory{
 		}
 		else if (mota.equalsIgnoreCase("red")) {
 			return new EspaziontziaRed(x,y);
-		}
+		} 
 		//Jokalariak despistatu egiten bada eta ez badu kolorerik hautatzen defektuzkoa berdea izango da, errorrerik ez egoteko
 		return new EspaziontziaGreen(x,y);
 	}

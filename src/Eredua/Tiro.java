@@ -43,7 +43,7 @@ public class Tiro extends Thread {
         return pos;
     }
 
-    private void mugituGora() {
+    public void mugituGora() {
     	pos.setY(pos.getY() - 1);
     }
 

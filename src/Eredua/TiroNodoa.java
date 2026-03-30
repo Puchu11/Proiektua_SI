@@ -12,11 +12,9 @@ public class TiroNodoa extends Tiro {
 	public void gehituTiroa(Tiro t) {
         tiroLista.add(t);
     }
-	@Override
-	public void run() {
+	public void mugituGora() {
 		for (Tiro t: tiroLista) {
-			t.start();
+			t.mugituGora();
 		}
 	}
-
 }
