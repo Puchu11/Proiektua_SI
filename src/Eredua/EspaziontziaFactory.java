@@ -18,8 +18,9 @@ public class EspaziontziaFactory{
 		else if (mota.equals("blue")) {
 			return new EspaziontziaBlue(x,y);
 		}
-		else {
+		else if (mota.equalsIgnoreCase("red")){
 			return new EspaziontziaRed(x,y);
 		}
+		return new EspaziontziaGreen(x,y);
 	}
 }
