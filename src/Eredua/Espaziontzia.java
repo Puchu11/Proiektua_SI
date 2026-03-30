@@ -1,5 +1,7 @@
 package Eredua;
 
+import java.awt.Color;
+
 public abstract class Espaziontzia extends Entitatea {
 	private int geziMunizioa=30;
 	private int erronboMunizioa=20;
@@ -7,7 +9,7 @@ public abstract class Espaziontzia extends Entitatea {
 	Espaziontzia(int x, int y) {
 		super(x, y);
 	}
-	
+	public abstract Color getKolorea();
 	public void mugituGora() {
 		this.getPosizioa().setY(this.getPosizioa().getY()-1);
 	}
