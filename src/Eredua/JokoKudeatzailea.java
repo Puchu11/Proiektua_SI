@@ -25,7 +25,7 @@ public class JokoKudeatzailea extends Observable {
 	public void setEspaziontziMota(String motaBerria) {
 		this.espaziontziMota = motaBerria;
 	}
-	public void getEspaziontziMota() {
+	public String getEspaziontziMota() {
 		return this.espaziontziMota;
 	}
 	
