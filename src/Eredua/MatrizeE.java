@@ -18,7 +18,6 @@ public class MatrizeE extends Observable {
     private ArrayList<Etsaia> etsaiak = new ArrayList<Etsaia>();
     private java.util.Timer etsaienTimer;
     private Random rnd = new Random();
-
     private MatrizeE() {}
     
     public static MatrizeE getEma() {
@@ -27,6 +26,7 @@ public class MatrizeE extends Observable {
         }
         return ema;
     }
+   
     
     public void matrizeaSortu() {
     	for (int i = 0; i < altuera; i++) {
@@ -80,7 +80,12 @@ public class MatrizeE extends Observable {
     	return Mugitu;
     }
     	
-    public void tiroEgin() {espaziontzia.tiroEgin();  }
+    public void tiroEgin() {if(espaziontzia !=null ) {
+    	espaziontzia.tiroEgin(espaziontzia.getTiroMota()); 
+    	}else {
+    		System.out.println("ADI: Espaziontzia oraindik ez da sortu");
+    	}
+    }
     
     private void etsaiakSortu() {
     	for (int i=0; i<6+rnd.nextInt(4); i++) {
@@ -170,7 +175,7 @@ public class MatrizeE extends Observable {
 				return;
     			
     		}
-   
+  
     		if (!matrizea[e.getPosizioa().getY()][e.getPosizioa().getX()].getEntitateMota().equals("etsaia")) {
     			matrizea[y][x].gelaxkaEguneratu(new HutsaEgoera());
     			matrizea[e.getPosizioa().getY()][e.getPosizioa().getX()].gelaxkaEguneratu(new EtsaiaEgoera());
@@ -194,4 +199,5 @@ public class MatrizeE extends Observable {
         System.out.println("Matrize amatatuta");
         
     }
+
 }

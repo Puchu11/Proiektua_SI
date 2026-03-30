@@ -1,6 +1,4 @@
 package Bista;
-import Eredua.MugimenduZuzena;
-import Eredua.MugimenduSigiSaga;
 import java.awt.CardLayout;
 import java.awt.Color;
 import java.awt.GridLayout;
@@ -30,7 +28,7 @@ public class MatrizeB extends JFrame implements Observer {
 	private GelaxkaB labelN[][] = new GelaxkaB[60][100];
 
 	private Controller controller = null;
-
+	
 	public MatrizeB() {
 		setTitle("Space Invaders");
 		setBounds(100, 100, 900, 600);
@@ -130,7 +128,7 @@ public class MatrizeB extends JFrame implements Observer {
 	            } else if (behera) {
 	                MatrizeE.getEma().mugituEspaziontzia("behera");
 	            }
-
+	            
 	            azkenMugimenduKontrola = orain;
 	        }
 
@@ -139,7 +137,7 @@ public class MatrizeB extends JFrame implements Observer {
 	            azkenTiroKontrola = orain;
 	        }
 	    }
-
+ 
 	    @Override
 	    public void keyPressed(KeyEvent e) {
 	        switch (e.getKeyCode()) {
@@ -148,8 +146,9 @@ public class MatrizeB extends JFrame implements Observer {
 	            case KeyEvent.VK_UP    -> gora = true;
 	            case KeyEvent.VK_DOWN  -> behera = true;
 	            case KeyEvent.VK_SPACE -> tiro = true;
-	            case KeyEvent.VK_1 -> MatrizeE.getEma().getEspaziontzia().setTiroEstrategia(new MugimenduZuzena());
-	            case KeyEvent.VK_2 -> MatrizeE.getEma().getEspaziontzia().setTiroEstrategia(new MugimenduSigiSaga());
+	            case KeyEvent.VK_1 -> MatrizeE.getEma().getEspaziontzia().setTiroMota(0);
+	            case KeyEvent.VK_2 -> MatrizeE.getEma().getEspaziontzia().setTiroMota(1);
+	            case KeyEvent.VK_3 -> MatrizeE.getEma().getEspaziontzia().setTiroMota(2);
 	        }
 	    }
 

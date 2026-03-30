@@ -6,7 +6,7 @@ public class EspaziontziaFactory{
 	
 	public static EspaziontziaFactory getEspaziontziaFactory() {
 		if (nireFactory==null) {
-			nireFactory = new EspaziontziaFactory;
+			nireFactory = new EspaziontziaFactory();
 		}
 		return nireFactory;
 	}
@@ -18,7 +18,7 @@ public class EspaziontziaFactory{
 		else if (mota.equals("blue")) {
 			return new EspaziontziaBlue(x,y);
 		}
-		else if (mota.equals("red")) {
+		else {
 			return new EspaziontziaRed(x,y);
 		}
 	}
