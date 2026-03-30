@@ -1,6 +1,6 @@
 package Eredua;
 
-public class Espaziontzia extends Entitatea {
+public abstract class Espaziontzia extends Entitatea {
 	private MugimenduEstrategia tiroEstrategia= new MugimenduZuzena();
 	private int geziMunizioa=30;
 	private int erronboMunizioa=20;
