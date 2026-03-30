@@ -29,7 +29,7 @@ public class HasierakoPantaila extends JFrame implements Observer{
 				setBounds(100, 100, 900, 600);
 				setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 				getContentPane().setBackground(Color.BLACK);
-				setLayout(new GridLayout(2, 1));
+				setLayout(new GridLayout(3, 1));
 				setFocusable(true);
 
 				JLabel titulua = new JLabel("SPACE INVADERS", SwingConstants.CENTER);
@@ -39,8 +39,13 @@ public class HasierakoPantaila extends JFrame implements Observer{
 				JLabel azpititulua = new JLabel("Sakatu ENTER hasteko", SwingConstants.CENTER);
 				azpititulua.setForeground(Color.YELLOW);
 				azpititulua.setFont(new Font("Arial", Font.PLAIN, 18));
+				
+				JLabel aukerak = new JLabel("Hautatu ontzia: [G] Berdea - [B] Urdina - [R] Gorria", SwingConstants.CENTER);
+				aukerak.setForeground(Color.CYAN);
+				aukerak.setFont(new Font("Arial", Font.PLAIN, 16))
 
 				add(titulua);
+				add(aukerak);
 				add(azpititulua);
 
 				addKeyListener(getController());
