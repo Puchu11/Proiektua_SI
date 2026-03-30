@@ -1,5 +1,7 @@
 package Eredua;
 
+import java.awt.Color;
+
 public abstract class Espaziontzia extends Entitatea {
 	private MugimenduEstrategia tiroEstrategia= new MugimenduZuzena();
 	private int geziMunizioa=30;
