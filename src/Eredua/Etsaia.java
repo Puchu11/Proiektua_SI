@@ -1,5 +1,6 @@
 package Eredua;
 
+import java.util.Iterator;
 
 public class Etsaia extends Entitatea {
 	
@@ -41,8 +42,8 @@ public class Etsaia extends Entitatea {
 	    if (xBerria < 0 || xBerria >= 100 || yBerria < 0 || yBerria >= 60) {
 	        return false;
 	    }
-
-	    for (Etsaia e : MatrizeE.getEma().getEtsaiak()) {
+	    Iterator<Entitatea> itr = MatrizeE.getEma().getEtsaiak().getIterator();
+	    while (itr.hasNext()){
 	        if (e != this &&
 	            e.getPosizioa().getX() == xBerria &&
 	            e.getPosizioa().getY() == yBerria &&

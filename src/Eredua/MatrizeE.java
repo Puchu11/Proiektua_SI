@@ -1,6 +1,7 @@
 package Eredua;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.Observable;
 import java.util.Random;
 import java.util.Timer;
@@ -16,7 +17,7 @@ public class MatrizeE extends Observable {
     private GelaxkaE matrizea[][] = new GelaxkaE[altuera][zabalera];
     private EntitateNodo espaziontzia= new EntitateNodo();
     private Espaziontzia espaziontziaIm;
-    private ArrayList<Etsaia> etsaiak = new ArrayList<Etsaia>();
+    private ArrayList<EntitateNodo> etsaiak = new ArrayList<EntitateNodo>();
     private java.util.Timer etsaienTimer;
     private Random rnd = new Random();
 
@@ -36,10 +37,10 @@ public class MatrizeE extends Observable {
 				
             }   
     	}
+    	
     	String espaziontziMota= JokoKudeatzailea.getNireJokoKudeatzailea().getEspaziontziMota(); 
     	espaziontziaSortu(espaziontziMota);
     	etsaiakSortu();
-    	hasieratuEtsaienMugimendua();
     }
     public void mugituEspaziontzia(String norabidea) {
     	
@@ -75,22 +76,73 @@ public class MatrizeE extends Observable {
     }
     
     private void etsaiakSortu() {
-    	for (int i=0; i<6+rnd.nextInt(4); i++) {
-			int x = rnd.nextInt(zabalera);
-			boolean okupatuta = false;
-			for (Etsaia e : etsaiak) {
-	            if (e.getPosizioa().getX() == x) {
-	                okupatuta = true;
-	                break;
-	            }
-	        }
-	        if (!okupatuta) {
-	            Etsaia etsaia = new Etsaia(x, 5, i);
-	            etsaiak.add(etsaia);
-	            matrizea[etsaia.getPosizioa().getY()][etsaia.getPosizioa().getX()].gelaxkaEguneratu(new EtsaiaEgoera());
-	        }
-    	}
+        int kopurua = 6 + rnd.nextInt(4);   
+        int sortuta = 0;                    
+        int saiakerak = 0;                 
+        int maxSaiakerak = 500;
+
+        while (sortuta < kopurua && saiakerak < maxSaiakerak) {
+            saiakerak++;
+            int x = rnd.nextInt(zabalera);
+            boolean okupatuta = false;
+
+            for (int j = -2; j < 3; j++) {
+                if (x + j < 0 || x + j >= zabalera || getGelaxka(x + j, 5).getEntitateMota().equals("etsaia")) {
+                    okupatuta = true;
+                    break;
+                }
+            }
+
+            if (!okupatuta) {
+                Etsaia pE1 = new Etsaia(x, 5, sortuta);
+                matrizea[pE1.getPosizioa().getY()][pE1.getPosizioa().getX()].gelaxkaEguneratu(new EtsaiaEgoera());
+
+                Etsaia pE2 = new Etsaia(x - 1, 5, sortuta);
+                matrizea[pE2.getPosizioa().getY()][pE2.getPosizioa().getX()].gelaxkaEguneratu(new EtsaiaEgoera());
+
+                Etsaia pE3 = new Etsaia(x - 2, 5, sortuta);
+                matrizea[pE3.getPosizioa().getY()][pE3.getPosizioa().getX()].gelaxkaEguneratu(new EtsaiaEgoera());
+
+                Etsaia pE4 = new Etsaia(x + 1, 5, sortuta);
+                matrizea[pE4.getPosizioa().getY()][pE4.getPosizioa().getX()].gelaxkaEguneratu(new EtsaiaEgoera());
+
+                Etsaia pE5 = new Etsaia(x + 2, 5, sortuta);
+                matrizea[pE5.getPosizioa().getY()][pE5.getPosizioa().getX()].gelaxkaEguneratu(new EtsaiaEgoera());
+
+                Etsaia pE6 = new Etsaia(x, 4, sortuta);
+                matrizea[pE6.getPosizioa().getY()][pE6.getPosizioa().getX()].gelaxkaEguneratu(new EtsaiaEgoera());
+
+                Etsaia pE7 = new Etsaia(x - 1, 4, sortuta);
+                matrizea[pE7.getPosizioa().getY()][pE7.getPosizioa().getX()].gelaxkaEguneratu(new EtsaiaEgoera());
+
+                Etsaia pE8 = new Etsaia(x + 1, 4, sortuta);
+                matrizea[pE8.getPosizioa().getY()][pE8.getPosizioa().getX()].gelaxkaEguneratu(new EtsaiaEgoera());
+
+                Etsaia pE9 = new Etsaia(x - 1, 6, sortuta);
+                matrizea[pE9.getPosizioa().getY()][pE9.getPosizioa().getX()].gelaxkaEguneratu(new EtsaiaEgoera());
+
+                Etsaia pE10 = new Etsaia(x + 1, 6, sortuta);
+                matrizea[pE10.getPosizioa().getY()][pE10.getPosizioa().getX()].gelaxkaEguneratu(new EtsaiaEgoera());
+
+                EntitateNodo etsaiNodo = new EntitateNodo();
+                etsaiak.add(etsaiNodo);
+
+                etsaiNodo.gehituEntitate(pE1);
+                etsaiNodo.gehituEntitate(pE2);
+                etsaiNodo.gehituEntitate(pE3);
+                etsaiNodo.gehituEntitate(pE4);
+                etsaiNodo.gehituEntitate(pE5);
+                etsaiNodo.gehituEntitate(pE6);
+                etsaiNodo.gehituEntitate(pE7);
+                etsaiNodo.gehituEntitate(pE8);
+                etsaiNodo.gehituEntitate(pE9);
+                etsaiNodo.gehituEntitate(pE10);
+
+                sortuta++; 
+            }
+        }
     }
+    
     private void hasieratuEtsaienMugimendua() {
     	etsaienTimer = new Timer();
         TimerTask ataza = new TimerTask() {
@@ -105,17 +157,17 @@ public class MatrizeE extends Observable {
     public boolean talkaEginDu(int x, int y) {
     	if(matrizea[y][x].getEntitateMota().equals("etsaia")) {
     		Etsaia hilda=null;
-    		for(Etsaia e: etsaiak) {
+    		for(Etsaia e: etsaiNodo) {
     			if(e.getPosizioa().getX()== x && e.getPosizioa().getY()==y) {
     				hilda=e;
     				break;
     			}
     		}
     		if(hilda!= null) {
-    			etsaiak.remove(hilda);
+    			etsaiNodo.remove(hilda);
     		}
     		gelaxkaEguneratu(x,y, new HutsaEgoera());
-    		if (etsaiak.isEmpty()) {
+    		if (etsaiNodo.isEmpty()) {
     			JokoKudeatzailea.getNireJokoKudeatzailea().egoeraAldatu(Egoera.IRABAZI);
     		}
     		return true;
@@ -124,7 +176,7 @@ public class MatrizeE extends Observable {
     }
     
     private void jokoaAmaituDa(int x, int y) {
-    	for(Etsaia e: etsaiak) {
+    	for(Etsaia e: etsaiNodo) {
     		if (e.getPosizioa().getX()==x && e.getPosizioa().getY()==y) {
     			JokoKudeatzailea.getNireJokoKudeatzailea().egoeraAldatu(Egoera.GALDU);
     			break;
@@ -136,12 +188,12 @@ public class MatrizeE extends Observable {
     }
     
     private void etsaiakMugitu() {
-    	for (Etsaia e: etsaiak) {
-    		int x=e.getPosizioa().getX();
-    		int y=e.getPosizioa().getY();
-    		int aukera= rnd.nextInt(3);
+    	Iterator<Entitatea> itr = etsaiNodo.getIterator();
+    	while(itr.hasNext()) {
+    		Etsaia e = (Etsaia) itr.next();
 
-		
+    		int aukera= rnd.nextInt(3);
+    		
     		if (aukera==0 && e.mugituDaiteke("ezkerrera")) {
     			e.mugitu("ezkerrera");
     		}
@@ -151,24 +203,11 @@ public class MatrizeE extends Observable {
     		else if (aukera==2 && e.mugituDaiteke("behera")) {
     			e.mugitu("behera");
     		}
-    		
-    		matrizea[y][x].gelaxkaEguneratu(new HutsaEgoera());
-			matrizea[e.getPosizioa().getY()][e.getPosizioa().getX()].gelaxkaEguneratu(new EtsaiaEgoera());
-    		
-			if(getGelaxka(e.getPosizioa().getX(),e.getPosizioa().getY()).getEntitateMota().equals("tiro")) {
-				etsaiak.remove(e);
-				e=null;
-				matrizea[y][x].gelaxkaEguneratu(new HutsaEgoera());
-				if (etsaiak.isEmpty()) {
-	    			JokoKudeatzailea.getNireJokoKudeatzailea().egoeraAldatu(Egoera.IRABAZI);
-	    		}
-				return;
-    			
-    		}
     	}
+    	
     }
     private void kolizioa(int x, int y) {
-    	for(Etsaia e: etsaiak) {
+    	for(Etsaia e: etsaiNodo) {
     		if (e.getPosizioa().getX()==x && e.getPosizioa().getY()==y) {
     			JokoKudeatzailea.getNireJokoKudeatzailea().egoeraAldatu(Egoera.GALDU);
     			break;
@@ -184,7 +223,7 @@ public class MatrizeE extends Observable {
         
     }
     
-    public ArrayList<Etsaia> getEtsaiak(){
+    public ArrayList<EntitateNodo> getEtsaiak(){
     	return etsaiak;
     }
     

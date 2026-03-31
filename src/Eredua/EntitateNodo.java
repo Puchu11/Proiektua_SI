@@ -1,6 +1,7 @@
 package Eredua;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 
 public class EntitateNodo implements EntitateInterfazea {
 
@@ -11,6 +12,11 @@ public class EntitateNodo implements EntitateInterfazea {
 		public ArrayList<Entitatea> getLista(){
 			return entitateLista;
 		}
+		
+		public Iterator<Entitatea> getIterator(){
+			return entitateLista.iterator();
+		}
+		
 		public boolean mugituDaiteke(String norabidea) {
 			for(Entitatea a: entitateLista) {
 				if(!a.mugituDaiteke(norabidea)) {
@@ -50,6 +56,8 @@ public class EntitateNodo implements EntitateInterfazea {
 		public void gehituEntitate(Entitatea berria) {
 			entitateLista.add(berria);
 		}
+		
+		
 
 		
 }
