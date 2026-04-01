@@ -6,6 +6,7 @@ public abstract class Espaziontzia extends Entitatea {
 	private int geziMunizioa=30;
 	private int erronboMunizioa=20;
 	private int tiroMota = 0;
+	
 	Espaziontzia(int x, int y) {
 		super(x, y);
 	}
@@ -40,6 +41,7 @@ public abstract class Espaziontzia extends Entitatea {
 			
 		}
 	}
+	
 	private void sortuTiroGezi() {
 		int x =this.getPosizioa().getX();
 		int y = this.getPosizioa().getY()-3;
@@ -49,6 +51,7 @@ public abstract class Espaziontzia extends Entitatea {
 		gezia.gehituTiroa(new Tiro(x-1, y+1));
 		gezia.gehituTiroa(new Tiro(x+1, y+1));
 	}
+	
 	private void sortuTiroNormala(){
 		int x=this.getPosizioa().getX();
 		int y=this.getPosizioa().getY();

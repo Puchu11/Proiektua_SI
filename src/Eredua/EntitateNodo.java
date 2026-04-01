@@ -34,7 +34,8 @@ public class EntitateNodo implements EntitateInterfazea {
 		            MatrizeE.getEma().getMatrizea()[a.getPosizioa().getY()][a.getPosizioa().getX()]
 		                .gelaxkaEguneratu(new HutsaEgoera());
 		        }
-
+		        
+		        
 		        // Mugitu dena
 		        for (Entitatea a : entitateLista) {
 		            a.mugitu(norabidea);

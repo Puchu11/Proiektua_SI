@@ -16,7 +16,6 @@ public class MatrizeE extends Observable {
 
     private GelaxkaE matrizea[][] = new GelaxkaE[altuera][zabalera];
     private EntitateNodo espaziontzia= new EntitateNodo();
-    private Espaziontzia espaziontziaIm;
     private ArrayList<EntitateNodo> etsaiak = new ArrayList<EntitateNodo>();
     private java.util.Timer etsaienTimer;
     private Random rnd = new Random();
@@ -41,6 +40,7 @@ public class MatrizeE extends Observable {
     	String espaziontziMota= JokoKudeatzailea.getNireJokoKudeatzailea().getEspaziontziMota(); 
     	espaziontziaSortu(espaziontziMota);
     	etsaiakSortu();
+    	hasieratuEtsaienMugimendua();
     }
     public void mugituEspaziontzia(String norabidea) {
     	
@@ -72,12 +72,13 @@ public class MatrizeE extends Observable {
     }
     
     public Espaziontzia getEspaziontzia() {
-    	return espaziontziaIm;
+    	Espaziontzia erdikoa = (Espaziontzia) espaziontzia.getLista().get(0);
+    	return erdikoa;
     }
     
     private void etsaiakSortu() {
         int kopurua = 6 + rnd.nextInt(4);   
-        int sortuta = 0;                    
+        int sortuta 	= 0;                    
         int saiakerak = 0;                 
         int maxSaiakerak = 500;
 
@@ -97,13 +98,13 @@ public class MatrizeE extends Observable {
                 Etsaia pE1 = new Etsaia(x, 5, sortuta);
                 matrizea[pE1.getPosizioa().getY()][pE1.getPosizioa().getX()].gelaxkaEguneratu(new EtsaiaEgoera());
 
-                Etsaia pE2 = new Etsaia(x - 1, 5, sortuta);
+                Etsaia pE2 = new Etsaia(x - 2, 3, sortuta);
                 matrizea[pE2.getPosizioa().getY()][pE2.getPosizioa().getX()].gelaxkaEguneratu(new EtsaiaEgoera());
 
                 Etsaia pE3 = new Etsaia(x - 2, 5, sortuta);
                 matrizea[pE3.getPosizioa().getY()][pE3.getPosizioa().getX()].gelaxkaEguneratu(new EtsaiaEgoera());
 
-                Etsaia pE4 = new Etsaia(x + 1, 5, sortuta);
+                Etsaia pE4 = new Etsaia(x + 2, 3, sortuta);
                 matrizea[pE4.getPosizioa().getY()][pE4.getPosizioa().getX()].gelaxkaEguneratu(new EtsaiaEgoera());
 
                 Etsaia pE5 = new Etsaia(x + 2, 5, sortuta);
@@ -123,6 +124,28 @@ public class MatrizeE extends Observable {
 
                 Etsaia pE10 = new Etsaia(x + 1, 6, sortuta);
                 matrizea[pE10.getPosizioa().getY()][pE10.getPosizioa().getX()].gelaxkaEguneratu(new EtsaiaEgoera());
+                
+                Etsaia pE11 = new Etsaia(x - 2, 6, sortuta);
+                matrizea[pE11.getPosizioa().getY()][pE11.getPosizioa().getX()].gelaxkaEguneratu(new EtsaiaEgoera());
+
+                Etsaia pE12 = new Etsaia(x + 2, 6, sortuta);
+                matrizea[pE12.getPosizioa().getY()][pE12.getPosizioa().getX()].gelaxkaEguneratu(new EtsaiaEgoera());
+                
+                Etsaia pE13 = new Etsaia(x + 1, 7, sortuta);
+                matrizea[pE13.getPosizioa().getY()][pE13.getPosizioa().getX()].gelaxkaEguneratu(new EtsaiaEgoera());
+                
+                Etsaia pE14 = new Etsaia(x , 7, sortuta);
+                matrizea[pE14.getPosizioa().getY()][pE10.getPosizioa().getX()].gelaxkaEguneratu(new EtsaiaEgoera());
+                
+                Etsaia pE15 = new Etsaia(x -1, 7, sortuta);
+                matrizea[pE15.getPosizioa().getY()][pE15.getPosizioa().getX()].gelaxkaEguneratu(new EtsaiaEgoera());
+                
+                Etsaia pE16 = new Etsaia(x -2, 4, sortuta);
+                matrizea[pE16.getPosizioa().getY()][pE16.getPosizioa().getX()].gelaxkaEguneratu(new EtsaiaEgoera());
+                
+
+                Etsaia pE17 = new Etsaia(x +2, 4, sortuta);
+                matrizea[pE17.getPosizioa().getY()][pE17.getPosizioa().getX()].gelaxkaEguneratu(new EtsaiaEgoera());
 
                 EntitateNodo etsaiNodo = new EntitateNodo();
                 etsaiak.add(etsaiNodo);
@@ -137,6 +160,13 @@ public class MatrizeE extends Observable {
                 etsaiNodo.gehituEntitate(pE8);
                 etsaiNodo.gehituEntitate(pE9);
                 etsaiNodo.gehituEntitate(pE10);
+                etsaiNodo.gehituEntitate(pE11);
+                etsaiNodo.gehituEntitate(pE12);
+                etsaiNodo.gehituEntitate(pE13);
+                etsaiNodo.gehituEntitate(pE14);
+                etsaiNodo.gehituEntitate(pE15);
+                etsaiNodo.gehituEntitate(pE16);
+                etsaiNodo.gehituEntitate(pE17);
 
                 sortuta++; 
             }
@@ -188,9 +218,8 @@ public class MatrizeE extends Observable {
     }
     
     private void etsaiakMugitu() {
-    	Iterator<Entitatea> itr = etsaiNodo.getIterator();
-    	while(itr.hasNext()) {
-    		Etsaia e = (Etsaia) itr.next();
+    	
+    	for(EntitateNodo e: etsaiak) {
 
     		int aukera= rnd.nextInt(3);
     		
@@ -228,7 +257,6 @@ public class MatrizeE extends Observable {
     }
     
     private void espaziontziaSortu(String mota) {
-    	espaziontziaIm = EspaziontziaFactory.getEspaziontziaFactory().sortuEspaziontzia(mota, 50, 55);    	
     	
     	Espaziontzia pixel1 = EspaziontziaFactory.getEspaziontziaFactory().sortuEspaziontzia(mota, 50, 55);
         matrizea[pixel1.getPosizioa().getY()][pixel1.getPosizioa().getX()].gelaxkaEguneratu(new EspaziontziaEgoera());
@@ -244,12 +272,60 @@ public class MatrizeE extends Observable {
         
         Espaziontzia pixel5 = EspaziontziaFactory.getEspaziontziaFactory().sortuEspaziontzia(mota, 51, 54);
         matrizea[pixel5.getPosizioa().getY()][pixel5.getPosizioa().getX()].gelaxkaEguneratu(new EspaziontziaEgoera());
+        
+        Espaziontzia pixel6 = EspaziontziaFactory.getEspaziontziaFactory().sortuEspaziontzia(mota, 50, 56);
+        matrizea[pixel6.getPosizioa().getY()][pixel6.getPosizioa().getX()].gelaxkaEguneratu(new EspaziontziaEgoera());
+
+        Espaziontzia pixel7 = EspaziontziaFactory.getEspaziontziaFactory().sortuEspaziontzia(mota, 50, 54);
+        matrizea[pixel7.getPosizioa().getY()][pixel7.getPosizioa().getX()].gelaxkaEguneratu(new EspaziontziaEgoera());
+       
+        Espaziontzia pixel8 = EspaziontziaFactory.getEspaziontziaFactory().sortuEspaziontzia(mota, 50, 53);
+        matrizea[pixel8.getPosizioa().getY()][pixel8.getPosizioa().getX()].gelaxkaEguneratu(new EspaziontziaEgoera());
+        
+        Espaziontzia pixel9 = EspaziontziaFactory.getEspaziontziaFactory().sortuEspaziontzia(mota, 50, 52);
+        matrizea[pixel9.getPosizioa().getY()][pixel9.getPosizioa().getX()].gelaxkaEguneratu(new EspaziontziaEgoera());
+        
+        Espaziontzia pixel10 = EspaziontziaFactory.getEspaziontziaFactory().sortuEspaziontzia(mota, 51, 53);
+        matrizea[pixel10.getPosizioa().getY()][pixel10.getPosizioa().getX()].gelaxkaEguneratu(new EspaziontziaEgoera());
+        
+        Espaziontzia pixel11 = EspaziontziaFactory.getEspaziontziaFactory().sortuEspaziontzia(mota, 49, 53);
+        matrizea[pixel11.getPosizioa().getY()][pixel11.getPosizioa().getX()].gelaxkaEguneratu(new EspaziontziaEgoera());
+        
+        Espaziontzia pixel12 = EspaziontziaFactory.getEspaziontziaFactory().sortuEspaziontzia(mota, 52, 55);
+        matrizea[pixel12.getPosizioa().getY()][pixel12.getPosizioa().getX()].gelaxkaEguneratu(new EspaziontziaEgoera());
+        
+        Espaziontzia pixel13 = EspaziontziaFactory.getEspaziontziaFactory().sortuEspaziontzia(mota, 52, 56);
+        matrizea[pixel13.getPosizioa().getY()][pixel13.getPosizioa().getX()].gelaxkaEguneratu(new EspaziontziaEgoera());
+        
+        Espaziontzia pixel14 = EspaziontziaFactory.getEspaziontziaFactory().sortuEspaziontzia(mota, 52, 57);
+        matrizea[pixel14.getPosizioa().getY()][pixel14.getPosizioa().getX()].gelaxkaEguneratu(new EspaziontziaEgoera());
     	
+        Espaziontzia pixel15 = EspaziontziaFactory.getEspaziontziaFactory().sortuEspaziontzia(mota, 48, 55);
+        matrizea[pixel15.getPosizioa().getY()][pixel15.getPosizioa().getX()].gelaxkaEguneratu(new EspaziontziaEgoera());
+        
+        Espaziontzia pixel16 = EspaziontziaFactory.getEspaziontziaFactory().sortuEspaziontzia(mota, 48, 56);
+        matrizea[pixel16.getPosizioa().getY()][pixel16.getPosizioa().getX()].gelaxkaEguneratu(new EspaziontziaEgoera());
+        
+        Espaziontzia pixel17 = EspaziontziaFactory.getEspaziontziaFactory().sortuEspaziontzia(mota, 48, 57);
+        matrizea[pixel17.getPosizioa().getY()][pixel17.getPosizioa().getX()].gelaxkaEguneratu(new EspaziontziaEgoera());
+        
         espaziontzia.gehituEntitate(pixel1);
         espaziontzia.gehituEntitate(pixel2);
         espaziontzia.gehituEntitate(pixel3);
         espaziontzia.gehituEntitate(pixel4);
         espaziontzia.gehituEntitate(pixel5);
-        
+        espaziontzia.gehituEntitate(pixel6);
+        espaziontzia.gehituEntitate(pixel7);
+        espaziontzia.gehituEntitate(pixel8);
+        espaziontzia.gehituEntitate(pixel9);
+        espaziontzia.gehituEntitate(pixel10);
+        espaziontzia.gehituEntitate(pixel11);
+        espaziontzia.gehituEntitate(pixel12);
+        espaziontzia.gehituEntitate(pixel13);
+        espaziontzia.gehituEntitate(pixel14);
+        espaziontzia.gehituEntitate(pixel15);
+        espaziontzia.gehituEntitate(pixel16);
+        espaziontzia.gehituEntitate(pixel17);
     }
+    
 }

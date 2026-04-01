@@ -42,15 +42,20 @@ public class Etsaia extends Entitatea {
 	    if (xBerria < 0 || xBerria >= 100 || yBerria < 0 || yBerria >= 60) {
 	        return false;
 	    }
-	    Iterator<Entitatea> itr = MatrizeE.getEma().getEtsaiak().getIterator();
-	    while (itr.hasNext()){
-	        if (e != this &&
-	            e.getPosizioa().getX() == xBerria &&
-	            e.getPosizioa().getY() == yBerria &&
-	            e.getIndizea() != this.getIndizea()) {
+	    
+	    for (EntitateNodo nodo : MatrizeE.getEma().getEtsaiak()) {
+	    	for (Entitatea e : nodo.getLista()) {
+	    	    if (e instanceof Etsaia) {
+	    	        Etsaia etsaia = (Etsaia) e;
 
-	            return false;
-	        }
+	    	        if (e != this &&
+	    	            e.getPosizioa().getX() == xBerria &&
+	    	            e.getPosizioa().getY() == yBerria &&
+	    	            etsaia.getIndizea() != this.getIndizea()) {
+	    	            return false;
+	    	        }
+	    	    }
+	    	}  
 	    }
 
 	    return true;
