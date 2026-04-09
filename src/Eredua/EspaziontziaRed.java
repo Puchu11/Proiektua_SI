@@ -9,4 +9,9 @@ public class EspaziontziaRed extends Espaziontzia {
     public Color getKolorea() {
     	return Color.RED;
     }
+    
+    @Override
+    public void tiroEgin() {
+    	super.tiroEgin();
+    }
 }
