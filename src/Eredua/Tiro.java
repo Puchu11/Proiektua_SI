@@ -8,36 +8,6 @@ public class Tiro extends Thread {
     public Tiro(int x, int y) {
         this.pos = new Posizioa(x, y);
     } 
-
-    @Override 
-    public void run() {
-        while (bizirik) {
-            int x = pos.getX();
-            int y = pos.getY();
-            if (y < 0) {
-                bizirik = false;
-                break;
-            }
-            try {
-                Thread.sleep(50);
-            } catch (InterruptedException e) {
-                break;
-            }           
-            MatrizeE.getEma().gelaxkaEguneratu(x, y, new HutsaEgoera());    
-            mugituGora();            
-            //
-            if (pos.getY() < 0 || pos.getX()<0 || pos.getX()>= 100) {
-                bizirik = false;             
-                break;
-            }else {
-            	if(MatrizeE.getEma().talkaEginDu(pos.getX(), pos.getY())) {
-            		this.hil();
-            	}else {
-            		MatrizeE.getEma().gelaxkaEguneratu(pos.getX(), pos.getY(), new TiroaEgoera());
-            	}
-            }
-        }
-    }
     
     public Posizioa getPosizioa() {
         return pos;
@@ -47,8 +17,9 @@ public class Tiro extends Thread {
     	pos.setY(pos.getY() - 1);
     }
 
-    private void hil() {
+    public void hil() {
         bizirik = false;
-    }
+        MatrizeE.getEma().getMatrizea()[this.getPosizioa().getY()][this.getPosizioa().getX()].gelaxkaEguneratu(new HutsaEgoera());
+        }
     
 }
