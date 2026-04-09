@@ -20,6 +20,6 @@ public class Tiro extends Thread {
     public void hil() {
         bizirik = false;
         MatrizeE.getEma().getMatrizea()[this.getPosizioa().getY()][this.getPosizioa().getX()].gelaxkaEguneratu(new HutsaEgoera());
-        }
+    }
     
 }

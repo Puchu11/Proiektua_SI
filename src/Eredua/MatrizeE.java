@@ -267,14 +267,7 @@ public class MatrizeE extends Observable {
         Espaziontzia pixel17 = EspaziontziaFactory.getEspaziontziaFactory().sortuEspaziontzia(mota, 48, 57);
         matrizea[pixel17.getPosizioa().getY()][pixel17.getPosizioa().getX()].gelaxkaEguneratu(new EspaziontziaEgoera());
     	
-        Espaziontzia pixel15 = EspaziontziaFactory.getEspaziontziaFactory().sortuEspaziontzia(mota, 48, 55);
-        matrizea[pixel15.getPosizioa().getY()][pixel15.getPosizioa().getX()].gelaxkaEguneratu(new EspaziontziaEgoera());
-        
-        Espaziontzia pixel16 = EspaziontziaFactory.getEspaziontziaFactory().sortuEspaziontzia(mota, 48, 56);
-        matrizea[pixel16.getPosizioa().getY()][pixel16.getPosizioa().getX()].gelaxkaEguneratu(new EspaziontziaEgoera());
-        
-        Espaziontzia pixel17 = EspaziontziaFactory.getEspaziontziaFactory().sortuEspaziontzia(mota, 48, 57);
-        matrizea[pixel17.getPosizioa().getY()][pixel17.getPosizioa().getX()].gelaxkaEguneratu(new EspaziontziaEgoera());
+
         
         espaziontzia.gehituEntitate(pixel1);
         espaziontzia.gehituEntitate(pixel2);
