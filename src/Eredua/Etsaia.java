@@ -42,20 +42,19 @@ public class Etsaia extends Entitatea {
 	    if (xBerria < 0 || xBerria >= 100 || yBerria < 0 || yBerria >= 60) {
 	        return false;
 	    }
-	    
-	    for (EntitateNodo nodo : MatrizeE.getEma().getEtsaiak()) {
-	    	for (Entitatea e : nodo.getLista()) {
-	    	    if (e instanceof Etsaia) {
-	    	        Etsaia etsaia = (Etsaia) e;
-
-	    	        if (e != this &&
-	    	            e.getPosizioa().getX() == xBerria &&
-	    	            e.getPosizioa().getY() == yBerria &&
-	    	            etsaia.getIndizea() != this.getIndizea()) {
-	    	            return false;
-	    	        }
-	    	    }
-	    	}  
+	    for (EntitateNodo nodo: MatrizeE.getEma().getEtsaiak()) {
+	    	for(Entitatea e: nodo.getLista()) {
+	    		if(e instanceof Etsaia) {
+	    			Etsaia etsaia=(Etsaia) e;
+	    			
+	    			if(	e!= this && 
+	    				e.getPosizioa().getX() == xBerria &&
+	    				e.getPosizioa().getY()==yBerria && 
+	    				etsaia.getIndizea()!=this.getIndizea()) {
+	    				return false;
+	    			}
+	    		}
+	    	}
 	    }
 
 	    return true;
