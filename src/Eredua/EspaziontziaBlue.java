@@ -9,4 +9,13 @@ public class EspaziontziaBlue extends Espaziontzia {
     public Color getKolorea() {
         return Color.BLUE;
     }
+    
+    @Override
+    public void tiroEgin() {
+        if (getTiroMota() == 1) {
+            System.out.println("Blue ezin du gezirik bota!");
+            setTiroMota(0);
+        }
+        super.tiroEgin();
+    }
 }
