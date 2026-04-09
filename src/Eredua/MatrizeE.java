@@ -77,7 +77,7 @@ public class MatrizeE extends Observable {
     
     private void etsaiakSortu() {
         int kopurua = 6 + rnd.nextInt(4);   
-        int sortuta = 0;                    
+        int sortuta 	= 0;                    
         int saiakerak = 0;                 
         int maxSaiakerak = 500;
 
@@ -267,6 +267,15 @@ public class MatrizeE extends Observable {
         Espaziontzia pixel17 = EspaziontziaFactory.getEspaziontziaFactory().sortuEspaziontzia(mota, 48, 57);
         matrizea[pixel17.getPosizioa().getY()][pixel17.getPosizioa().getX()].gelaxkaEguneratu(new EspaziontziaEgoera());
     	
+        Espaziontzia pixel15 = EspaziontziaFactory.getEspaziontziaFactory().sortuEspaziontzia(mota, 48, 55);
+        matrizea[pixel15.getPosizioa().getY()][pixel15.getPosizioa().getX()].gelaxkaEguneratu(new EspaziontziaEgoera());
+        
+        Espaziontzia pixel16 = EspaziontziaFactory.getEspaziontziaFactory().sortuEspaziontzia(mota, 48, 56);
+        matrizea[pixel16.getPosizioa().getY()][pixel16.getPosizioa().getX()].gelaxkaEguneratu(new EspaziontziaEgoera());
+        
+        Espaziontzia pixel17 = EspaziontziaFactory.getEspaziontziaFactory().sortuEspaziontzia(mota, 48, 57);
+        matrizea[pixel17.getPosizioa().getY()][pixel17.getPosizioa().getX()].gelaxkaEguneratu(new EspaziontziaEgoera());
+        
         espaziontzia.gehituEntitate(pixel1);
         espaziontzia.gehituEntitate(pixel2);
         espaziontzia.gehituEntitate(pixel3);
@@ -286,4 +295,5 @@ public class MatrizeE extends Observable {
         espaziontzia.gehituEntitate(pixel17);
         
     }
+    
 }

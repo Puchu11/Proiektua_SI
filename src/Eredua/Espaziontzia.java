@@ -41,6 +41,7 @@ public abstract class Espaziontzia extends Entitatea {
 			
 		}
 	}
+	
 	private void sortuTiroGezi() {
 		int x =this.getPosizioa().getX();
 		int y = this.getPosizioa().getY()-4;
