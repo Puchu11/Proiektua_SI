@@ -213,7 +213,7 @@ public class MatrizeE extends Observable {
     	}
     }
 
-    public void estaiaEzabatu(int x, int y) {
+    public void etsaiakEzabatu(int x, int y) {
     	EntitateNodo nodoEzabatu = null;
     	Entitatea entitateaEzabatu = null;
     	
