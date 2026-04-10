@@ -15,9 +15,13 @@ public abstract class Espaziontzia extends Entitatea {
 		this.getPosizioa().setY(this.getPosizioa().getY()-1);
 	}
 	
+	public void setTiro(int pMota) {
+		this.tiroMota=pMota;
+	}
+	
 	public void tiroEgin() {
 		if(tiroMota==1) {
-			if(geziMunizioa>0) {
+			if(geziMunizioa > 0) {
 				geziMunizioa--;
 				System.out.println("Gezia geratzen da: "+geziMunizioa);
 				// 3 pixel sortzen ditugu gezi itxura egiteko
@@ -91,6 +95,7 @@ public abstract class Espaziontzia extends Entitatea {
     public int getTiroMota() {
     	return this.tiroMota;
     }
+    
     public void setTiroMota(int pMota) {
     	if(pMota>=0 && pMota<=2) {
     		this.tiroMota=pMota;

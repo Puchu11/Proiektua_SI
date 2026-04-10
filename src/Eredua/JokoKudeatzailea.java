@@ -46,4 +46,9 @@ public class JokoKudeatzailea extends Observable {
 		this.setChanged();
 		this.notifyObservers(this.egoera);
 	}
+	
+	public void mezuaErakutsi(String mezua) {
+		this.setChanged();
+		this.notifyObservers(mezua);
+	}
 }

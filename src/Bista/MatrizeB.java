@@ -1,6 +1,7 @@
 package Bista;
 import java.awt.CardLayout;
 import java.awt.Color;
+import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
@@ -9,7 +10,11 @@ import java.util.Observable;
 import java.util.Observer;
 
 import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JLayeredPane;
 import javax.swing.JPanel;
+import javax.swing.SwingConstants;
+import javax.swing.SwingUtilities;
 import javax.swing.Timer;
 
 import Eredua.Egoera;
@@ -26,6 +31,8 @@ public class MatrizeB extends JFrame implements Observer {
     private IrabaziPantaila irabaziPantaila; 
     private GalduPantaila galduPantaila; 
 	private GelaxkaB labelN[][] = new GelaxkaB[60][100];
+	private JLabel mezua = new JLabel("", SwingConstants.CENTER);
+	private Timer mezuaTimer;
 
 	private Controller controller = null;
 	
@@ -38,12 +45,23 @@ public class MatrizeB extends JFrame implements Observer {
 		kontenedorea = new JPanel (nabegadorea); 
 		
 		jokoPanela = getPanel();
+		
 		irabaziPantaila=new IrabaziPantaila();
 		galduPantaila=new GalduPantaila();
 		kontenedorea.add(jokoPanela, "JOKOA");
 	    kontenedorea.add(irabaziPantaila,"IRABAZI_PANTAILA");
 		kontenedorea.add(galduPantaila,"GALDU_PANTAILA");
 		getContentPane().add(kontenedorea);	
+		
+		mezua.setForeground(Color.YELLOW);
+		mezua.setFont(new Font("Arial", Font.BOLD, 20));
+		mezua.setBounds(0, 500, 900, 50);
+		mezua.setVisible(false);
+
+		getLayeredPane().add(mezua, JLayeredPane.POPUP_LAYER);
+		
+		mezuaTimer = new Timer(3000, e -> mezua.setVisible(false));
+		mezuaTimer.setRepeats(false);
 		
 		JokoKudeatzailea.getNireJokoKudeatzailea().addObserver(this);
 		
@@ -78,7 +96,9 @@ public class MatrizeB extends JFrame implements Observer {
 			nabegadorea.show(kontenedorea, "IRABAZI_PANTAILA");
 		} else if (arg == Egoera.GALDU) {
 			nabegadorea.show(kontenedorea, "GALDU_PANTAILA");
-		}
+		} else if(arg instanceof String mezua) {
+			mezuaErakutsi(mezua);
+		}	
 	}
 
 	private JPanel getPanel() {
@@ -87,6 +107,18 @@ public class MatrizeB extends JFrame implements Observer {
 			jokoPanela.setLayout(new GridLayout(60, 100, 0, 0));
 		}
 		return jokoPanela;
+	}
+	
+	private void mezuaErakutsi(String m) {
+	    mezua.setText(m);
+	    mezua.setVisible(true);
+
+	    SwingUtilities.invokeLater(() -> {
+	        int zabalera = getWidth();
+	        mezua.setBounds(0, 20, zabalera, 50);
+	    });
+
+	    mezuaTimer.restart();
 	}
 
 	private Controller getController() {

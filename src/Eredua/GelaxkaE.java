@@ -21,7 +21,7 @@ public class GelaxkaE extends Observable{
 	public void gelaxkaEguneratu(GelaxkaEgoera berria) {	
 		this.egoera = berria;
 		setChanged();
-		this.notifyObservers(this.egoera);
+		this.notifyObservers(this.egoera.lortuKolorea());
 	}
 
 	public String getEntitateMota() {

@@ -21,14 +21,11 @@ public class GelaxkaB extends JLabel implements Observer {
 	}
 	
 	@Override
-	public void update(Observable o, Object arg) {
-		
-		if (arg instanceof GelaxkaEgoera egoera) {
+	public void update(Observable o, Object arg) {		
+		if (arg instanceof Color kolorea) {
 				
-               setBackground(egoera.lortuKolorea());
+               setBackground(kolorea);
                repaint();
-                
-				
 		}
 	}
 }

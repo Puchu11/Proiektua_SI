@@ -217,75 +217,73 @@ public class MatrizeE extends Observable {
   	
     	
     	Espaziontzia pixel1 = EspaziontziaFactory.getEspaziontziaFactory().sortuEspaziontzia(mota, 50, 55);
+        espaziontzia.gehituEntitate(pixel1);  	
         matrizea[pixel1.getPosizioa().getY()][pixel1.getPosizioa().getX()].gelaxkaEguneratu(new EspaziontziaEgoera());
         
         Espaziontzia pixel2 = EspaziontziaFactory.getEspaziontziaFactory().sortuEspaziontzia(mota, 51, 55);
+        espaziontzia.gehituEntitate(pixel2);  
         matrizea[pixel2.getPosizioa().getY()][pixel2.getPosizioa().getX()].gelaxkaEguneratu(new EspaziontziaEgoera());
         
         Espaziontzia pixel3 = EspaziontziaFactory.getEspaziontziaFactory().sortuEspaziontzia(mota, 49, 55);
+        espaziontzia.gehituEntitate(pixel3);  
         matrizea[pixel3.getPosizioa().getY()][pixel3.getPosizioa().getX()].gelaxkaEguneratu(new EspaziontziaEgoera());
         
         Espaziontzia pixel4 = EspaziontziaFactory.getEspaziontziaFactory().sortuEspaziontzia(mota, 49, 54);
+        espaziontzia.gehituEntitate(pixel4);  
         matrizea[pixel4.getPosizioa().getY()][pixel4.getPosizioa().getX()].gelaxkaEguneratu(new EspaziontziaEgoera());
         
         Espaziontzia pixel5 = EspaziontziaFactory.getEspaziontziaFactory().sortuEspaziontzia(mota, 51, 54);
+        espaziontzia.gehituEntitate(pixel5);  
         matrizea[pixel5.getPosizioa().getY()][pixel5.getPosizioa().getX()].gelaxkaEguneratu(new EspaziontziaEgoera());
 
         Espaziontzia pixel6 = EspaziontziaFactory.getEspaziontziaFactory().sortuEspaziontzia(mota, 50, 56);
+        espaziontzia.gehituEntitate(pixel6);  
         matrizea[pixel6.getPosizioa().getY()][pixel6.getPosizioa().getX()].gelaxkaEguneratu(new EspaziontziaEgoera());
 
         Espaziontzia pixel7 = EspaziontziaFactory.getEspaziontziaFactory().sortuEspaziontzia(mota, 50, 54);
+        espaziontzia.gehituEntitate(pixel7);  
         matrizea[pixel7.getPosizioa().getY()][pixel7.getPosizioa().getX()].gelaxkaEguneratu(new EspaziontziaEgoera());
         
         Espaziontzia pixel8 = EspaziontziaFactory.getEspaziontziaFactory().sortuEspaziontzia(mota, 50, 53);
+        espaziontzia.gehituEntitate(pixel8);  
         matrizea[pixel8.getPosizioa().getY()][pixel8.getPosizioa().getX()].gelaxkaEguneratu(new EspaziontziaEgoera());
         
         Espaziontzia pixel9 = EspaziontziaFactory.getEspaziontziaFactory().sortuEspaziontzia(mota, 50, 52);
+        espaziontzia.gehituEntitate(pixel9);  
         matrizea[pixel9.getPosizioa().getY()][pixel9.getPosizioa().getX()].gelaxkaEguneratu(new EspaziontziaEgoera());
         
         Espaziontzia pixel10 = EspaziontziaFactory.getEspaziontziaFactory().sortuEspaziontzia(mota, 51, 53);
+        espaziontzia.gehituEntitate(pixel10);  
         matrizea[pixel10.getPosizioa().getY()][pixel10.getPosizioa().getX()].gelaxkaEguneratu(new EspaziontziaEgoera());
         
         Espaziontzia pixel11 = EspaziontziaFactory.getEspaziontziaFactory().sortuEspaziontzia(mota, 49, 53);
+        espaziontzia.gehituEntitate(pixel11);  
         matrizea[pixel11.getPosizioa().getY()][pixel11.getPosizioa().getX()].gelaxkaEguneratu(new EspaziontziaEgoera());
         
         Espaziontzia pixel12 = EspaziontziaFactory.getEspaziontziaFactory().sortuEspaziontzia(mota, 52, 55);
+        espaziontzia.gehituEntitate(pixel12);  
         matrizea[pixel12.getPosizioa().getY()][pixel12.getPosizioa().getX()].gelaxkaEguneratu(new EspaziontziaEgoera());
         
         Espaziontzia pixel13 = EspaziontziaFactory.getEspaziontziaFactory().sortuEspaziontzia(mota, 52, 56);
+        espaziontzia.gehituEntitate(pixel13);  
         matrizea[pixel13.getPosizioa().getY()][pixel13.getPosizioa().getX()].gelaxkaEguneratu(new EspaziontziaEgoera());
         
         Espaziontzia pixel14 = EspaziontziaFactory.getEspaziontziaFactory().sortuEspaziontzia(mota, 52, 57);
+        espaziontzia.gehituEntitate(pixel14);  
         matrizea[pixel14.getPosizioa().getY()][pixel14.getPosizioa().getX()].gelaxkaEguneratu(new EspaziontziaEgoera());
         
         Espaziontzia pixel15 = EspaziontziaFactory.getEspaziontziaFactory().sortuEspaziontzia(mota, 48, 55);
+        espaziontzia.gehituEntitate(pixel15);  
         matrizea[pixel15.getPosizioa().getY()][pixel15.getPosizioa().getX()].gelaxkaEguneratu(new EspaziontziaEgoera());
         
         Espaziontzia pixel16 = EspaziontziaFactory.getEspaziontziaFactory().sortuEspaziontzia(mota, 48, 56);
+        espaziontzia.gehituEntitate(pixel16);  
         matrizea[pixel6.getPosizioa().getY()][pixel16.getPosizioa().getX()].gelaxkaEguneratu(new EspaziontziaEgoera());
         
         Espaziontzia pixel17 = EspaziontziaFactory.getEspaziontziaFactory().sortuEspaziontzia(mota, 48, 57);
+        espaziontzia.gehituEntitate(pixel17);  
         matrizea[pixel17.getPosizioa().getY()][pixel17.getPosizioa().getX()].gelaxkaEguneratu(new EspaziontziaEgoera());
     	
-
-        
-        espaziontzia.gehituEntitate(pixel1);
-        espaziontzia.gehituEntitate(pixel2);
-        espaziontzia.gehituEntitate(pixel3);
-        espaziontzia.gehituEntitate(pixel4);
-        espaziontzia.gehituEntitate(pixel5);
-        espaziontzia.gehituEntitate(pixel6);
-        espaziontzia.gehituEntitate(pixel7);
-        espaziontzia.gehituEntitate(pixel8);
-        espaziontzia.gehituEntitate(pixel9);
-        espaziontzia.gehituEntitate(pixel10);
-        espaziontzia.gehituEntitate(pixel11);
-        espaziontzia.gehituEntitate(pixel12);
-        espaziontzia.gehituEntitate(pixel13);
-        espaziontzia.gehituEntitate(pixel14);
-        espaziontzia.gehituEntitate(pixel15);
-        espaziontzia.gehituEntitate(pixel16);
-        espaziontzia.gehituEntitate(pixel17);
         
     }
     
