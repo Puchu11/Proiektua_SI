@@ -29,7 +29,8 @@ class EtsaiaEgoera implements GelaxkaEgoera {
 	public Color lortuKolorea() {
 		return Color.GREEN;
 		
-		}
+	}
+	
 	@Override
 	public String lortuMota() {
 		return "etsaia";
@@ -40,6 +41,7 @@ class EtsaiaEgoera implements GelaxkaEgoera {
 }
 
 class EspaziontziaEgoera implements GelaxkaEgoera{
+	
 	@Override
 	public Color lortuKolorea() {
 		return MatrizeE.getEma().getEspaziontzia().getKolorea();
