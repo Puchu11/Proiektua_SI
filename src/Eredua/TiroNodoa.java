@@ -22,18 +22,31 @@ public class TiroNodoa extends Thread {
 				bizirik=false;
 				break;
 			}
-			if (!bizirikDaude()) {
-				hil();
-			}else {
-				//ezabatu posizio zaharrak
-				for(Tiro t: tiroLista) {
-					MatrizeE.getEma().getMatrizea()[t.getPosizioa().getY()][t.getPosizioa().getX()].gelaxkaEguneratu(new HutsaEgoera());
-				}
-				//mugitu dena
-				for(Tiro t: tiroLista) {
+	
+			//ezabatu posizio zaharrak
+			for(Tiro t: tiroLista) {
+				MatrizeE.getEma().getMatrizea()[t.getPosizioa().getY()][t.getPosizioa().getX()].gelaxkaEguneratu(new HutsaEgoera());
+			}
+			
+			//mugitu eta kolisioa egiaztatu
+			for(Tiro t: tiroLista) {
 					t.mugituGora();
+					
+					if (t.getPosizioa().getY() <= 0) {
+						this.bizirik = false; 
+						break;
+					}
+					
+					GelaxkaE gelaxka = MatrizeE.getEma().getGelaxka(t.getPosizioa().getX(), t.getPosizioa().getY());
+					if (gelaxka != null && gelaxka.getEntitateteMota().equals("etsaia")) {
+						MatrizeE.getEma().etsaiaEzabatu(t.getPosizioa().getX(), t.getPosizioa().getY());
+						this.bizirik = false; 
+						break; 
+						
+					}
 				}
-				//marraztu dena
+				//marraztu bizirik badago 
+			if (bizirik) {
 				for (Tiro t: tiroLista) {
 					MatrizeE.getEma().getMatrizea()[t.getPosizioa().getY()][t.getPosizioa().getX()].gelaxkaEguneratu(new TiroaEgoera());
 				}
