@@ -38,7 +38,7 @@ public class TiroNodoa extends Thread {
 					}
 					
 					GelaxkaE gelaxka = MatrizeE.getEma().getGelaxka(t.getPosizioa().getX(), t.getPosizioa().getY());
-					if (gelaxka != null && gelaxka.getEntitateteMota().equals("etsaia")) {
+					if (gelaxka != null && gelaxka.getEntitateMota().equals("etsaia")) {
 						MatrizeE.getEma().etsaiaEzabatu(t.getPosizioa().getX(), t.getPosizioa().getY());
 						this.bizirik = false; 
 						break; 
