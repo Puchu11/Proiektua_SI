@@ -43,6 +43,7 @@ public class TiroNodoa extends Thread {
 						this.bizirik = false; 
 						break; 
 						
+						
 					}
 				}
 				//marraztu bizirik badago 
