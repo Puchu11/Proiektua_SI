@@ -211,6 +211,10 @@ public class MatrizeE extends Observable {
     		}
     		
     	}
+    	if (espaziontziaTalka()) {
+            jokoaAmaitu();
+            JokoKudeatzailea.getNireJokoKudeatzailea().egoeraAldatu(Egoera.GALDU);
+    	}
     }
 
     public void etsaiakEzabatu(int x, int y) {
@@ -330,6 +334,19 @@ public class MatrizeE extends Observable {
         matrizea[pixel17.getPosizioa().getY()][pixel17.getPosizioa().getX()].gelaxkaEguneratu(new EspaziontziaEgoera());
     	
         
+    }
+    private boolean espaziontziaTalka() {
+        for (EntitateNodo etsaiNodo : etsaiak) {
+            for (Entitatea etsaiPixel : etsaiNodo.getLista()) {
+                for (Entitatea espazPixel : espaziontzia.getLista()) {
+                    if (etsaiPixel.getPosizioa().getX() == espazPixel.getPosizioa().getX() &&
+                        etsaiPixel.getPosizioa().getY() == espazPixel.getPosizioa().getY()) {
+                        return true;
+                    }
+                }
+            }
+        }
+        return false;
     }
     
 }
