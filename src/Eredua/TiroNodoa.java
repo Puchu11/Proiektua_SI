@@ -3,7 +3,7 @@ package Eredua;
 import java.util.List;
 import java.util.ArrayList;
 
-public class TiroNodoa extends Thread {
+public class TiroNodoa extends Thread implements TiroInterfazea {
 	private List<Tiro> tiroLista = new ArrayList<>();
 	private volatile boolean bizirik;
 	

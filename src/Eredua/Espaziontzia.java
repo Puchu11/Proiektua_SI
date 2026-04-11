@@ -3,6 +3,7 @@ package Eredua;
 import java.awt.Color;
 
 public abstract class Espaziontzia extends Entitatea {
+	
 	private int geziMunizioa=30;
 	private int erronboMunizioa=20;
 	private int tiroMota = 0;

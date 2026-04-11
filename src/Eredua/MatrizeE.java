@@ -202,8 +202,13 @@ public class MatrizeE extends Observable {
     		if (e.mugituDaiteke(norabideHautatuta)) {
     			e.mugitu(norabideHautatuta);
     			
-    			for (Entitatea ent : e.getLista()) {
-    				if (ent.getPosizioa().getY() >= 52) {
+    			for (EntitateNodo ent : etsaiak) {
+    				if (ent.getLista().get(14).getPosizioa().getY() >= 59){
+    					try {
+    						Thread.sleep(500);
+    					}catch (InterruptedException a) {
+    						break;
+    					}
     					JokoKudeatzailea.getNireJokoKudeatzailea().egoeraAldatu(Egoera.GALDU);
     					return;
     				}
@@ -211,6 +216,7 @@ public class MatrizeE extends Observable {
     		}
     		
     	}
+    	
     	if (espaziontziaTalka()) {
             jokoaAmaitu();
             JokoKudeatzailea.getNireJokoKudeatzailea().egoeraAldatu(Egoera.GALDU);

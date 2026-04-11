@@ -55,7 +55,7 @@ public class MatrizeB extends JFrame implements Observer {
 		
 		mezua.setForeground(Color.YELLOW);
 		mezua.setFont(new Font("Arial", Font.BOLD, 20));
-		mezua.setBounds(0, 500, 900, 50);
+		mezua.setBounds(0, 20, 900, 50);
 		mezua.setVisible(false);
 
 		getLayeredPane().add(mezua, JLayeredPane.POPUP_LAYER);

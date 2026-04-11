@@ -1,7 +1,7 @@
 package Eredua;
 import java.util.ArrayList;
 
-public class Tiro extends Thread {
+public class Tiro implements TiroInterfazea{
 
     private Posizioa pos;
     private volatile boolean bizirik = true;
@@ -20,6 +20,5 @@ public class Tiro extends Thread {
     public void hil() {
         bizirik = false;
         MatrizeE.getEma().getMatrizea()[this.getPosizioa().getY()][this.getPosizioa().getX()].gelaxkaEguneratu(new HutsaEgoera());
-    }
-    
+    }    
 }
