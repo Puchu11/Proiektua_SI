@@ -223,19 +223,22 @@ public class MatrizeE extends Observable {
     public void etsaiakEzabatu(int x, int y) {
     	
     	EntitateNodo nodoEzabatu = null;
-    	Entitatea entitateaEzabatu = null;
-    	
-    	for (EntitateNodo nodo : etsaiak) {
+    	// For klasikoa erabiltzen dugu ArrayList-arekin seguruagoa delako. Etsai fantasmak ekiditeko.
+    	for (int i=0; i < etsaiak.size();i++) {
+    		EntitateNodo nodo= etsaiak.get(i);
     		for (Entitatea e : nodo.getLista()) {
     			if (e.getPosizioa().getX() == x && e.getPosizioa().getY() == y) {
-    				entitateaEzabatu = e;
     				nodoEzabatu = nodo;
     				break; 
     			}
     		}
+    		if (nodoEzabatu != null) {
+    			break;
+    		}
     	}
-    	
+    	//Etsai osoa (pixel guztiak) ezabatu matrizean eta zerrendan
     	if (nodoEzabatu != null) {
+    		// Matrizean pixel guztiak "hutsa" (beltz) jarri berehala
     		for (Entitatea e:nodoEzabatu.getLista()) {
     			matrizea[e.getPosizioa().getY()][e.getPosizioa().getX()].gelaxkaEguneratu(new HutsaEgoera());
     		}
