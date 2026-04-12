@@ -209,15 +209,20 @@ public class MatrizeE extends Observable {
     	}	
     		for (int i = 0; i < etsaiak.size(); i++) {
     			EntitateNodo entNodo = etsaiak.get(i);
-    			if (!entNodo.getLista().isEmpty()){
-    				if(entNodo.getLista().get(0).getPosizioa().getY()>=59) {
-    					jokoaAmaitu();
-    					JokoKudeatzailea.getNireJokoKudeatzailea().egoeraAldatu(Egoera.GALDU);
-    					return;
-    				}
-    			}
+    			if (!entNodo.getLista().isEmpty()) {
+    		        // Begiratu etsaiaren pixel GUZTIAK, baten bat behera iritsi den
+    		        for (Entitatea p : entNodo.getLista()) {
+    		            if (p.getPosizioa().getY() >= 59) { // 58 jarri dugu muga gisa segurtasunagatik
+    		                System.out.println("!!! KONSOLEAN: Etsaia behera iritsi da (" + p.getPosizioa().getY() + ") !!!");
+    		                jokoaAmaitu();  
+    		                JokoKudeatzailea.getNireJokoKudeatzailea().egoeraAldatu(Egoera.GALDU);
+    		                return; 
+    		            }
+    		        }
+    		    }
     		}
     		if(espaziontziaTalka()) {
+    			System.out.println("!!GALDU DOZU:TALKA");
     			jokoaAmaitu();
     			JokoKudeatzailea.getNireJokoKudeatzailea().egoeraAldatu(Egoera.GALDU);
     		}

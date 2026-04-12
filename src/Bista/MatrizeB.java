@@ -94,8 +94,10 @@ public class MatrizeB extends JFrame implements Observer {
 			getController().hasi();
 		} else if (arg == Egoera.IRABAZI) {
 			nabegadorea.show(kontenedorea, "IRABAZI_PANTAILA");
+			jokoPanela.repaint();
 		} else if (arg == Egoera.GALDU) {
 			nabegadorea.show(kontenedorea, "GALDU_PANTAILA");
+			this.repaint();
 		} else if(arg instanceof String mezua) {
 			mezuaErakutsi(mezua);
 		}	
