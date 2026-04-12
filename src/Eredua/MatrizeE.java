@@ -182,7 +182,10 @@ public class MatrizeE extends Observable {
         etsaienTimer.schedule(ataza, 0, 200);
     }
     private void etsaiakMugitu() {
-    	for(EntitateNodo e: etsaiak) {
+    	//for-each arazoak ematen ebazan eta erroreak ematen ebazan kolizioa egiterakoan, izan be lista zeharkatzen dogunean eta aldi berean ezabatzen arazoak ematen ebazan
+    	for(int i= 0; i < etsaiak.size(); i++) {
+    		EntitateNodo e = etsaiak.get(i);
+    		
     		int aukera=rnd.nextInt(3);
     		String norabideHautatuta = "";
     		
@@ -196,32 +199,25 @@ public class MatrizeE extends Observable {
     			norabideHautatuta = "behera"; 
     		}
     		
-    		
-    		
-    		
     		if (e.mugituDaiteke(norabideHautatuta)) {
     			e.mugitu(norabideHautatuta);
-    			
-    			for (EntitateNodo ent : etsaiak) {
-    				if (ent.getLista().get(14).getPosizioa().getY() >= 59){
-    					try {
-    						Thread.sleep(500);
-    					}catch (InterruptedException a) {
-    						break;
-    					}
+    		}
+    	}	
+    		for (int i = 0; i < etsaiak.size(); i++) {
+    			EntitateNodo entNodo = etsaiak.get(i);
+    			if (entNodo.getLista().size() > 14){
+    				if(entNodo.getLista().get(14).getPosizioa().getY()>=59) {
     					JokoKudeatzailea.getNireJokoKudeatzailea().egoeraAldatu(Egoera.GALDU);
     					return;
     				}
     			}
     		}
-    		
+    		if(espaziontziaTalka()) {
+    			jokoaAmaitu();
+    			JokoKudeatzailea.getNireJokoKudeatzailea().egoeraAldatu(Egoera.GALDU);
+    		}
     	}
     	
-    	if (espaziontziaTalka()) {
-            jokoaAmaitu();
-            JokoKudeatzailea.getNireJokoKudeatzailea().egoeraAldatu(Egoera.GALDU);
-    	}
-    }
 
     public void etsaiakEzabatu(int x, int y) {
     	
