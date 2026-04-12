@@ -217,6 +217,7 @@ public class MatrizeE extends Observable {
     			JokoKudeatzailea.getNireJokoKudeatzailea().egoeraAldatu(Egoera.GALDU);
     		}
     	}
+   
     	
 
     public void etsaiakEzabatu(int x, int y) {
