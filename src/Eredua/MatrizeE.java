@@ -211,6 +211,7 @@ public class MatrizeE extends Observable {
     			EntitateNodo entNodo = etsaiak.get(i);
     			if (!entNodo.getLista().isEmpty()){
     				if(entNodo.getLista().get(0).getPosizioa().getY()>=59) {
+    					jokoaAmaitu();
     					JokoKudeatzailea.getNireJokoKudeatzailea().egoeraAldatu(Egoera.GALDU);
     					return;
     				}
