@@ -183,7 +183,11 @@ public class MatrizeE extends Observable {
     }
     private void etsaiakMugitu() {
     	//for-each arazoak ematen ebazan eta erroreak ematen ebazan kolizioa egiterakoan, izan be lista zeharkatzen dogunean eta aldi berean ezabatzen arazoak ematen ebazan
+    	int kopurua= etsaiak.size();
     	for(int i= 0; i < etsaiak.size(); i++) {
+    		
+    		if(i>=etsaiak.size()) break;
+    		
     		EntitateNodo e = etsaiak.get(i);
     		
     		int aukera=rnd.nextInt(3);
@@ -205,8 +209,8 @@ public class MatrizeE extends Observable {
     	}	
     		for (int i = 0; i < etsaiak.size(); i++) {
     			EntitateNodo entNodo = etsaiak.get(i);
-    			if (entNodo.getLista().size() > 14){
-    				if(entNodo.getLista().get(14).getPosizioa().getY()>=59) {
+    			if (!entNodo.getLista().isEmpty()){
+    				if(entNodo.getLista().get(0).getPosizioa().getY()>=59) {
     					JokoKudeatzailea.getNireJokoKudeatzailea().egoeraAldatu(Egoera.GALDU);
     					return;
     				}
