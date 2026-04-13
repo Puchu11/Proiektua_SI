@@ -1,0 +1,80 @@
+
+
+@startuml
+skinparam packageStyle rectangle
+
+package "Eredua (Modelo)" {
+  abstract class Entitatea {
+    - posizioa : Posizioa
+    + Entitatea(x:int, y:int)
+    + getPosizioa() : Posizioa
+    + setPosizioa(pos:Posizioa) : void
+  }
+
+  class Posizioa {
+    - x : int
+    - y : int
+    + Posizioa(x:int, y:int)
+    + getX() : int
+    + setX(x:int) : void
+    + getY() : int
+    + setY(y:int) : void
+  }
+
+  class Espaziontzia
+  class Etsaia
+  class Tiro {
+    - aktibo : boolean
+  }
+
+  class MatrizeKudeatzailea {
+    - {static} ema : MatrizeKudeatzailea
+    - {static} zabalera : int = 60
+    - {static} altuera : int = 100
+    - matrizea : Entitatea[][]
+    - entitateak : ArrayList<Entitatea>
+    - MatrizeKudeatzailea()
+    + {static} getEma() : MatrizeKudeatzailea
+    + MatrizeaSortu() : void
+  }
+}
+
+package "Bista (Vista)" {
+  class Matrizea {
+    - lblLerroak : JLabel
+    - lblZutabeak : JLabel
+    - panel : JPanel
+    + Matrizea()
+    + matrizeaSortu() : void
+    + update(o:Observable, arg:Object) : void
+  }
+}
+
+package "(Default)" {
+  class Nagusia {
+    + main(args:String[]) : void
+  }
+}
+
+' Herencia
+Entitatea <|-- Espaziontzia
+Entitatea <|-- Etsaia
+Entitatea <|-- Tiro
+
+' Composición/asociación
+Entitatea *-- Posizioa
+
+' Observable/Observer
+MatrizeKudeatzailea --|> Observable
+Matrizea ..|> Observer
+Matrizea --> MatrizeKudeatzailea : addObserver()\ngetEma()
+
+' Uso desde main
+Nagusia --> MatrizeKudeatzailea
+Nagusia --> Matrizea
+
+' Contenido del modelo
+MatrizeKudeatzailea "1" o-- "0..*" Entitatea : entitateak
+MatrizeKudeatzailea "1" o-- "1" Entitatea[][] : matrizea
+
+@enduml
