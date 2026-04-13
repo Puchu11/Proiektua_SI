@@ -1,8 +1,0 @@
-Patroiak:
-	Factory --> Jokalaria (Jara)
-	Composite --> Etsaiak, Jokalaria, Tiroa (Iago)
-	Strategy --> Tiroa (Ugatz)
-	State --> Gelaxkak (Andrea)
-	
-Implementar los patrones.
-Estan hechos los de Factory y Composite en el visualParadigm. Falta el strategy.
