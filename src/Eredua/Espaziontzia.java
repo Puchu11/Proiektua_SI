@@ -90,6 +90,7 @@ public abstract class Espaziontzia extends Entitatea {
 		erronboa.gehituTiroa(new Tiro(x, y-2));
 		erronboa.gehituTiroa(new Tiro(x, y-1));
 		
+		
 		erronboa.start();
 	}
  

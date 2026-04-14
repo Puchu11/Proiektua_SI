@@ -4,13 +4,13 @@ import java.util.List;
 import java.util.ArrayList;
 
 public class TiroNodoa extends Thread implements TiroInterfazea {
-	private List<Tiro> tiroLista = new ArrayList<>();
+	private List<TiroInterfazea> tiroLista = new ArrayList<>();
 	private volatile boolean bizirik;
 	
 	public TiroNodoa () {
 		this.bizirik=true;
 	}
-	public void gehituTiroa(Tiro t) {
+	public void gehituTiroa(TiroInterfazea t) {
         tiroLista.add(t);
     }
 	@Override
@@ -22,51 +22,49 @@ public class TiroNodoa extends Thread implements TiroInterfazea {
 				bizirik=false;
 				break;
 			}
-	
-			//ezabatu posizio zaharrak
-			for(Tiro t: tiroLista) {
-				MatrizeE.getEma().getMatrizea()[t.getPosizioa().getY()][t.getPosizioa().getX()].gelaxkaEguneratu(new HutsaEgoera());
-			}
 			
 			//mugitu eta kolisioa egiaztatu
-			for(Tiro t: tiroLista) {
+			for(TiroInterfazea tInterfazea: tiroLista) {
+				Tiro t = (Tiro) tInterfazea;
+				MatrizeE.getEma().getMatrizea()[t.getPosizioa().getY()][t.getPosizioa().getX()].gelaxkaEguneratu(new HutsaEgoera());
 					t.mugituGora();
 					
 					if (t.getPosizioa().getY() <= 0) {
-						this.bizirik = false; 
+						try {
+							Thread.sleep(50);
+						}catch (InterruptedException e) {
+							bizirik=false;
+							break;
+						}
+						
+						hil();
 						break;
 					}
 					
 					GelaxkaE gelaxka = MatrizeE.getEma().getGelaxka(t.getPosizioa().getX(), t.getPosizioa().getY());
 					if (gelaxka != null && gelaxka.getEntitateMota().equals("etsaia")) {
 						MatrizeE.getEma().etsaiakEzabatu(t.getPosizioa().getX(), t.getPosizioa().getY());
-						this.bizirik = false; 
-						break; 
-						
-						
+						hil();
+						break; 						
 					}
-				}
-				//marraztu bizirik badago 
-			if (bizirik) {
-				for (Tiro t: tiroLista) {
 					MatrizeE.getEma().getMatrizea()[t.getPosizioa().getY()][t.getPosizioa().getX()].gelaxkaEguneratu(new TiroaEgoera());
 				}
-			}
 		}
 	}
 	public void mugituGora() {
-		for (Tiro t: tiroLista) {
+		for (TiroInterfazea t: tiroLista) {
 			t.mugituGora();
 		}
-	}
+	 }
 	public void hil() {
-		for(Tiro t: tiroLista) {
+		for(TiroInterfazea t: tiroLista) {
 			t.hil();
 		}
 		bizirik=false;
 	}
 	public boolean bizirikDaude() {
-		for (Tiro t: tiroLista) {
+		for (TiroInterfazea tInterfazea: tiroLista) {
+			Tiro t = (Tiro) tInterfazea;
 			if(t.getPosizioa().getY()<=0) {
 				return false;
 			}

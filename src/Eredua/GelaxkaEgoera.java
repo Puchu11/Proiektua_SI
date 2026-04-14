@@ -34,8 +34,6 @@ class EtsaiaEgoera implements GelaxkaEgoera {
 	@Override
 	public String lortuMota() {
 		return "etsaia";
-	
-		
 	}
 	
 }

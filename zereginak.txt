@@ -1,0 +1,27 @@
+Para el Sprint 3 ir poniendo vuestras ideas para el juego, e ir haciendolas:
+
+IMPLEMENTACION GRAFICA Y DE SONIDO:
+	1. Al principio del juego poner una imagen del titulo del juego, no solo un texto y añadir musica.
+	2. Cada vez que disparas que haga Soniditos (Puede ser para cada tiro o uno general para los tres).
+	3. Al perder, para el juego unos segundo, poner musica de perder (como la de MArio Bros por ejemplo).
+	
+	
+JUGABILIDAD:
+	GENERAL
+	1. Rejugabilidad
+	2. Poner una dificultad (Que cada dificultad tenga algo como: disparar mas lento, tener menos municion, mas marcianos, que se muevan mas rapido los enemigos...)
+	NAVE Y DISPAROS:
+	1. Nuevos disparos
+	2. Que los marcianos den powerUp al matarlos (aleatorio) --> moverse mas rapido
+															 --> Disparas mas rapido o las balas se mueven mas deprisa
+															 --> Que te den municion
+															 --> Que te den acceso a disparos nuevos...
+	3. 
+	
+	ESTAIAK:
+	1. nuevos enemigos (Con otro diseño y que puedan disparar)
+
+	
+ESTAS SON ALGUNAS IDEAS, SE QUE SON MUCHAS (NO HAY QUE HACER TODAS TRANQUI).
+
+SI HA ALGUIEN SE LE OCURRE ALGUNA MAS QUE LA PONGA.

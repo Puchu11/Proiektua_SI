@@ -201,8 +201,16 @@ public class MatrizeE extends Observable {
     		}
     		else {
     			norabideHautatuta = "behera"; 
+    		} 		
+    		for (EntitateInterfazea etsaia : e.getLista()) {
+    			Etsaia ePixel = (Etsaia) etsaia;
+    			if(espaziontziaTalka(norabideHautatuta, ePixel.getPosizioa().getX(),ePixel.getPosizioa().getY())) {
+    				System.out.println("!!GALDU DOZU:TALKA");
+    				jokoaAmaitu();
+    				JokoKudeatzailea.getNireJokoKudeatzailea().egoeraAldatu(Egoera.GALDU);
+    				break;
+    			}
     		}
-    		
     		if (e.mugituDaiteke(norabideHautatuta)) {
     			e.mugitu(norabideHautatuta);
     		}
@@ -211,20 +219,16 @@ public class MatrizeE extends Observable {
     			EntitateNodo entNodo = etsaiak.get(i);
     			if (!entNodo.getLista().isEmpty()) {
     		        // Begiratu etsaiaren pixel GUZTIAK, baten bat behera iritsi den
-    		        for (Entitatea p : entNodo.getLista()) {
-    		            if (p.getPosizioa().getY() >= 59) { // 58 jarri dugu muga gisa segurtasunagatik
-    		                System.out.println("!!! KONSOLEAN: Etsaia behera iritsi da (" + p.getPosizioa().getY() + ") !!!");
+    		        for (EntitateInterfazea e : entNodo.getLista()) {
+    	    			Etsaia etsaia= (Etsaia) e;
+    		            if (etsaia.getPosizioa().getY() >= 59) { // 59 jarri dugu muga gisa segurtasunagatik
+    		                System.out.println("!!! KONSOLEAN: Etsaia behera iritsi da (" + etsaia.getPosizioa().getY() + ") !!!");
     		                jokoaAmaitu();  
     		                JokoKudeatzailea.getNireJokoKudeatzailea().egoeraAldatu(Egoera.GALDU);
     		                return; 
     		            }
     		        }
     		    }
-    		}
-    		if(espaziontziaTalka()) {
-    			System.out.println("!!GALDU DOZU:TALKA");
-    			jokoaAmaitu();
-    			JokoKudeatzailea.getNireJokoKudeatzailea().egoeraAldatu(Egoera.GALDU);
     		}
     	}
    
@@ -236,8 +240,9 @@ public class MatrizeE extends Observable {
     	// For klasikoa erabiltzen dugu ArrayList-arekin seguruagoa delako. Etsai fantasmak ekiditeko.
     	for (int i=0; i < etsaiak.size();i++) {
     		EntitateNodo nodo= etsaiak.get(i);
-    		for (Entitatea e : nodo.getLista()) {
-    			if (e.getPosizioa().getX() == x && e.getPosizioa().getY() == y) {
+    		for (EntitateInterfazea e : nodo.getLista()) {
+    			Etsaia etsaia= (Etsaia) e;
+    			if (etsaia.getPosizioa().getX() == x && etsaia.getPosizioa().getY() == y) {
     				nodoEzabatu = nodo;
     				break; 
     			}
@@ -249,8 +254,9 @@ public class MatrizeE extends Observable {
     	//Etsai osoa (pixel guztiak) ezabatu matrizean eta zerrendan
     	if (nodoEzabatu != null) {
     		// Matrizean pixel guztiak "hutsa" (beltz) jarri berehala
-    		for (Entitatea e:nodoEzabatu.getLista()) {
-    			matrizea[e.getPosizioa().getY()][e.getPosizioa().getX()].gelaxkaEguneratu(new HutsaEgoera());
+    		for (EntitateInterfazea e:nodoEzabatu.getLista()) {
+    			Etsaia etsaia= (Etsaia) e;
+    			matrizea[etsaia.getPosizioa().getY()][etsaia.getPosizioa().getX()].gelaxkaEguneratu(new HutsaEgoera());
     		}
     		etsaiak.remove(nodoEzabatu);
     		
@@ -340,7 +346,7 @@ public class MatrizeE extends Observable {
         Espaziontzia pixel15 = EspaziontziaFactory.getEspaziontziaFactory().sortuEspaziontzia(mota, 48, 55);
         espaziontzia.gehituEntitate(pixel15);  
         matrizea[pixel15.getPosizioa().getY()][pixel15.getPosizioa().getX()].gelaxkaEguneratu(new EspaziontziaEgoera());
-        
+       
         Espaziontzia pixel16 = EspaziontziaFactory.getEspaziontziaFactory().sortuEspaziontzia(mota, 48, 56);
         espaziontzia.gehituEntitate(pixel16);  
         matrizea[pixel16.getPosizioa().getY()][pixel16.getPosizioa().getX()].gelaxkaEguneratu(new EspaziontziaEgoera());
@@ -351,18 +357,28 @@ public class MatrizeE extends Observable {
     	
         
     }
-    private boolean espaziontziaTalka() {
-        for (EntitateNodo etsaiNodo : etsaiak) {
-            for (Entitatea etsaiPixel : etsaiNodo.getLista()) {
-                for (Entitatea espazPixel : espaziontzia.getLista()) {
-                    if (etsaiPixel.getPosizioa().getX() == espazPixel.getPosizioa().getX() &&
-                        etsaiPixel.getPosizioa().getY() == espazPixel.getPosizioa().getY()) {
-                        return true;
-                    }
-                }
-            }
+    private boolean espaziontziaTalka(String norabidea,int x, int y) {
+        if(espaziontziaDago(norabidea,x,y)) {
+        	return true;
         }
         return false;
+    }
+    
+    
+    private boolean espaziontziaDago(String norabidea,int x, int y) {
+    	
+    	if(norabidea.equals("ezkerrera")) {
+    		x--;
+    	}else if (norabidea.equals("eskuinera")){
+    		x++;
+    	}else {
+    		y++;
+    	}
+    	
+    	GelaxkaE g = getGelaxka(x, y);
+        if (g == null) return false;
+
+        return g.getEntitateMota().equals("espaziontzia");
     }
     
 }

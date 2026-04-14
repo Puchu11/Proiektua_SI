@@ -29,6 +29,7 @@ public abstract class Entitatea implements EntitateInterfazea {
 		;
 	}
 	public void mugitu(String norabidea) {
+		MatrizeE.getEma().getMatrizea()[this.getPosizioa().getY()][this.getPosizioa().getX()].gelaxkaEguneratu(new HutsaEgoera());
 		switch (norabidea) {
 		case "gora":
             mugituGora();
@@ -45,9 +46,15 @@ public abstract class Entitatea implements EntitateInterfazea {
         default:
             break;
 		}
+		if(this instanceof Etsaia) {
+			MatrizeE.getEma().getMatrizea()[this.getPosizioa().getY()][this.getPosizioa().getX()].gelaxkaEguneratu(new EtsaiaEgoera());
+		}else {
+			MatrizeE.getEma().getMatrizea()[this.getPosizioa().getY()][this.getPosizioa().getX()].gelaxkaEguneratu(new EspaziontziaEgoera());
+		}
 	}
+	
 	private void mugituGora() {
-		 this.getPosizioa().setY(this.getPosizioa().getY() - 1);
+		 this.getPosizioa().setY(this.getPosizioa().getY() - 1);		 
 	}
 	private void mugituBehera() {
 	    this.getPosizioa().setY(this.getPosizioa().getY() + 1);

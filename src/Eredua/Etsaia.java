@@ -43,13 +43,13 @@ public class Etsaia extends Entitatea {
 	        return false;
 	    }
 	    for (EntitateNodo nodo: MatrizeE.getEma().getEtsaiak()) {
-	    	for(Entitatea e: nodo.getLista()) {
+	    	for(EntitateInterfazea e: nodo.getLista()) {
 	    		if(e instanceof Etsaia) {
-	    			Etsaia etsaia=(Etsaia) e;
+	    			Etsaia etsaia= (Etsaia) e;
 	    			
-	    			if(	e!= this && 
-	    				e.getPosizioa().getX() == xBerria &&
-	    				e.getPosizioa().getY()==yBerria && 
+	    			if(	etsaia!= this && 
+	    				etsaia.getPosizioa().getX() == xBerria &&
+	    				etsaia.getPosizioa().getY()==yBerria && 
 	    				etsaia.getIndizea()!=this.getIndizea()) {
 	    				return false;
 	    			}
