@@ -20,13 +20,14 @@ public class AudioKudeatzailea {
 	}
 	public void musikaErreproduzitu (String bidea) {
 		try {
-			AudioInputStream audioStream = AudioSystem.getAudioInputStream(new File(bidea));
+			File fitxategia = new File (bidea);
+			AudioInputStream audioStream = AudioSystem.getAudioInputStream(fitxategia);
 			fondoMusika = AudioSystem.getClip();
 			fondoMusika.open(audioStream);
 			fondoMusika.loop(Clip.LOOP_CONTINUOUSLY);
 			fondoMusika.start();
 		} catch (Exception e) {
-			System.out.println ("Errorea musika kargatzean": + e.getMessage());
+			System.out.println ("Errorea musika kargatzean:" + e.getMessage());
 			
 		}
 	}
@@ -38,7 +39,8 @@ public class AudioKudeatzailea {
 	public void soinuaErreproduzitu (String bidea) {
 		new Thread(() -> {
 			try {
-				AudioInputStream audioStream = AudioSystem.getAudioInputStream(new File(bidea));
+				File fitxategia = new File (bidea); 
+				AudioInputStream audioStream = AudioSystem.getAudioInputStream(fitxategia);
 				Clip clip = AudioSystem.getClip();
 				clip.open(audioStream);
 				clip.start();
