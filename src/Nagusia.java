@@ -6,7 +6,7 @@ import Eredua.MatrizeE;
 
 public class Nagusia {
 	public static void main(String[] args) {
-		AudioKudeatzailea.getAudioKudeatzailea().musikaErreproduzitu("res/intro_musika.wav");
+		AudioKudeatzailea.getAudioKudeatzailea().musikaErreproduzitu("src/res/intro_musika.wav");
 		
 		HasierakoPantaila hasierakoPantaila = new HasierakoPantaila();
 		MatrizeE matrizeE = MatrizeE.getEma();
