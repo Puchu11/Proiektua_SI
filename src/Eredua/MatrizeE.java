@@ -207,6 +207,8 @@ public class MatrizeE extends Observable {
     			if(espaziontziaTalka(norabideHautatuta, ePixel.getPosizioa().getX(),ePixel.getPosizioa().getY())) {
     				System.out.println("!!GALDU DOZU:TALKA");
     				jokoaAmaitu();
+    				AudioKudeatzailea.getAudioKudeatzailea().musikaGelditu();
+    				AudioKudeatzailea.getAudioKudeatzailea().soinuaErreproduzitu("res/mario_death.wav");
     				JokoKudeatzailea.getNireJokoKudeatzailea().egoeraAldatu(Egoera.GALDU);
     				break;
     			}
