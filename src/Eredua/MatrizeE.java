@@ -68,6 +68,7 @@ public class MatrizeE extends Observable {
     public void tiroEgin() {
     	Espaziontzia erdikoa = (Espaziontzia) espaziontzia.getLista().get(0);
     	erdikoa.tiroEgin();
+    	AudioKudeatzailea.getAudioKudeatzailea().soinuaErreproduzitu("src/res/laser.wav");
     }
     
     public Espaziontzia getEspaziontzia() {
@@ -208,7 +209,7 @@ public class MatrizeE extends Observable {
     				System.out.println("!!GALDU DOZU:TALKA");
     				jokoaAmaitu();
     				AudioKudeatzailea.getAudioKudeatzailea().musikaGelditu();
-    				AudioKudeatzailea.getAudioKudeatzailea().soinuaErreproduzitu("res/mario_death.wav");
+    				AudioKudeatzailea.getAudioKudeatzailea().soinuaErreproduzitu("src/res/mario_death.wav");
     				JokoKudeatzailea.getNireJokoKudeatzailea().egoeraAldatu(Egoera.GALDU);
     				break;
     			}

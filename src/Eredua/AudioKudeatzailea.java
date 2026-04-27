@@ -26,7 +26,7 @@ public class AudioKudeatzailea {
 			fondoMusika.loop(Clip.LOOP_CONTINUOUSLY);
 			fondoMusika.start();
 		} catch (Exception e) {
-			System.out.println ("Errorea musika kargatzean": + e.getMessage());
+			System.out.println ("Errorea musika kargatzean" + e.getMessage());
 			
 		}
 	}
