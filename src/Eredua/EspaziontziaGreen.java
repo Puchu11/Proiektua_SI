@@ -12,12 +12,11 @@ public class EspaziontziaGreen extends Espaziontzia {
     }
     
     @Override
-    public void setTiroMota(int pMota) {
+    public void portaeraAldatu(int pMota) {
         if (pMota== 2) {
         	JokoKudeatzailea.getNireJokoKudeatzailea().mezuaErakutsi("Green ezin du erronborik bota!");
         }else {
-        	setTiro(pMota);
-        	
+        	setTiroPortaera(pMota);
         }
     }
 }

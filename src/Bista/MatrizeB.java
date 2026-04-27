@@ -180,9 +180,9 @@ public class MatrizeB extends JFrame implements Observer {
 	            case KeyEvent.VK_UP    -> gora = true;
 	            case KeyEvent.VK_DOWN  -> behera = true;
 	            case KeyEvent.VK_SPACE -> tiro = true;
-	            case KeyEvent.VK_1 -> MatrizeE.getEma().getEspaziontzia().setTiroMota(0);
-	            case KeyEvent.VK_2 -> MatrizeE.getEma().getEspaziontzia().setTiroMota(1);
-	            case KeyEvent.VK_3 -> MatrizeE.getEma().getEspaziontzia().setTiroMota(2);
+	            case KeyEvent.VK_1 -> MatrizeE.getEma().getEspaziontzia().portaeraAldatu(0);
+	            case KeyEvent.VK_2 -> MatrizeE.getEma().getEspaziontzia().portaeraAldatu(1);
+	            case KeyEvent.VK_3 -> MatrizeE.getEma().getEspaziontzia().portaeraAldatu(2);
 	        }
 	    }
 
