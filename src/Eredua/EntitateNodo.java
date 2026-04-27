@@ -65,6 +65,7 @@ public class EntitateNodo implements EntitateInterfazea {
 		                ((Entitatea)b).getPosizioa().getY() - ((Entitatea)a).getPosizioa().getY()
 		            );
 		            break;
+		            
 
 		        case "gora": // gora → Y txikienetik handienera
 		            listaOrdenatuta.sort((a, b) ->
