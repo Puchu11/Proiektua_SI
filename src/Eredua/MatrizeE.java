@@ -68,6 +68,7 @@ public class MatrizeE extends Observable {
     public void tiroEgin() {
     	Espaziontzia erdikoa = (Espaziontzia) espaziontzia.getLista().get(0);
     	erdikoa.tiroEgin();
+    	AudioKudeatzailea.getAudioKudeatzailea().soinuaErreproduzitu("res/laser.wav");
     }
     
     public Espaziontzia getEspaziontzia() {
