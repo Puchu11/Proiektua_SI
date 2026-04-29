@@ -133,50 +133,42 @@ public class MatrizeE extends Observable {
         etsaienTimer.schedule(ataza, 0, 200);
     }
     private void etsaiakMugitu() {
-        // 1. RECORREMOS LOS NODOS DE ENEMIGOS CON UN FOR CLÁSICO
-        // Usamos un for normal porque si eliminamos algo de la lista, el iterador no se rompe
         for (int i = 0; i < etsaiak.size(); i++) {
             EntitateNodo e = etsaiak.get(i);
             
-            // Decidir dirección aleatoria
             int aukera = rnd.nextInt(3);
             String norabidea = (aukera == 0) ? "ezkerrera" : (aukera == 1) ? "eskuinera" : "behera";
 
-            // 2. COMPROBAR TALKA (CHOQUE) SIN JAVA 8 STREAMS
-            // Recorremos cada pixel del enemigo para ver si en la siguiente posición está la nave
             boolean talka = false;
             for (EntitateInterfazea ent : e.getLista()) {
                 Etsaia enemyPixel = (Etsaia) ent;
                 if (espaziontziaTalka(norabidea, enemyPixel.getPosizioa().getX(), enemyPixel.getPosizioa().getY())) {
                     talka = true;
-                    break; // Si un pixel choca, ya sabemos que hay colisión
+                    break;
                 }
             }
 
-            // 3. SI HAY CHOQUE: QUITAR VIDA Y ELIMINAR ESE GRUPO DE ENEMIGOS
+            // bizitzak
             if (talka) {
                 System.out.println("!! TALKA: Bizitza bat galdu duzu !!");
                 JokoKudeatzailea.getNireJokoKudeatzailea().bizitzaBatKendu();
-                
-                // Eliminamos el enemigo que ha chocado
+
                 Etsaia ePixel = (Etsaia) e.getLista().get(0);
                 etsaiakEzabatu(ePixel.getPosizioa().getX(), ePixel.getPosizioa().getY());
                 
-                return; // IMPORTANTE: Salimos del método para evitar errores de concurrencia
+                return; 
             }
 
-            // 4. SI NO HAY CHOQUE: MOVER EL ENEMIGO NORMALMENTE
             if (e.mugituDaiteke(norabidea)) {
                 e.mugitu(norabidea);
             }
         }
 
-        // 5. COMPROBAR SI ALGÚN ENEMIGO HA LLEGADO AL FINAL (SIN STREAMS)
         EntitateNodo nodoBehean = null;
         for (EntitateNodo nodo : etsaiak) {
             for (EntitateInterfazea ent : nodo.getLista()) {
                 Etsaia ets = (Etsaia) ent;
-                if (ets.getPosizioa().getY() >= 59) { // Altura máxima
+                if (ets.getPosizioa().getY() >= 59) {
                     nodoBehean = nodo;
                     break;
                 }
@@ -184,7 +176,6 @@ public class MatrizeE extends Observable {
             if (nodoBehean != null) break;
         }
 
-        // Si alguien ha llegado abajo, quitamos vida y lo borramos
         if (nodoBehean != null) {
             JokoKudeatzailea.getNireJokoKudeatzailea().bizitzaBatKendu();
             Etsaia eAux = (Etsaia) nodoBehean.getLista().get(0);
