@@ -232,8 +232,7 @@ public class MatrizeE extends Observable {
             etsaiakEzabatu(eAux.getPosizioa().getX(), eAux.getPosizioa().getY());
         }
     }
-   
-    	
+       	
 
     public void etsaiakEzabatu(int x, int y) {
     	
