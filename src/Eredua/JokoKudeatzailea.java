@@ -40,6 +40,7 @@ public class JokoKudeatzailea extends Observable {
 	public void egoeraAldatu(Egoera berria) {
 		this.egoera=berria;
 		if(this.egoera==Egoera.JOKATZEN) {
+			this.bizitzak = 3;
 			MatrizeE.getEma().matrizeaSortu();
 		}
 		if(this.egoera==Egoera.IRABAZI||this.egoera==Egoera.GALDU) {

@@ -135,6 +135,9 @@ public class MatrizeB extends JFrame implements Observer {
 	    
 	    else if (arg instanceof Integer) {
 	        int geratzenDirenBizitzak = (Integer) arg;
+	        for (int i = 0; i < 3; i++) {
+	            bihotzEtiketak[i].setVisible(i < geratzenDirenBizitzak);
+	        }
 	        if (geratzenDirenBizitzak < 3 && geratzenDirenBizitzak > 0) {
 	        	bizitzaMezuaLabel.setText("BIZITZA BAT GALDU DUZU!");
 	        	Timer t = new Timer(3000, e -> bizitzaMezuaLabel.setText(""));
@@ -166,7 +169,7 @@ public class MatrizeB extends JFrame implements Observer {
 
 	    SwingUtilities.invokeLater(() -> {
 	        int zabalera = getWidth();
-	        mezua.setBounds(0, 20, zabalera, 50);
+	        mezua.setBounds(0, 5, zabalera, 50);
 	    });
 
 	    mezuaTimer.restart();
