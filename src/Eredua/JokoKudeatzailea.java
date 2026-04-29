@@ -65,7 +65,30 @@ public class JokoKudeatzailea extends Observable {
 	        AudioKudeatzailea.getAudioKudeatzailea().soinuaErreproduzitu("src/res/mario_death.wav");
 	    }
 	}
+	
+	public void balakEguneratu(int balak) {
+	    
+		String ikurra = MatrizeE.getEma().getEspaziontzia().getBalarenIkurra();
+		
+		String testua;
 
+	    if (ikurra.equals("●")) {
+	        testua = ikurra + "● ● ● ● ● ● ...";
+	    } else {
+	    	System.out.println("hola");
+	        StringBuilder sb = new StringBuilder();
+
+	        for (int i = 0; i < balak; i++) {
+	            sb.append(ikurra).append(" ");
+	        }
+
+	        testua = sb.toString();
+	    }
+
+	    setChanged();
+	    notifyObservers("BALAK:  " + testua);
+	}
+	
 	public int getBizitzak() {
 	    return this.bizitzak;
 	}

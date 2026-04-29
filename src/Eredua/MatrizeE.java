@@ -133,51 +133,64 @@ public class MatrizeE extends Observable {
         etsaienTimer.schedule(ataza, 0, 200);
     }
     private void etsaiakMugitu() {
-        // 1. ERRORE NAGUSIA: Kopia bat behar dugu zerrenda aldatzeko (ConcurrentModificationException) 
+        // 1. Kopia bat sortzen dugu zerrenda zeharkatzen dugun bitartean 
+        // elementuak ezabatu ahal izateko (ConcurrentModificationException prebentzioa).
         ArrayList<EntitateNodo> kopiaEtsaiak = new ArrayList<>(etsaiak);
 
-        for (EntitateNodo e : kopiaEtsaiak) {
-            // Norabidea behin bakarrik aukeratu nodo bakoitzeko
+        for (EntitateNodo entNodo : kopiaEtsaiak) {
+            // Norabidea ausaz aukeratu nodo bakoitzeko.
             int aukera = rnd.nextInt(3);
             String norabideHautatuta = (aukera == 0) ? "ezkerrera" : (aukera == 1) ? "eskuinera" : "behera";
+            final String norabideaFinal = norabideHautatuta;
 
-            // 2. ERROREAREN ZUZENKETA: Logika errepikatua ezabatu eta bakarrean elkartu
-            
-            // TALKA DETEKZIOA (Java 8 Stream-ak erabiliz [cite: 517])
-            boolean talkaNabearekin = e.getLista().stream()
+            // 2. TALKA DETEKZIOA (Java 8 Stream-ak erabiliz ).
+            boolean talka = entNodo.getLista().stream()
                     .map(ent -> (Etsaia) ent)
-                    .anyMatch(enemy -> espaziontziaTalka(norabideHautatuta, enemy.getPosizioa().getX(), enemy.getPosizioa().getY()));
+                    .anyMatch(etsaia -> espaziontziaTalka(
+                            norabideaFinal,
+                            etsaia.getPosizioa().getX(),
+                            etsaia.getPosizioa().getY()
+                    ));
 
-            if (talkaNabearekin) {
+            if (talka) {
                 System.out.println("!! TALKA: Bizitza bat galdu duzu !!");
                 JokoKudeatzailea.getNireJokoKudeatzailea().bizitzaBatKendu();
-                
-                // Talka egin duen etsai multzoa ezabatu
-                Etsaia lehena = (Etsaia) e.getLista().get(0);
-                etsaiakEzabatu(lehena.getPosizioa().getX(), lehena.getPosizioa().getY());
-                continue; // Nodo hau ezabatu denez, hurrengoarekin jarraitu
+
+                if (!entNodo.getLista().isEmpty()) {
+                    Etsaia lehenengoa = (Etsaia) entNodo.getLista().get(0);
+                    etsaiakEzabatu(
+                            lehenengoa.getPosizioa().getX(),
+                            lehenengoa.getPosizioa().getY()
+                    );
+                }
+                continue; // Nodo hau ezabatu denez, hurrengoarekin jarraitu.
             }
 
-            // MUGIMENDUA
-            if (e.mugituDaiteke(norabideHautatuta)) {
-                e.mugitu(norabideHautatuta);
+            // 3. MUGIMENDUA.
+            if (entNodo.mugituDaiteke(norabideaFinal)) {
+                entNodo.mugitu(norabideaFinal);
             }
 
-            // BEHERA IRITSI DEN EGIAZTATU (Mugimenduaren ostean)
-            boolean iritsiDaBehera = e.getLista().stream()
+            // 4. BEHERA IRITSI DEN EGIAZTATU (Mugimenduaren ostean).
+            boolean iritsiDaBehera = entNodo.getLista().stream()
                     .map(ent -> (Etsaia) ent)
                     .anyMatch(enemy -> enemy.getPosizioa().getY() >= 59);
 
             if (iritsiDaBehera) {
                 System.out.println("!!! Etsaia behera iritsi da !!!");
                 JokoKudeatzailea.getNireJokoKudeatzailea().bizitzaBatKendu();
-                Etsaia lehena = (Etsaia) e.getLista().get(0);
-                etsaiakEzabatu(lehena.getPosizioa().getX(), lehena.getPosizioa().getY());
+                
+                if (!entNodo.getLista().isEmpty()) {
+                    Etsaia lehenengoa = (Etsaia) entNodo.getLista().get(0);
+                    etsaiakEzabatu(
+                            lehenengoa.getPosizioa().getX(),
+                            lehenengoa.getPosizioa().getY()
+                    );
+                }
             }
         }
     }
-    	
-
+   
     public void etsaiakEzabatu(int x, int y) {	
     	EntitateNodo nodoEzabatu = etsaiak.stream().filter(nodo -> nodo.getLista().stream()
     	                .map(ent -> (Etsaia) ent)
@@ -267,5 +280,4 @@ public class MatrizeE extends Observable {
 
         return g.getEntitateMota().equals("espaziontzia");
     }
-    
 }
