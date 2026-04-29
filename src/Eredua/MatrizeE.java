@@ -95,79 +95,29 @@ public class MatrizeE extends Observable {
             }
 
             if (!okupatuta) {
-                Etsaia pE1 = new Etsaia(x, 5, sortuta);
-                matrizea[pE1.getPosizioa().getY()][pE1.getPosizioa().getX()].gelaxkaEguneratu(new EtsaiaEgoera());
+            	int[][] koordenatuak = {
+            		    {0, 5},{-2, 3},{-2, 5},{2, 3},{2, 5},
+            		    {0, 4},{-1, 4},{1, 4},
+            		    {-1, 6},{1, 6},{-2, 6},{2, 6},
+            		    {1, 7},{0, 7},{-1, 7},
+            		    {-2, 4},{2, 4}
+            		};
 
-                Etsaia pE2 = new Etsaia(x - 2, 3, sortuta);
-                matrizea[pE2.getPosizioa().getY()][pE2.getPosizioa().getX()].gelaxkaEguneratu(new EtsaiaEgoera());
+            		EntitateNodo etsaiNodo = new EntitateNodo();
+            		etsaiak.add(etsaiNodo);
 
-                Etsaia pE3 = new Etsaia(x - 2, 5, sortuta);
-                matrizea[pE3.getPosizioa().getY()][pE3.getPosizioa().getX()].gelaxkaEguneratu(new EtsaiaEgoera());
+            		for (int[] pos : koordenatuak) {
+            		    int posX = x + pos[0];
+            		    int posY = pos[1];
 
-                Etsaia pE4 = new Etsaia(x + 2, 3, sortuta);
-                matrizea[pE4.getPosizioa().getY()][pE4.getPosizioa().getX()].gelaxkaEguneratu(new EtsaiaEgoera());
+            		    Etsaia etsaia = new Etsaia(posX, posY, sortuta);
 
-                Etsaia pE5 = new Etsaia(x + 2, 5, sortuta);
-                matrizea[pE5.getPosizioa().getY()][pE5.getPosizioa().getX()].gelaxkaEguneratu(new EtsaiaEgoera());
+            		    matrizea[posY][posX]
+            		            .gelaxkaEguneratu(new EtsaiaEgoera());
 
-                Etsaia pE6 = new Etsaia(x, 4, sortuta);
-                matrizea[pE6.getPosizioa().getY()][pE6.getPosizioa().getX()].gelaxkaEguneratu(new EtsaiaEgoera());
-
-                Etsaia pE7 = new Etsaia(x - 1, 4, sortuta);
-                matrizea[pE7.getPosizioa().getY()][pE7.getPosizioa().getX()].gelaxkaEguneratu(new EtsaiaEgoera());
-
-                Etsaia pE8 = new Etsaia(x + 1, 4, sortuta);
-                matrizea[pE8.getPosizioa().getY()][pE8.getPosizioa().getX()].gelaxkaEguneratu(new EtsaiaEgoera());
-
-                Etsaia pE9 = new Etsaia(x - 1, 6, sortuta);
-                matrizea[pE9.getPosizioa().getY()][pE9.getPosizioa().getX()].gelaxkaEguneratu(new EtsaiaEgoera());
-
-                Etsaia pE10 = new Etsaia(x + 1, 6, sortuta);
-                matrizea[pE10.getPosizioa().getY()][pE10.getPosizioa().getX()].gelaxkaEguneratu(new EtsaiaEgoera());
-                
-                Etsaia pE11= new Etsaia(x-2, 6, sortuta);
-                matrizea[pE11.getPosizioa().getY()][pE11.getPosizioa().getX()].gelaxkaEguneratu(new EtsaiaEgoera());
-                
-                Etsaia pE12= new Etsaia(x+2, 6, sortuta);
-                matrizea[pE12.getPosizioa().getY()][pE12.getPosizioa().getX()].gelaxkaEguneratu(new EtsaiaEgoera());
-                
-                Etsaia pE13= new Etsaia(x+1, 7, sortuta);
-                matrizea[pE13.getPosizioa().getY()][pE13.getPosizioa().getX()].gelaxkaEguneratu(new EtsaiaEgoera());
-                
-                Etsaia pE14= new Etsaia(x, 7, sortuta);
-                matrizea[pE14.getPosizioa().getY()][pE14.getPosizioa().getX()].gelaxkaEguneratu(new EtsaiaEgoera());
-                
-                Etsaia pE15= new Etsaia(x-1, 7, sortuta);
-                matrizea[pE15.getPosizioa().getY()][pE15.getPosizioa().getX()].gelaxkaEguneratu(new EtsaiaEgoera());
-                
-                Etsaia pE16= new Etsaia(x-2, 4, sortuta);
-                matrizea[pE16.getPosizioa().getY()][pE16.getPosizioa().getX()].gelaxkaEguneratu(new EtsaiaEgoera());
-                
-                Etsaia pE17= new Etsaia(x+2, 4, sortuta);
-                matrizea[pE17.getPosizioa().getY()][pE17.getPosizioa().getX()].gelaxkaEguneratu(new EtsaiaEgoera());
-                
-                EntitateNodo etsaiNodo = new EntitateNodo();
-                etsaiak.add(etsaiNodo);
-
-                etsaiNodo.gehituEntitate(pE1);
-                etsaiNodo.gehituEntitate(pE2);
-                etsaiNodo.gehituEntitate(pE3);
-                etsaiNodo.gehituEntitate(pE4);
-                etsaiNodo.gehituEntitate(pE5);
-                etsaiNodo.gehituEntitate(pE6);
-                etsaiNodo.gehituEntitate(pE7);
-                etsaiNodo.gehituEntitate(pE8);
-                etsaiNodo.gehituEntitate(pE9);
-                etsaiNodo.gehituEntitate(pE10);
-                etsaiNodo.gehituEntitate(pE11);
-                etsaiNodo.gehituEntitate(pE12);
-                etsaiNodo.gehituEntitate(pE13);
-                etsaiNodo.gehituEntitate(pE14);
-                etsaiNodo.gehituEntitate(pE15);
-                etsaiNodo.gehituEntitate(pE16);
-                etsaiNodo.gehituEntitate(pE17);
-                
-                sortuta++; 
+            		    etsaiNodo.gehituEntitate(etsaia);
+            		}
+            		sortuta++;
             }
         }
     }
@@ -183,37 +133,45 @@ public class MatrizeE extends Observable {
         etsaienTimer.schedule(ataza, 0, 200);
     }
     private void etsaiakMugitu() {
+        // 1. RECORREMOS LOS NODOS DE ENEMIGOS CON UN FOR CLÁSICO
+        // Usamos un for normal porque si eliminamos algo de la lista, el iterador no se rompe
         for (int i = 0; i < etsaiak.size(); i++) {
             EntitateNodo e = etsaiak.get(i);
+            
+            // Decidir dirección aleatoria
             int aukera = rnd.nextInt(3);
             String norabidea = (aukera == 0) ? "ezkerrera" : (aukera == 1) ? "eskuinera" : "behera";
 
+            // 2. COMPROBAR TALKA (CHOQUE) SIN JAVA 8 STREAMS
+            // Recorremos cada pixel del enemigo para ver si en la siguiente posición está la nave
             boolean talka = false;
             for (EntitateInterfazea ent : e.getLista()) {
                 Etsaia enemyPixel = (Etsaia) ent;
                 if (espaziontziaTalka(norabidea, enemyPixel.getPosizioa().getX(), enemyPixel.getPosizioa().getY())) {
                     talka = true;
-                    break;
+                    break; // Si un pixel choca, ya sabemos que hay colisión
                 }
             }
 
-            //bizitzak
+            // 3. SI HAY CHOQUE: QUITAR VIDA Y ELIMINAR ESE GRUPO DE ENEMIGOS
             if (talka) {
                 System.out.println("!! TALKA: Bizitza bat galdu duzu !!");
                 JokoKudeatzailea.getNireJokoKudeatzailea().bizitzaBatKendu();
                 
-                // ezabatu etsaia
+                // Eliminamos el enemigo que ha chocado
                 Etsaia ePixel = (Etsaia) e.getLista().get(0);
                 etsaiakEzabatu(ePixel.getPosizioa().getX(), ePixel.getPosizioa().getY());
                 
-                return;
+                return; // IMPORTANTE: Salimos del método para evitar errores de concurrencia
             }
 
+            // 4. SI NO HAY CHOQUE: MOVER EL ENEMIGO NORMALMENTE
             if (e.mugituDaiteke(norabidea)) {
                 e.mugitu(norabidea);
             }
         }
 
+        // 5. COMPROBAR SI ALGÚN ENEMIGO HA LLEGADO AL FINAL (SIN STREAMS)
         EntitateNodo nodoBehean = null;
         for (EntitateNodo nodo : etsaiak) {
             for (EntitateInterfazea ent : nodo.getLista()) {
@@ -226,6 +184,7 @@ public class MatrizeE extends Observable {
             if (nodoBehean != null) break;
         }
 
+        // Si alguien ha llegado abajo, quitamos vida y lo borramos
         if (nodoBehean != null) {
             JokoKudeatzailea.getNireJokoKudeatzailea().bizitzaBatKendu();
             Etsaia eAux = (Etsaia) nodoBehean.getLista().get(0);
@@ -234,33 +193,27 @@ public class MatrizeE extends Observable {
     }
        	
 
-    public void etsaiakEzabatu(int x, int y) {
+    public void etsaiakEzabatu(int x, int y) {	
+    	EntitateNodo nodoEzabatu = etsaiak.stream().filter(nodo -> nodo.getLista().stream()
+    	                .map(ent -> (Etsaia) ent)
+    	                .anyMatch(e ->
+    	                        e.getPosizioa().getX() == x &&
+    	                        e.getPosizioa().getY() == y
+    	                ))
+    	        .findFirst()
+    	        .orElse(null);
     	
-    	EntitateNodo nodoEzabatu = null;
-    	// For klasikoa erabiltzen dugu ArrayList-arekin seguruagoa delako. Etsai fantasmak ekiditeko.
-    	for (int i=0; i < etsaiak.size();i++) {
-    		EntitateNodo nodo= etsaiak.get(i);
-    		for (EntitateInterfazea e : nodo.getLista()) {
-    			Etsaia etsaia= (Etsaia) e;
-    			if (etsaia.getPosizioa().getX() == x && etsaia.getPosizioa().getY() == y) {
-    				nodoEzabatu = nodo;
-    				break; 
-    			}
-    		}
-    		if (nodoEzabatu != null) {
-    			break;
-    		}
-    	}
-    	//Etsai osoa (pixel guztiak) ezabatu matrizean eta zerrendan
     	if (nodoEzabatu != null) {
-    		// Matrizean pixel guztiak "hutsa" (beltz) jarri berehala
-    		for (EntitateInterfazea e:nodoEzabatu.getLista()) {
-    			Etsaia etsaia= (Etsaia) e;
-    			matrizea[etsaia.getPosizioa().getY()][etsaia.getPosizioa().getX()].gelaxkaEguneratu(new HutsaEgoera());
-    		}
-    		etsaiak.remove(nodoEzabatu);
-    		
+    	    nodoEzabatu.getLista().stream()
+    	            .map(ent -> (Etsaia) ent)
+    	            .forEach(e ->
+    	                    matrizea[e.getPosizioa().getY()][e.getPosizioa().getX()]
+    	                            .gelaxkaEguneratu(new HutsaEgoera())
+    	            );
+
+    	    etsaiak.remove(nodoEzabatu);
     	}
+    	
     	if (etsaiak.isEmpty()) {
     		JokoKudeatzailea.getNireJokoKudeatzailea().egoeraAldatu(Egoera.IRABAZI);
     		
@@ -285,78 +238,27 @@ public class MatrizeE extends Observable {
     }
     
     private void espaziontziaSortu(String mota) {
-  	
-    	
-    	Espaziontzia pixel1 = EspaziontziaFactory.getEspaziontziaFactory().sortuEspaziontzia(mota, 50, 55);
-        espaziontzia.gehituEntitate(pixel1);  	
-        matrizea[pixel1.getPosizioa().getY()][pixel1.getPosizioa().getX()].gelaxkaEguneratu(new EspaziontziaEgoera());
-        
-        Espaziontzia pixel2 = EspaziontziaFactory.getEspaziontziaFactory().sortuEspaziontzia(mota, 51, 55);
-        espaziontzia.gehituEntitate(pixel2);  
-        matrizea[pixel2.getPosizioa().getY()][pixel2.getPosizioa().getX()].gelaxkaEguneratu(new EspaziontziaEgoera());
-        
-        Espaziontzia pixel3 = EspaziontziaFactory.getEspaziontziaFactory().sortuEspaziontzia(mota, 49, 55);
-        espaziontzia.gehituEntitate(pixel3);  
-        matrizea[pixel3.getPosizioa().getY()][pixel3.getPosizioa().getX()].gelaxkaEguneratu(new EspaziontziaEgoera());
-        
-        Espaziontzia pixel4 = EspaziontziaFactory.getEspaziontziaFactory().sortuEspaziontzia(mota, 49, 54);
-        espaziontzia.gehituEntitate(pixel4);  
-        matrizea[pixel4.getPosizioa().getY()][pixel4.getPosizioa().getX()].gelaxkaEguneratu(new EspaziontziaEgoera());
-        
-        Espaziontzia pixel5 = EspaziontziaFactory.getEspaziontziaFactory().sortuEspaziontzia(mota, 51, 54);
-        espaziontzia.gehituEntitate(pixel5);  
-        matrizea[pixel5.getPosizioa().getY()][pixel5.getPosizioa().getX()].gelaxkaEguneratu(new EspaziontziaEgoera());
 
-        Espaziontzia pixel6 = EspaziontziaFactory.getEspaziontziaFactory().sortuEspaziontzia(mota, 50, 56);
-        espaziontzia.gehituEntitate(pixel6);  
-        matrizea[pixel6.getPosizioa().getY()][pixel6.getPosizioa().getX()].gelaxkaEguneratu(new EspaziontziaEgoera());
+        int[][] koordenatuak = {
+            {50, 55},{51, 55},{49, 55},
+            {49, 54},{51, 54},
+            {50, 56},{50, 54},{50, 53},{50, 52},
+            {51, 53},{49, 53},
+            {52, 55},{52, 56},{52, 57},
+            {48, 55},{48, 56},{48, 57}
+        };
 
-        Espaziontzia pixel7 = EspaziontziaFactory.getEspaziontziaFactory().sortuEspaziontzia(mota, 50, 54);
-        espaziontzia.gehituEntitate(pixel7);  
-        matrizea[pixel7.getPosizioa().getY()][pixel7.getPosizioa().getX()].gelaxkaEguneratu(new EspaziontziaEgoera());
-        
-        Espaziontzia pixel8 = EspaziontziaFactory.getEspaziontziaFactory().sortuEspaziontzia(mota, 50, 53);
-        espaziontzia.gehituEntitate(pixel8);  
-        matrizea[pixel8.getPosizioa().getY()][pixel8.getPosizioa().getX()].gelaxkaEguneratu(new EspaziontziaEgoera());
-        
-        Espaziontzia pixel9 = EspaziontziaFactory.getEspaziontziaFactory().sortuEspaziontzia(mota, 50, 52);
-        espaziontzia.gehituEntitate(pixel9);  
-        matrizea[pixel9.getPosizioa().getY()][pixel9.getPosizioa().getX()].gelaxkaEguneratu(new EspaziontziaEgoera());
-        
-        Espaziontzia pixel10 = EspaziontziaFactory.getEspaziontziaFactory().sortuEspaziontzia(mota, 51, 53);
-        espaziontzia.gehituEntitate(pixel10);  
-        matrizea[pixel10.getPosizioa().getY()][pixel10.getPosizioa().getX()].gelaxkaEguneratu(new EspaziontziaEgoera());
-        
-        Espaziontzia pixel11 = EspaziontziaFactory.getEspaziontziaFactory().sortuEspaziontzia(mota, 49, 53);
-        espaziontzia.gehituEntitate(pixel11);  
-        matrizea[pixel11.getPosizioa().getY()][pixel11.getPosizioa().getX()].gelaxkaEguneratu(new EspaziontziaEgoera());
-        
-        Espaziontzia pixel12 = EspaziontziaFactory.getEspaziontziaFactory().sortuEspaziontzia(mota, 52, 55);
-        espaziontzia.gehituEntitate(pixel12);  
-        matrizea[pixel12.getPosizioa().getY()][pixel12.getPosizioa().getX()].gelaxkaEguneratu(new EspaziontziaEgoera());
-        
-        Espaziontzia pixel13 = EspaziontziaFactory.getEspaziontziaFactory().sortuEspaziontzia(mota, 52, 56);
-        espaziontzia.gehituEntitate(pixel13);  
-        matrizea[pixel13.getPosizioa().getY()][pixel13.getPosizioa().getX()].gelaxkaEguneratu(new EspaziontziaEgoera());
-        
-        Espaziontzia pixel14 = EspaziontziaFactory.getEspaziontziaFactory().sortuEspaziontzia(mota, 52, 57);
-        espaziontzia.gehituEntitate(pixel14);  
-        matrizea[pixel14.getPosizioa().getY()][pixel14.getPosizioa().getX()].gelaxkaEguneratu(new EspaziontziaEgoera());
-        
-        Espaziontzia pixel15 = EspaziontziaFactory.getEspaziontziaFactory().sortuEspaziontzia(mota, 48, 55);
-        espaziontzia.gehituEntitate(pixel15);  
-        matrizea[pixel15.getPosizioa().getY()][pixel15.getPosizioa().getX()].gelaxkaEguneratu(new EspaziontziaEgoera());
-       
-        Espaziontzia pixel16 = EspaziontziaFactory.getEspaziontziaFactory().sortuEspaziontzia(mota, 48, 56);
-        espaziontzia.gehituEntitate(pixel16);  
-        matrizea[pixel16.getPosizioa().getY()][pixel16.getPosizioa().getX()].gelaxkaEguneratu(new EspaziontziaEgoera());
-        
-        Espaziontzia pixel17 = EspaziontziaFactory.getEspaziontziaFactory().sortuEspaziontzia(mota, 48, 57);
-        espaziontzia.gehituEntitate(pixel17);  
-        matrizea[pixel17.getPosizioa().getY()][pixel17.getPosizioa().getX()].gelaxkaEguneratu(new EspaziontziaEgoera());
-    	
-        
+        for (int[] pos : koordenatuak) {
+            Espaziontzia pixel = EspaziontziaFactory.getEspaziontziaFactory()
+                    .sortuEspaziontzia(mota, pos[0], pos[1]);
+
+            espaziontzia.gehituEntitate(pixel);
+
+            matrizea[pos[1]][pos[0]]
+                    .gelaxkaEguneratu(new EspaziontziaEgoera());
+        }
     }
+    
     private boolean espaziontziaTalka(String norabidea,int x, int y) {
         if(espaziontziaDago(norabidea,x,y)) {
         	return true;
