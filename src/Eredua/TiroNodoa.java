@@ -52,23 +52,15 @@ public class TiroNodoa extends Thread implements TiroInterfazea {
 		}
 	}
 	public void mugituGora() {
-		for (TiroInterfazea t: tiroLista) {
-			t.mugituGora();
-		}
-	 }
+	    tiroLista.forEach(TiroInterfazea::mugituGora);
+	}
 	public void hil() {
-		for(TiroInterfazea t: tiroLista) {
-			t.hil();
-		}
-		bizirik=false;
+	    tiroLista.forEach(TiroInterfazea::hil);
+	    bizirik = false;
 	}
 	public boolean bizirikDaude() {
-		for (TiroInterfazea tInterfazea: tiroLista) {
-			Tiro t = (Tiro) tInterfazea;
-			if(t.getPosizioa().getY()<=0) {
-				return false;
-			}
-		}
-		return true;
+	    return tiroLista.stream()
+	            .map(t -> (Tiro) t)
+	            .allMatch(t -> t.getPosizioa().getY() > 0);
 	}
 }
