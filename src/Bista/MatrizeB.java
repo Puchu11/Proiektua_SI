@@ -1,6 +1,8 @@
 package Bista;
+import java.awt.BorderLayout;
 import java.awt.CardLayout;
 import java.awt.Color;
+import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.event.ActionListener;
@@ -33,6 +35,9 @@ public class MatrizeB extends JFrame implements Observer {
 	private GelaxkaB labelN[][] = new GelaxkaB[60][100];
 	private JLabel mezua = new JLabel("", SwingConstants.CENTER);
 	private Timer mezuaTimer;
+	private JLabel[] bihotzEtiketak;
+	private JPanel bizitzaPanela;
+	private JLabel bizitzaMezuaLabel;
 
 	private Controller controller = null;
 	
@@ -68,6 +73,31 @@ public class MatrizeB extends JFrame implements Observer {
 		// controller 
 		addKeyListener(getController());
 		setFocusable(true);
+		
+		//bizitzak
+		bizitzaPanela = new JPanel(new BorderLayout()); // BorderLayout erabiliko dugu barruan
+		bizitzaPanela.setBackground(Color.BLACK);
+
+		// Mezua (Ezkerrean)
+		bizitzaMezuaLabel = new JLabel(""); 
+		bizitzaMezuaLabel.setForeground(Color.RED); // Gorriz nabarmentzeko
+		bizitzaMezuaLabel.setFont(new Font("Arial", Font.BOLD, 18));
+		bizitzaPanela.add(bizitzaMezuaLabel, BorderLayout.WEST); // WEST = Ezkerra
+
+		// Bihotzak (Eskuinean)
+		JPanel bihotzenEremua = new JPanel(new FlowLayout(FlowLayout.RIGHT));
+		bihotzenEremua.setBackground(Color.BLACK);
+		bihotzEtiketak = new JLabel[3];
+		for (int i = 0; i < 3; i++) {
+		    bihotzEtiketak[i] = new JLabel("♥"); 
+		    bihotzEtiketak[i].setForeground(new Color(255, 105, 180));
+		    bihotzEtiketak[i].setFont(new Font("Arial", Font.BOLD, 30));
+		    bihotzenEremua.add(bihotzEtiketak[i]);
+		}
+		bizitzaPanela.add(bihotzenEremua, BorderLayout.EAST); // EAST = Eskuina
+
+		this.add(bizitzaPanela, BorderLayout.NORTH);
+
 	}
 	
 	private void matrizeaSortu() {
@@ -85,22 +115,41 @@ public class MatrizeB extends JFrame implements Observer {
 
 	@Override
 	public void update(Observable o, Object arg) {
-		if (arg == Egoera.JOKATZEN) {
-			matrizeaSortu();
-			setVisible(true);	
-			new Timer(16, e -> {jokoPanela.repaint();}).start();
-			nabegadorea.show(kontenedorea, "JOKOA");
-			this.requestFocusInWindow();
-			getController().hasi();
-		} else if (arg == Egoera.IRABAZI) {
-			nabegadorea.show(kontenedorea, "IRABAZI_PANTAILA");
-			jokoPanela.repaint();
-		} else if (arg == Egoera.GALDU) {
-			nabegadorea.show(kontenedorea, "GALDU_PANTAILA");
-			this.repaint();
-		} else if(arg instanceof String mezua) {
-			mezuaErakutsi(mezua);
-		}	
+	    if (arg instanceof Egoera) {
+	        Egoera e = (Egoera) arg;
+	        if (e == Egoera.JOKATZEN) {
+	            matrizeaSortu();
+	            setVisible(true);    
+	            new Timer(16, ev -> {jokoPanela.repaint();}).start();
+	            nabegadorea.show(kontenedorea, "JOKOA");
+	            this.requestFocusInWindow();
+	            getController().hasi();
+	        } else if (e == Egoera.IRABAZI) {
+	            nabegadorea.show(kontenedorea, "IRABAZI_PANTAILA");
+	            jokoPanela.repaint();
+	        } else if (e == Egoera.GALDU) {
+	            nabegadorea.show(kontenedorea, "GALDU_PANTAILA");
+	            this.repaint();
+	        }
+	    } 
+	    
+	    else if (arg instanceof Integer) {
+	        int geratzenDirenBizitzak = (Integer) arg;
+	        if (geratzenDirenBizitzak < 3 && geratzenDirenBizitzak > 0) {
+	        	bizitzaMezuaLabel.setText("BIZITZA BAT GALDU DUZU!");
+	        	Timer t = new Timer(3000, e -> bizitzaMezuaLabel.setText(""));
+	            t.setRepeats(false);
+	            t.start();
+	        }
+	        for (int i = 0; i < 3; i++) {
+	            if (i >= geratzenDirenBizitzak) {
+	                bihotzEtiketak[i].setVisible(false); // Bihotza desagertu
+	            }
+	        }	        
+	    } 
+	    else if (arg instanceof String mezuaString) {
+	        mezuaErakutsi(mezuaString);
+	    }
 	}
 
 	private JPanel getPanel() {
