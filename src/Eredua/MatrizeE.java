@@ -183,57 +183,59 @@ public class MatrizeE extends Observable {
         etsaienTimer.schedule(ataza, 0, 200);
     }
     private void etsaiakMugitu() {
-    	//for-each arazoak ematen ebazan eta erroreak ematen ebazan kolizioa egiterakoan, izan be lista zeharkatzen dogunean eta aldi berean ezabatzen arazoak ematen ebazan
-    	int kopurua= etsaiak.size();
-    	for(int i= 0; i < etsaiak.size(); i++) {
-    		
-    		if(i>=etsaiak.size()) break;
-    		
-    		EntitateNodo e = etsaiak.get(i);
-    		
-    		int aukera=rnd.nextInt(3);
-    		String norabideHautatuta = "";
-    		
-    		if (aukera == 0) {
-    			norabideHautatuta = "ezkerrera";
-    		}
-    		else if (aukera == 1) {
-    			norabideHautatuta = "eskuinera";
-    		}
-    		else {
-    			norabideHautatuta = "behera"; 
-    		} 		
-    		for (EntitateInterfazea etsaia : e.getLista()) {
-    			Etsaia ePixel = (Etsaia) etsaia;
-    			if(espaziontziaTalka(norabideHautatuta, ePixel.getPosizioa().getX(),ePixel.getPosizioa().getY())) {
-    				System.out.println("!!GALDU DOZU:TALKA");
-    				jokoaAmaitu();
-    				AudioKudeatzailea.getAudioKudeatzailea().musikaGelditu();
-    				AudioKudeatzailea.getAudioKudeatzailea().soinuaErreproduzitu("src/res/mario_death.wav");
-    				JokoKudeatzailea.getNireJokoKudeatzailea().egoeraAldatu(Egoera.GALDU);
-    				break;
-    			}
-    		}
-    		if (e.mugituDaiteke(norabideHautatuta)) {
-    			e.mugitu(norabideHautatuta);
-    		}
-    	}	
-    		for (int i = 0; i < etsaiak.size(); i++) {
-    			EntitateNodo entNodo = etsaiak.get(i);
-    			if (!entNodo.getLista().isEmpty()) {
-    		        // Begiratu etsaiaren pixel GUZTIAK, baten bat behera iritsi den
-    		        for (EntitateInterfazea e : entNodo.getLista()) {
-    	    			Etsaia etsaia= (Etsaia) e;
-    		            if (etsaia.getPosizioa().getY() >= 59) { // 59 jarri dugu muga gisa segurtasunagatik
-    		                System.out.println("!!! KONSOLEAN: Etsaia behera iritsi da (" + etsaia.getPosizioa().getY() + ") !!!");
-    		                jokoaAmaitu();  
-    		                JokoKudeatzailea.getNireJokoKudeatzailea().egoeraAldatu(Egoera.GALDU);
-    		                return; 
-    		            }
-    		        }
-    		    }
-    		}
-    	}
+        // for-each-ak arazoak ematen zituen zerrenda aldatzean, horregatik for klasikoa
+        for (int i = 0; i < etsaiak.size(); i++) {
+            if (i >= etsaiak.size()) break;
+
+            EntitateNodo e = etsaiak.get(i);
+            int aukera = rnd.nextInt(3);
+            String norabideHautatuta = "";
+
+            if (aukera == 0) {
+                norabideHautatuta = "ezkerrera";
+            } else if (aukera == 1) {
+                norabideHautatuta = "eskuinera";
+            } else {
+                norabideHautatuta = "behera";
+            }
+
+            // 1. ALDAKETA: NABEAREKIN TALKA EGINDAKOAN
+            for (EntitateInterfazea etsaia : e.getLista()) {
+                Etsaia ePixel = (Etsaia) etsaia;
+                if (espaziontziaTalka(norabideHautatuta, ePixel.getPosizioa().getX(), ePixel.getPosizioa().getY())) {
+                    System.out.println("!! TALKA: Bizitza bat galdu duzu !!");
+                    
+                    // Jokoa amaitu ordez, bizitza bat kentzen dugu
+                    JokoKudeatzailea.getNireJokoKudeatzailea().bizitzaBatKendu();
+                    
+                    // Talka egin duen etsai multzo hori ezabatu dezakegu nabea behin eta berriz ez jotzeko
+                    etsaiakEzabatu(ePixel.getPosizioa().getX(), ePixel.getPosizioa().getY());
+                    
+                    return; // Metodotik irten bizitza bat galdu ostean
+                }
+            }
+
+            if (e.mugituDaiteke(norabideHautatuta)) {
+                e.mugitu(norabideHautatuta);
+            }
+        }
+
+        for (int i = 0; i < etsaiak.size(); i++) {
+            EntitateNodo entNodo = etsaiak.get(i);
+            if (!entNodo.getLista().isEmpty()) {
+                for (EntitateInterfazea e : entNodo.getLista()) {
+                    Etsaia etsaia = (Etsaia) e;
+                    if (etsaia.getPosizioa().getY() >= 59) {
+                        System.out.println("!!! Etsaia behera iritsi da !!!");
+
+                        JokoKudeatzailea.getNireJokoKudeatzailea().bizitzaBatKendu();
+                        etsaiakEzabatu(etsaia.getPosizioa().getX(), etsaia.getPosizioa().getY());
+                        return;
+                    }
+                }
+            }
+        }
+    }
    
     	
 
