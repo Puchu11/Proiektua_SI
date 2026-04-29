@@ -6,102 +6,54 @@ public abstract class Espaziontzia extends Entitatea {
 	
 	private int geziMunizioa=30;
 	private int erronboMunizioa=20;
-	private int tiroMota = 0;
+	private TiroPortaera tiroPortaera;
 	
 	Espaziontzia(int x, int y) {
 		super(x, y);
+		tiroPortaera= new TiroNormala();
 	}
 	public abstract Color getKolorea();
 	public void mugituGora() {
 		this.getPosizioa().setY(this.getPosizioa().getY()-1);
 	}
 	
-	public void setTiro(int pMota) {
-		this.tiroMota=pMota;
-	}
-	
-	public void tiroEgin() {
-		if(tiroMota==1) {
-			if(geziMunizioa > 0) {
-				geziMunizioa--;
-				System.out.println("Gezia geratzen da: "+geziMunizioa);
-				// 3 pixel sortzen ditugu gezi itxura egiteko
-				sortuTiroGezi();
-			}else {
-				// Muniziorik gabe, tiro zuzen bat botako du automatikoki
-				sortuTiroNormala();
-				
-			} 
-		}else if(tiroMota==2) {
-			if(erronboMunizioa>0) {
-				erronboMunizioa--;
-				System.out.println("Erronbo geratzen dira: "+ erronboMunizioa);
-				sortuTiroErronboa();
-			}else {
-				sortuTiroNormala();
-			}
+	public void portaeraAldatu(int pMota) {
+		if(pMota==1) {
+			tiroPortaera= new TiroGezi();
+		}else if (pMota==2) {
+			tiroPortaera = new TiroErronboa();
 		}else {
-			//tiro zuzena
-			sortuTiroNormala();
-			
+			tiroPortaera = new TiroNormala();
 		}
 	}
 	
-	private void sortuTiroGezi() {
-		int x =this.getPosizioa().getX();
-		int y = this.getPosizioa().getY()-4;
-		
-		TiroNodoa gezia = new TiroNodoa ();
-		gezia.gehituTiroa(new Tiro(x,y));
-		gezia.gehituTiroa(new Tiro(x-1, y+1));
-		gezia.gehituTiroa(new Tiro(x+1, y+1));
-		
-		gezia.start();
+	public void tiroEgin() {		
+		if(tiroPortaera instanceof TiroGezi && geziMunizioa>0) {
+			tiroPortaera.tiroEgin(this.getPosizioa().getX(), this.getPosizioa().getY()-4);
+			geziMunizioa--;
+			JokoKudeatzailea.getNireJokoKudeatzailea().mezuaErakutsi("Gezi Munizioa: " + geziMunizioa);
+		}else if(tiroPortaera instanceof TiroGezi && geziMunizioa<=0) {
+			JokoKudeatzailea.getNireJokoKudeatzailea().mezuaErakutsi("Ez da geratzen Gezi Munizioa");
+		}
+		else if(tiroPortaera instanceof TiroErronboa && erronboMunizioa>0){
+			tiroPortaera.tiroEgin(this.getPosizioa().getX(), this.getPosizioa().getY()-4);
+			erronboMunizioa--;
+			JokoKudeatzailea.getNireJokoKudeatzailea().mezuaErakutsi("Erronbo Munizioa: " + erronboMunizioa);
+		}else if(tiroPortaera instanceof TiroErronboa && geziMunizioa<=0) {
+			JokoKudeatzailea.getNireJokoKudeatzailea().mezuaErakutsi("Ez da geratzen Gezi Erronboa");
+		}
+		else if(tiroPortaera instanceof TiroNormala) {
+			tiroPortaera.tiroEgin(this.getPosizioa().getX(), this.getPosizioa().getY()-4);
+		}
 	}
 	
-	
-	private void sortuTiroNormala(){
-		int x=this.getPosizioa().getX();
-		int y=this.getPosizioa().getY();
-		TiroNodoa normala=new TiroNodoa();
-		normala.gehituTiroa(new Tiro(x,y-4));
-		
-		normala.start();
+	public void setTiroPortaera(int pMota) {
+		if(pMota==1) {
+			tiroPortaera= new TiroGezi();
+		}else if (pMota==2) {
+			tiroPortaera = new TiroErronboa();
+		}else {
+			tiroPortaera = new TiroNormala();
+		}
 	}
-	
-	
-	private void sortuTiroErronboa() {
-		int x =this.getPosizioa().getX();
-		int y = this.getPosizioa().getY()-3;
-		
-		TiroNodoa erronboa=new TiroNodoa();
-		
-		erronboa.gehituTiroa(new Tiro(x,y-5));
-		erronboa.gehituTiroa(new Tiro(x-1, y-4));
-		erronboa.gehituTiroa(new Tiro(x+1, y-4));
-		erronboa.gehituTiroa(new Tiro(x, y-4));
-		erronboa.gehituTiroa(new Tiro(x-1, y-3));
-		erronboa.gehituTiroa(new Tiro(x+1, y-3));
-		erronboa.gehituTiroa(new Tiro(x, y-3));
-		erronboa.gehituTiroa(new Tiro(x-2, y-3));
-		erronboa.gehituTiroa(new Tiro(x+2, y-3));
-		erronboa.gehituTiroa(new Tiro(x-1, y-2));
-		erronboa.gehituTiroa(new Tiro(x+1, y-2));
-		erronboa.gehituTiroa(new Tiro(x, y-2));
-		erronboa.gehituTiroa(new Tiro(x, y-1));
-		
-		
-		erronboa.start();
-	}
- 
-    public int getTiroMota() {
-    	return this.tiroMota;
-    }
-    
-    public void setTiroMota(int pMota) {
-    	if(pMota>=0 && pMota<=2) {
-    		this.tiroMota=pMota;
-    		System.out.print("tiro mota: "+ this.tiroMota);
-    	}
-    }
 }
