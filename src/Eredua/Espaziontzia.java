@@ -31,14 +31,14 @@ public abstract class Espaziontzia extends Entitatea {
 		if(tiroPortaera instanceof TiroGezi && geziMunizioa>0) {
 			tiroPortaera.tiroEgin(this.getPosizioa().getX(), this.getPosizioa().getY()-4);
 			geziMunizioa--;
-			JokoKudeatzailea.getNireJokoKudeatzailea().mezuaErakutsi("Gezi Munizioa: " + geziMunizioa);
+			balakEguneratu(1);
 		}else if(tiroPortaera instanceof TiroGezi && geziMunizioa<=0) {
 			JokoKudeatzailea.getNireJokoKudeatzailea().mezuaErakutsi("Ez da geratzen Gezi Munizioa");
 		}
 		else if(tiroPortaera instanceof TiroErronboa && erronboMunizioa>0){
 			tiroPortaera.tiroEgin(this.getPosizioa().getX(), this.getPosizioa().getY()-4);
 			erronboMunizioa--;
-			JokoKudeatzailea.getNireJokoKudeatzailea().mezuaErakutsi("Erronbo Munizioa: " + erronboMunizioa);
+			balakEguneratu(2);
 		}else if(tiroPortaera instanceof TiroErronboa && geziMunizioa<=0) {
 			JokoKudeatzailea.getNireJokoKudeatzailea().mezuaErakutsi("Ez da geratzen Gezi Erronboa");
 		}
@@ -54,6 +54,27 @@ public abstract class Espaziontzia extends Entitatea {
 			tiroPortaera = new TiroErronboa();
 		}else {
 			tiroPortaera = new TiroNormala();
+		}
+		balakEguneratu(pMota);
+	}
+	
+	public String getBalarenIkurra() {
+		if(tiroPortaera instanceof TiroGezi) {
+            return "▲";
+	    }else if(tiroPortaera instanceof TiroErronboa){
+	    	return "◆";
+	    }else {
+	    	return "●";
+	    }
+	}
+	
+	private void balakEguneratu(int pMota) {
+		if (pMota==1) {
+			JokoKudeatzailea.getNireJokoKudeatzailea().balakEguneratu(geziMunizioa);
+		}else if(pMota==2) {
+			JokoKudeatzailea.getNireJokoKudeatzailea().balakEguneratu(erronboMunizioa);
+		}else {
+			JokoKudeatzailea.getNireJokoKudeatzailea().balakEguneratu(0);
 		}
 	}
 }

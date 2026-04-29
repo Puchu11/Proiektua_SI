@@ -38,6 +38,7 @@ public class MatrizeB extends JFrame implements Observer {
 	private JLabel[] bihotzEtiketak;
 	private JPanel bizitzaPanela;
 	private JLabel bizitzaMezuaLabel;
+	private JLabel balakLabel;
 
 	private Controller controller = null;
 	
@@ -74,30 +75,43 @@ public class MatrizeB extends JFrame implements Observer {
 		addKeyListener(getController());
 		setFocusable(true);
 		
-		//bizitzak
-		bizitzaPanela = new JPanel(new BorderLayout()); // BorderLayout erabiliko dugu barruan
+		bizitzaPanela = new JPanel(new BorderLayout());
 		bizitzaPanela.setBackground(Color.BLACK);
 
-		// Mezua (Ezkerrean)
-		bizitzaMezuaLabel = new JLabel(""); 
-		bizitzaMezuaLabel.setForeground(Color.RED); // Gorriz nabarmentzeko
-		bizitzaMezuaLabel.setFont(new Font("Arial", Font.BOLD, 18));
-		bizitzaPanela.add(bizitzaMezuaLabel, BorderLayout.WEST); // WEST = Ezkerra
+		// BALAK
+		JPanel ezkerPanela = new JPanel(new FlowLayout(FlowLayout.LEFT));
+		ezkerPanela.setBackground(Color.BLACK);
 
-		// Bihotzak (Eskuinean)
+		balakLabel = new JLabel("● ∞");
+		balakLabel.setForeground(Color.WHITE);
+		balakLabel.setFont(new Font("Arial", Font.BOLD, 20));
+
+		ezkerPanela.add(balakLabel);
+		bizitzaPanela.add(ezkerPanela, BorderLayout.WEST);
+
+		// MEZUA
+		bizitzaMezuaLabel = new JLabel("", SwingConstants.CENTER);
+		bizitzaMezuaLabel.setForeground(Color.RED);
+		bizitzaMezuaLabel.setFont(new Font("Arial", Font.BOLD, 18));
+
+		bizitzaPanela.add(bizitzaMezuaLabel, BorderLayout.CENTER);
+
+		// BIZITZAK
 		JPanel bihotzenEremua = new JPanel(new FlowLayout(FlowLayout.RIGHT));
 		bihotzenEremua.setBackground(Color.BLACK);
+
 		bihotzEtiketak = new JLabel[3];
+
 		for (int i = 0; i < 3; i++) {
-		    bihotzEtiketak[i] = new JLabel("♥"); 
+		    bihotzEtiketak[i] = new JLabel("♥");
 		    bihotzEtiketak[i].setForeground(new Color(255, 105, 180));
 		    bihotzEtiketak[i].setFont(new Font("Arial", Font.BOLD, 30));
 		    bihotzenEremua.add(bihotzEtiketak[i]);
 		}
-		bizitzaPanela.add(bihotzenEremua, BorderLayout.EAST); // EAST = Eskuina
+
+		bizitzaPanela.add(bihotzenEremua, BorderLayout.EAST);
 
 		this.add(bizitzaPanela, BorderLayout.NORTH);
-
 	}
 	
 	private void matrizeaSortu() {
@@ -148,7 +162,11 @@ public class MatrizeB extends JFrame implements Observer {
 	        }	        
 	    } 
 	    else if (arg instanceof String mezuaString) {
-	        mezuaErakutsi(mezuaString);
+	        if (mezuaString.startsWith("BALAK:")) {
+	            balakLabel.setText(mezuaString);
+	        } else {
+	            mezuaErakutsi(mezuaString);
+	        }
 	    }
 	}
 
