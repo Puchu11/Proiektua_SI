@@ -166,7 +166,7 @@ public class MatrizeB extends JFrame implements Observer {
 
 	    SwingUtilities.invokeLater(() -> {
 	        int zabalera = getWidth();
-	        mezua.setBounds(0, 20, zabalera, 50);
+	        mezua.setBounds(0, 5, zabalera, 50);
 	    });
 
 	    mezuaTimer.restart();
