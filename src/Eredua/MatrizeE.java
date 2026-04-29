@@ -133,96 +133,47 @@ public class MatrizeE extends Observable {
         etsaienTimer.schedule(ataza, 0, 200);
     }
     private void etsaiakMugitu() {
-        // for-each-ak arazoak ematen zituen zerrenda aldatzean, horregatik for klasikoa
-        int kopurua = etsaiak.size();
-        for (int i = 0; i < etsaiak.size(); i++) {
-            if (i >= etsaiak.size()) break;
+        // 1. ERRORE NAGUSIA: Kopia bat behar dugu zerrenda aldatzeko (ConcurrentModificationException) 
+        ArrayList<EntitateNodo> kopiaEtsaiak = new ArrayList<>(etsaiak);
 
-            EntitateNodo e = etsaiak.get(i);
+        for (EntitateNodo e : kopiaEtsaiak) {
+            // Norabidea behin bakarrik aukeratu nodo bakoitzeko
             int aukera = rnd.nextInt(3);
-            String norabideHautatuta = "";
+            String norabideHautatuta = (aukera == 0) ? "ezkerrera" : (aukera == 1) ? "eskuinera" : "behera";
 
-            if (aukera == 0) {
-                norabideHautatuta = "ezkerrera";
-            } else if (aukera == 1) {
-                norabideHautatuta = "eskuinera";
-            } else {
-                norabideHautatuta = "behera";
+            // 2. ERROREAREN ZUZENKETA: Logika errepikatua ezabatu eta bakarrean elkartu
+            
+            // TALKA DETEKZIOA (Java 8 Stream-ak erabiliz [cite: 517])
+            boolean talkaNabearekin = e.getLista().stream()
+                    .map(ent -> (Etsaia) ent)
+                    .anyMatch(enemy -> espaziontziaTalka(norabideHautatuta, enemy.getPosizioa().getX(), enemy.getPosizioa().getY()));
+
+            if (talkaNabearekin) {
+                System.out.println("!! TALKA: Bizitza bat galdu duzu !!");
+                JokoKudeatzailea.getNireJokoKudeatzailea().bizitzaBatKendu();
+                
+                // Talka egin duen etsai multzoa ezabatu
+                Etsaia lehena = (Etsaia) e.getLista().get(0);
+                etsaiakEzabatu(lehena.getPosizioa().getX(), lehena.getPosizioa().getY());
+                continue; // Nodo hau ezabatu denez, hurrengoarekin jarraitu
             }
 
-            // 1. ALDAKETA: NABEAREKIN TALKA EGINDAKOAN
-            for (EntitateInterfazea etsaia : e.getLista()) {
-                Etsaia ePixel = (Etsaia) etsaia;
-                if (espaziontziaTalka(norabideHautatuta, ePixel.getPosizioa().getX(), ePixel.getPosizioa().getY())) {
-                    System.out.println("!! TALKA: Bizitza bat galdu duzu !!");
-                    
-                    // Jokoa amaitu ordez, bizitza bat kentzen dugu
-                    JokoKudeatzailea.getNireJokoKudeatzailea().bizitzaBatKendu();
-                    
-                    // Talka egin duen etsai multzo hori ezabatu dezakegu nabea behin eta berriz ez jotzeko
-                    etsaiakEzabatu(ePixel.getPosizioa().getX(), ePixel.getPosizioa().getY());
-                    
-                    return; // Metodotik irten bizitza bat galdu ostean
-                }
-            }
-
+            // MUGIMENDUA
             if (e.mugituDaiteke(norabideHautatuta)) {
                 e.mugitu(norabideHautatuta);
             }
-        }
 
-        for (int i = 0; i < etsaiak.size(); i++) {
-            EntitateNodo entNodo = etsaiak.get(i);
-            if (!entNodo.getLista().isEmpty()) {
-                for (EntitateInterfazea e : entNodo.getLista()) {
-                    Etsaia etsaia = (Etsaia) e;
-                    if (etsaia.getPosizioa().getY() >= 59) {
-                        System.out.println("!!! Etsaia behera iritsi da !!!");
-
-                        JokoKudeatzailea.getNireJokoKudeatzailea().bizitzaBatKendu();
-                        etsaiakEzabatu(etsaia.getPosizioa().getX(), etsaia.getPosizioa().getY());
-                        return;
-                    }
-                }
-            }
-            String norabideHautatuta = (aukera == 0) ? "ezkerrera" : (aukera == 1) ? "eskuinera" : "behera";
-
-            final String norabideaFinal = norabideHautatuta;
-
-            // Stream bidezko talka detekzioa (main branch-eko logika)
-            boolean talka = e.getLista().stream()
+            // BEHERA IRITSI DEN EGIAZTATU (Mugimenduaren ostean)
+            boolean iritsiDaBehera = e.getLista().stream()
                     .map(ent -> (Etsaia) ent)
-                    .anyMatch(enemy -> espaziontziaTalka(
-                            norabideaFinal,
-                            enemy.getPosizioa().getX(),
-                            enemy.getPosizioa().getY()
-                    ));
+                    .anyMatch(enemy -> enemy.getPosizioa().getY() >= 59);
 
-            if (talka) {
-                System.out.println("!!GALDU DOZU:TALKA");
-                jokoaAmaitu();
-                AudioKudeatzailea.getAudioKudeatzailea().musikaGelditu();
-                AudioKudeatzailea.getAudioKudeatzailea().soinuaErreproduzitu("src/res/mario_death.wav");
-                JokoKudeatzailea.getNireJokoKudeatzailea().egoeraAldatu(Egoera.GALDU);
-                return;
+            if (iritsiDaBehera) {
+                System.out.println("!!! Etsaia behera iritsi da !!!");
+                JokoKudeatzailea.getNireJokoKudeatzailea().bizitzaBatKendu();
+                Etsaia lehena = (Etsaia) e.getLista().get(0);
+                etsaiakEzabatu(lehena.getPosizioa().getX(), lehena.getPosizioa().getY());
             }
-
-            if (e.mugituDaiteke(norabideaFinal)) {
-                e.mugitu(norabideaFinal);
-            }
-        }
-
-        // Behera iristearen logika
-        boolean behera = etsaiak.stream()
-                .flatMap(nodo -> nodo.getLista().stream())
-                .map(ent -> (Etsaia) ent)
-                .anyMatch(e -> e.getPosizioa().getY() >= 59);
-
-        if (behera) {
-            System.out.println("!!! KONSOLEAN: Etsaia behera iritsi da !!!");
-            jokoaAmaitu();
-            JokoKudeatzailea.getNireJokoKudeatzailea().egoeraAldatu(Egoera.GALDU);
-            return;
         }
     }
     	
