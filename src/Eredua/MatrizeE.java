@@ -135,57 +135,65 @@ public class MatrizeE extends Observable {
         etsaienTimer.schedule(ataza, 0, 200);
     }
     private void etsaiakMugitu() {
-        for (int i = 0; i < etsaiak.size(); i++) {
-            EntitateNodo e = etsaiak.get(i);
-            
+        // 1. Kopia bat sortzen dugu zerrenda zeharkatzen dugun bitartean 
+        // elementuak ezabatu ahal izateko (ConcurrentModificationException prebentzioa).
+        ArrayList<EntitateNodo> kopiaEtsaiak = new ArrayList<>(etsaiak);
+
+        for (EntitateNodo entNodo : kopiaEtsaiak) {
+            // Norabidea ausaz aukeratu nodo bakoitzeko.
             int aukera = rnd.nextInt(3);
-            String norabidea = (aukera == 0) ? "ezkerrera" : (aukera == 1) ? "eskuinera" : "behera";
+            String norabideHautatuta = (aukera == 0) ? "ezkerrera" : (aukera == 1) ? "eskuinera" : "behera";
+            final String norabideaFinal = norabideHautatuta;
 
-            boolean talka = false;
-            for (EntitateInterfazea ent : e.getLista()) {
-                Etsaia enemyPixel = (Etsaia) ent;
-                if (espaziontziaTalka(norabidea, enemyPixel.getPosizioa().getX(), enemyPixel.getPosizioa().getY())) {
-                    talka = true;
-                    break;
-                }
-            }
+            // 2. TALKA DETEKZIOA (Java 8 Stream-ak erabiliz ).
+            boolean talka = entNodo.getLista().stream()
+                    .map(ent -> (Etsaia) ent)
+                    .anyMatch(etsaia -> espaziontziaTalka(
+                            norabideaFinal,
+                            etsaia.getPosizioa().getX(),
+                            etsaia.getPosizioa().getY()
+                    ));
 
-            // bizitzak
             if (talka) {
                 System.out.println("!! TALKA: Bizitza bat galdu duzu !!");
                 JokoKudeatzailea.getNireJokoKudeatzailea().bizitzaBatKendu();
 
-                Etsaia ePixel = (Etsaia) e.getLista().get(0);
-                etsaiakEzabatu(ePixel.getPosizioa().getX(), ePixel.getPosizioa().getY());
-                
-                return; 
-            }
-
-            if (e.mugituDaiteke(norabidea)) {
-                e.mugitu(norabidea);
+                if (!entNodo.getLista().isEmpty()) {
+                    Etsaia lehenengoa = (Etsaia) entNodo.getLista().get(0);
+                    etsaiakEzabatu(
+                            lehenengoa.getPosizioa().getX(),
+                            lehenengoa.getPosizioa().getY()
+                    );
+                }
+                continue; // Nodo hau ezabatu denez, hurrengoarekin jarraitu.
             }
         }
 
-        EntitateNodo nodoBehean = null;
-        for (EntitateNodo nodo : etsaiak) {
-            for (EntitateInterfazea ent : nodo.getLista()) {
-                Etsaia ets = (Etsaia) ent;
-                if (ets.getPosizioa().getY() >= 59) {
-                    nodoBehean = nodo;
-                    break;
+            // 3. MUGIMENDUA.
+            if (entNodo.mugituDaiteke(norabideaFinal)) {
+                entNodo.mugitu(norabideaFinal);
+            }
+
+            // 4. BEHERA IRITSI DEN EGIAZTATU (Mugimenduaren ostean).
+            boolean iritsiDaBehera = entNodo.getLista().stream()
+                    .map(ent -> (Etsaia) ent)
+                    .anyMatch(enemy -> enemy.getPosizioa().getY() >= 59);
+
+            if (iritsiDaBehera) {
+                System.out.println("!!! Etsaia behera iritsi da !!!");
+                JokoKudeatzailea.getNireJokoKudeatzailea().bizitzaBatKendu();
+                
+                if (!entNodo.getLista().isEmpty()) {
+                    Etsaia lehenengoa = (Etsaia) entNodo.getLista().get(0);
+                    etsaiakEzabatu(
+                            lehenengoa.getPosizioa().getX(),
+                            lehenengoa.getPosizioa().getY()
+                    );
                 }
             }
-            if (nodoBehean != null) break;
-        }
-
-        if (nodoBehean != null) {
-            JokoKudeatzailea.getNireJokoKudeatzailea().bizitzaBatKendu();
-            Etsaia eAux = (Etsaia) nodoBehean.getLista().get(0);
-            etsaiakEzabatu(eAux.getPosizioa().getX(), eAux.getPosizioa().getY());
         }
     }
-       	
-
+   
     public void etsaiakEzabatu(int x, int y) {	
     	EntitateNodo nodoEzabatu = etsaiak.stream().filter(nodo -> nodo.getLista().stream()
     	                .map(ent -> (Etsaia) ent)
@@ -205,7 +213,16 @@ public class MatrizeE extends Observable {
     	            );
 
     	    etsaiak.remove(nodoEzabatu);
-    	    JokoKudeatzailea.getNireJokoKudeatzailea().puntuazioaGehitu(1);
+    	    
+    	    java.util.List<PowerUp> powerUpZerrenda = new java.util.ArrayList<>();
+    	    powerUpZerrenda.add(esp -> esp.portaeraAldatu(1));
+    	    powerUpZerrenda.add(esp -> esp.portaeraAldatu(2));
+    	    
+    	    if(rnd.nextDouble()<0.3){ //%30-eko probabilitatea
+    	    	PowerUp aukeratua= powerUpZerrenda.get(rnd.nextInt(powerUpZerrenda.size()));
+    	    	aukeratua.aplikatu(getEspaziontzia());
+    	    	JokoKudeatzailea.getNireJokoKudeatzailea().mezuaErakutsi("PowerUp lortuta!");
+    	    }
     	}
     	
     	if (etsaiak.isEmpty()) {
@@ -276,5 +293,4 @@ public class MatrizeE extends Observable {
 
         return g.getEntitateMota().equals("espaziontzia");
     }
-    
 }
