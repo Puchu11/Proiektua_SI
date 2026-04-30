@@ -17,6 +17,7 @@ public class JokoKudeatzailea extends Observable {
 	private JokoKudeatzailea() {}
 	
 	private String espaziontziMota = "green";
+	private int puntuazioTotala = 0;
 	
 	public static JokoKudeatzailea getNireJokoKudeatzailea() {
 		if(ema==null) {
@@ -40,6 +41,7 @@ public class JokoKudeatzailea extends Observable {
 	public void egoeraAldatu(Egoera berria) {
 		this.egoera=berria;
 		if(this.egoera==Egoera.JOKATZEN) {
+			this.bizitzak = 3;
 			MatrizeE.getEma().matrizeaSortu();
 		}
 		if(this.egoera==Egoera.IRABAZI||this.egoera==Egoera.GALDU) {
@@ -91,5 +93,16 @@ public class JokoKudeatzailea extends Observable {
 	
 	public int getBizitzak() {
 	    return this.bizitzak;
+	}
+
+	public int getPuntuazioTotala() { 
+		return puntuazioTotala; 
+	}
+	public void puntuazioaGehitu(int p) {
+		this.puntuazioTotala = this.puntuazioTotala + p;
+	
+	}
+	public Egoera getEgoera() {
+	    return this.egoera;
 	}
 }

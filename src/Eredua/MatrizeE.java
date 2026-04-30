@@ -30,6 +30,8 @@ public class MatrizeE extends Observable {
     }
     
     public void matrizeaSortu() {
+    	espaziontzia.getLista().clear(); // partida berriz jokatzeko aurrekoa ezabatu
+        etsaiak.clear();
     	for (int i = 0; i < altuera; i++) {
             for (int j = 0; j < zabalera; j++) {
             	matrizea[i][j] = new GelaxkaE(j, i, new HutsaEgoera());
@@ -165,6 +167,7 @@ public class MatrizeE extends Observable {
                 }
                 continue; // Nodo hau ezabatu denez, hurrengoarekin jarraitu.
             }
+        }
 
             // 3. MUGIMENDUA.
             if (entNodo.mugituDaiteke(norabideaFinal)) {
