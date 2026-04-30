@@ -101,6 +101,7 @@ public class MatrizeB extends JFrame implements Observer {
 	}
 	
 	private void matrizeaSortu() {
+		jokoPanela.removeAll();
 		for (int i = 0; i < 60; i++) {
 			for (int j = 0; j < 100; j++) {
 				GelaxkaB gelaxkaB = new GelaxkaB();
@@ -111,25 +112,39 @@ public class MatrizeB extends JFrame implements Observer {
 				gelaxkaB.setBackground(gelaxkaE.getEgoera().lortuKolorea());
 			}
 		}
+		jokoPanela.revalidate();
+	    jokoPanela.repaint();
 	}
 
 	@Override
 	public void update(Observable o, Object arg) {
 	    if (arg instanceof Egoera) {
 	        Egoera e = (Egoera) arg;
+	        
 	        if (e == Egoera.JOKATZEN) {
+	        	bizitzaPanela.setVisible(true);
+	        	//bizitzak jokoa berriz hastean berriz marraztu
+	            for (int i = 0; i < 3; i++) {
+	                bihotzEtiketak[i].setVisible(true);
+	            }
 	            matrizeaSortu();
 	            setVisible(true);    
 	            new Timer(16, ev -> {jokoPanela.repaint();}).start();
 	            nabegadorea.show(kontenedorea, "JOKOA");
 	            this.requestFocusInWindow();
 	            getController().hasi();
-	        } else if (e == Egoera.IRABAZI) {
-	            nabegadorea.show(kontenedorea, "IRABAZI_PANTAILA");
-	            jokoPanela.repaint();
-	        } else if (e == Egoera.GALDU) {
-	            nabegadorea.show(kontenedorea, "GALDU_PANTAILA");
-	            this.repaint();
+	        } else if (e == Egoera.IRABAZI || e==Egoera.GALDU) {
+	        	bizitzaPanela.setVisible(false);
+	        	int puntuak= JokoKudeatzailea.getNireJokoKudeatzailea().getPuntuazioTotala();
+	        	if (e==Egoera.IRABAZI) {
+	        		irabaziPantaila.eguneratuTestua(puntuak);
+	        		nabegadorea.show(kontenedorea, "IRABAZI_PANTAILA");
+	        	} else {
+	        		galduPantaila.eguneratuTestua(puntuak);
+	        		nabegadorea.show(kontenedorea, "GALDU_PANTAILA");
+	        	}
+	        	this.requestFocusInWindow();
+	        	this.repaint();
 	        }
 	    } 
 	    
@@ -226,6 +241,17 @@ public class MatrizeB extends JFrame implements Observer {
  
 	    @Override
 	    public void keyPressed(KeyEvent e) {
+	    	Egoera unekoEgoera = JokoKudeatzailea.getNireJokoKudeatzailea().getEgoera();
+
+	        if (unekoEgoera == Egoera.IRABAZI || unekoEgoera == Egoera.GALDU) {
+	            if (e.getKeyCode() == KeyEvent.VK_R) {
+	                // Berriz jokoa hasten da baina puntuazioa gordetzen da
+	                JokoKudeatzailea.getNireJokoKudeatzailea().egoeraAldatu(Egoera.JOKATZEN);
+	                return;
+	            } else if (e.getKeyCode() == KeyEvent.VK_ESCAPE) {
+	                System.exit(0); // amaitu
+	            }
+	        }
 	        switch (e.getKeyCode()) {
 	            case KeyEvent.VK_LEFT  -> ezkerra = true;
 	            case KeyEvent.VK_RIGHT -> eskuma = true;
