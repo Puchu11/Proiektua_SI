@@ -210,6 +210,16 @@ public class MatrizeE extends Observable {
     	            );
 
     	    etsaiak.remove(nodoEzabatu);
+    	    
+    	    java.util.List<PowerUp> powerUpZerrenda = new java.util.ArrayList<>();
+    	    powerUpZerrenda.add(esp -> esp.portaeraAldatu(1));
+    	    powerUpZerrenda.add(esp -> esp.portaeraAldatu(2));
+    	    
+    	    if(rnd.nextDouble()<0.3){ //%30-eko probabilitatea
+    	    	PowerUp aukeratua= powerUpZerrenda.get(rnd.nextInt(powerUpZerrenda.size()));
+    	    	aukeratua.aplikatu(getEspaziontzia());
+    	    	JokoKudeatzailea.getNireJokoKudeatzailea().mezuaErakutsi("PowerUp lortuta!");
+    	    }
     	}
     	
     	if (etsaiak.isEmpty()) {
