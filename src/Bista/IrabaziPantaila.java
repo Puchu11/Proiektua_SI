@@ -14,7 +14,7 @@ public class IrabaziPantaila extends JPanel {
 	
 	public IrabaziPantaila() {
 		this.setBackground(Color.BLACK);
-		this.setLayout(new GridLayout(2,1));
+		this.setLayout(new GridLayout(3,1));
 		
 		JLabel titulua = new JLabel ("IRABAZI DOZU", SwingConstants.CENTER);
 		titulua.setForeground(Color.WHITE);

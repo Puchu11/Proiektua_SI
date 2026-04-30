@@ -135,17 +135,15 @@ public class MatrizeE extends Observable {
         etsaienTimer.schedule(ataza, 0, 200);
     }
     private void etsaiakMugitu() {
-        // 1. Kopia bat sortzen dugu zerrenda zeharkatzen dugun bitartean 
-        // elementuak ezabatu ahal izateko (ConcurrentModificationException prebentzioa).
         ArrayList<EntitateNodo> kopiaEtsaiak = new ArrayList<>(etsaiak);
 
         for (EntitateNodo entNodo : kopiaEtsaiak) {
-            // Norabidea ausaz aukeratu nodo bakoitzeko.
+            // Norabidea ausaz aukeratu nodo bakoitzeko
             int aukera = rnd.nextInt(3);
             String norabideHautatuta = (aukera == 0) ? "ezkerrera" : (aukera == 1) ? "eskuinera" : "behera";
             final String norabideaFinal = norabideHautatuta;
 
-            // 2. TALKA DETEKZIOA (Java 8 Stream-ak erabiliz ).
+            // 2. TALKA DETEKZIOA
             boolean talka = entNodo.getLista().stream()
                     .map(ent -> (Etsaia) ent)
                     .anyMatch(etsaia -> espaziontziaTalka(
@@ -165,16 +163,15 @@ public class MatrizeE extends Observable {
                             lehenengoa.getPosizioa().getY()
                     );
                 }
-                continue; // Nodo hau ezabatu denez, hurrengoarekin jarraitu.
+                continue; 
             }
-        }
 
-            // 3. MUGIMENDUA.
+            // 3. MUGIMENDUA
             if (entNodo.mugituDaiteke(norabideaFinal)) {
                 entNodo.mugitu(norabideaFinal);
             }
 
-            // 4. BEHERA IRITSI DEN EGIAZTATU (Mugimenduaren ostean).
+            // 4. BEHERA IRITSI DEN EGIAZTATU
             boolean iritsiDaBehera = entNodo.getLista().stream()
                     .map(ent -> (Etsaia) ent)
                     .anyMatch(enemy -> enemy.getPosizioa().getY() >= 59);
@@ -213,6 +210,7 @@ public class MatrizeE extends Observable {
     	            );
 
     	    etsaiak.remove(nodoEzabatu);
+    	    JokoKudeatzailea.getNireJokoKudeatzailea().puntuazioaGehitu(1);
     	    
     	    java.util.List<PowerUp> powerUpZerrenda = new java.util.ArrayList<>();
     	    powerUpZerrenda.add(esp -> esp.portaeraAldatu(1));
