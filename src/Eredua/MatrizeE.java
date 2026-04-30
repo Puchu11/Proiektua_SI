@@ -148,7 +148,7 @@ public class MatrizeE extends Observable {
             String norabideHautatuta = (aukera == 0) ? "ezkerrera" : (aukera == 1) ? "eskuinera" : "behera";
             final String norabideaFinal = norabideHautatuta;
 
-            // 2. TALKA DETEKZIOA (Java 8 Stream-ak erabiliz ).
+            // 2. TALKA DETEKZIOA (Java 8 Stream-ak erabiliz).
             boolean talka = entNodo.getLista().stream()
                     .map(ent -> (Etsaia) ent)
                     .anyMatch(etsaia -> espaziontziaTalka(
@@ -168,9 +168,9 @@ public class MatrizeE extends Observable {
                             lehenengoa.getPosizioa().getY()
                     );
                 }
+
                 continue; // Nodo hau ezabatu denez, hurrengoarekin jarraitu.
             }
-        }
 
             // 3. MUGIMENDUA.
             if (entNodo.mugituDaiteke(norabideaFinal)) {
@@ -194,9 +194,9 @@ public class MatrizeE extends Observable {
                     );
                 }
             }
+
         }
     }
-   
     public void etsaiakEzabatu(int x, int y) {	
     	EntitateNodo nodoEzabatu = etsaiak.stream().filter(nodo -> nodo.getLista().stream()
     	                .map(ent -> (Etsaia) ent)
