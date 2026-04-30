@@ -77,4 +77,9 @@ public abstract class Espaziontzia extends Entitatea {
 			JokoKudeatzailea.getNireJokoKudeatzailea().balakEguneratu(0);
 		}
 	}
+	public int getGeziMunizioa() {return geziMunizioa; }
+	public void setGeziMunizioa(int pM) { this.geziMunizioa = pM;}
+	
+	public int getErronboMunizioa() { return erronboMunizioa;}
+	public void setErronboMunizioa(int pM) {this.erronboMunizioa=pM;} 
 }

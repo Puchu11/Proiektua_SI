@@ -94,15 +94,11 @@ public class JokoKudeatzailea extends Observable {
 	public int getBizitzak() {
 	    return this.bizitzak;
 	}
+	public void bizitzaBatGehitu() {
+		this.bizitzak++;
+		this.setChanged();
+		this.notifyObservers(this.bizitzak);
+	}
 
-	public int getPuntuazioTotala() { 
-		return puntuazioTotala; 
-	}
-	public void puntuazioaGehitu(int p) {
-		this.puntuazioTotala = this.puntuazioTotala + p;
 	
-	}
-	public Egoera getEgoera() {
-	    return this.egoera;
-	}
 }
