@@ -10,7 +10,7 @@ import java.util.TimerTask;
 public class MatrizeE extends Observable {
 
     private static MatrizeE ema;
-
+    
     private static int zabalera = 100;  
     private static int altuera = 60;   
 
@@ -19,7 +19,8 @@ public class MatrizeE extends Observable {
     private ArrayList<EntitateNodo> etsaiak = new ArrayList<EntitateNodo>();
     private java.util.Timer etsaienTimer;
     private Random rnd = new Random();
-
+    private java.util.Timer powerUpTimer;
+    private java.util.List<PowerUpObjektua> erortzenDirenPowerUpak = new java.util.ArrayList<>();
     private MatrizeE() {}
     
     public static MatrizeE getEma() {
@@ -41,6 +42,8 @@ public class MatrizeE extends Observable {
     	espaziontziaSortu(espaziontziMota);
     	etsaiakSortu();
     	hasieratuEtsaienMugimendua();
+    	
+    	hasieratuPowerUpErorikoa();
     }
     public void mugituEspaziontzia(String norabidea) {
     	
@@ -211,15 +214,15 @@ public class MatrizeE extends Observable {
 
     	    etsaiak.remove(nodoEzabatu);
     	    
-    	    java.util.List<PowerUp> powerUpZerrenda = new java.util.ArrayList<>();
-    	    powerUpZerrenda.add(esp -> esp.portaeraAldatu(1));
-    	    powerUpZerrenda.add(esp -> esp.portaeraAldatu(2));
-    	    
-    	    if(rnd.nextDouble()<0.3){ //%30-eko probabilitatea
-    	    	PowerUp aukeratua= powerUpZerrenda.get(rnd.nextInt(powerUpZerrenda.size()));
-    	    	aukeratua.aplikatu(getEspaziontzia());
-    	    	JokoKudeatzailea.getNireJokoKudeatzailea().mezuaErakutsi("PowerUp lortuta!");
+    	    //PowerUp berria sortu eta gehitu
+    	    if (rnd.nextDouble()<0.3) {
+    	    	java.util.List<PowerUp> Lista= PowerUpFactory.lortuPowerUpGuztiak();
+        	    PowerUp aukeratua = Lista.get(rnd.nextInt(Lista.size()));
+        	    
+        	    erortzenDirenPowerUpak.add(new PowerUpObjektua(x, y, aukeratua));
+        	    JokoKudeatzailea.getNireJokoKudeatzailea().mezuaErakutsi("PowerUp erortzen hari da!");	
     	    }
+    	    
     	}
     	
     	if (etsaiak.isEmpty()) {
@@ -289,5 +292,39 @@ public class MatrizeE extends Observable {
         if (g == null) return false;
 
         return g.getEntitateMota().equals("espaziontzia");
+    }
+
+
+    public void hasieratuPowerUpErorikoa() {
+        powerUpTimer = new java.util.Timer();
+        powerUpTimer.schedule(new java.util.TimerTask(){
+            public void run() {
+                // ConcurrentModificationException ekiditeko kopia bat erabiltzen dugu
+                new java.util.ArrayList<>(erortzenDirenPowerUpak).forEach(p -> {
+                    p.jaitsi();
+            
+                    // Talka espaziontziarekin egiaztatu
+                    GelaxkaE g = getGelaxka(p.getX(), p.getY());
+                    if (g != null && g.getEntitateMota().equals("espaziontzia")) {
+                        p.aplikatuEfektua(getEspaziontzia());
+                        erortzenDirenPowerUpak.remove(p);
+                        JokoKudeatzailea.getNireJokoKudeatzailea().mezuaErakutsi("Power-up aplikatua!");
+                        
+                        // Nabearen kolorea eta egoera berrezarri (ezabatu gabe)
+                        g.gelaxkaEguneratu(new EspaziontziaEgoera());
+                        return;
+                    }
+                    
+                    // Muga baino gehiago jaisten bada, ezabatu
+                    if (p.getY() >= 60) {
+                    	GelaxkaE gOut = getGelaxka(p.getX(), p.getY() - 1);
+                        if (gOut != null && !gOut.getEntitateMota().equals("espaziontzia")) {
+                            gOut.gelaxkaEguneratu(new HutsaEgoera());
+                        }
+                        erortzenDirenPowerUpak.remove(p);
+                    }
+                });
+            }
+        }, 0, 300); // 300ms-tik behin mugituko da
     }
 }

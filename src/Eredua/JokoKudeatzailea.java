@@ -92,4 +92,11 @@ public class JokoKudeatzailea extends Observable {
 	public int getBizitzak() {
 	    return this.bizitzak;
 	}
+	public void bizitzaBatGehitu() {
+		this.bizitzak++;
+		this.setChanged();
+		this.notifyObservers(this.bizitzak);
+	}
+
+	
 }
