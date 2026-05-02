@@ -220,9 +220,19 @@ public class MatrizeE extends Observable {
     	    //PowerUp berria sortu eta gehitu
     	    if (rnd.nextDouble()<0.3) {
     	    	java.util.List<PowerUp> Lista= PowerUpFactory.lortuPowerUpGuztiak();
-        	    PowerUp aukeratua = Lista.get(rnd.nextInt(Lista.size()));
+        	    	int indizea= rnd.nextInt(Lista.size());
+    	    		PowerUp aukeratua = Lista.get(rnd.nextInt(Lista.size()));
         	    
-        	    erortzenDirenPowerUpak.add(new PowerUpObjektua(x, y, aukeratua));
+        	    	String izena = "";
+	        	    	switch (indizea) {
+	        	    	case 0: izena = "Gezi Tiroa"; break;
+	        	    	case 1: izena = "Erronbo Tiroa"; break;
+	        	    	case 2: izena = "Bizitza extra"; break;
+	        	    	case 3: izena = "Gezi Munizioa(+20)"; break;
+	        	    	case 4: izena = "Erronbo Munizioa (+10)"; break;
+	        	    	default: izena = "Power-up";
+        	    	}
+	        	erortzenDirenPowerUpak.add(new PowerUpObjektua(x, y,  izena, aukeratua));
         	    JokoKudeatzailea.getNireJokoKudeatzailea().mezuaErakutsi("PowerUp erortzen hari da!");	
     	    }
     	    
@@ -302,19 +312,24 @@ public class MatrizeE extends Observable {
         powerUpTimer = new java.util.Timer();
         powerUpTimer.schedule(new java.util.TimerTask(){
             public void run() {
-                // ConcurrentModificationException ekiditeko kopia bat erabiltzen dugu
                 new java.util.ArrayList<>(erortzenDirenPowerUpak).forEach(p -> {
                     p.jaitsi();
             
-                    // Talka espaziontziarekin egiaztatu
+                    // Talka espaziontziarekin egiaztatu (erdian edo alboetan)
                     GelaxkaE g = getGelaxka(p.getX(), p.getY());
-                    if (g != null && g.getEntitateMota().equals("espaziontzia")) {
+                    GelaxkaE gLeft = getGelaxka(p.getX() - 1, p.getY());
+                    GelaxkaE gRight = getGelaxka(p.getX() + 1, p.getY());
+                    
+                    if ((g != null && g.getEntitateMota().equals("espaziontzia")) ||
+                        (gLeft != null && gLeft.getEntitateMota().equals("espaziontzia")) ||
+                        (gRight != null && gRight.getEntitateMota().equals("espaziontzia"))) {
+                        
                         p.aplikatuEfektua(getEspaziontzia());
                         erortzenDirenPowerUpak.remove(p);
-                        JokoKudeatzailea.getNireJokoKudeatzailea().mezuaErakutsi("Power-up aplikatua!");
+                        JokoKudeatzailea.getNireJokoKudeatzailea().mezuaErakutsi("Power-up aplikatua: " + p.getIzena() + "!");
                         
-                        // Nabearen kolorea eta egoera berrezarri (ezabatu gabe)
-                        g.gelaxkaEguneratu(new EspaziontziaEgoera());
+                        // Nabearen egoera eta kolorea berrezarri (piezak ezabatu gabe)
+                        gelaxkaEguneratu(p.getX(), p.getY(), new EspaziontziaEgoera());
                         return;
                     }
                     

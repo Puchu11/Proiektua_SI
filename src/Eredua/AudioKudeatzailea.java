@@ -2,7 +2,10 @@ package Eredua;
 
 import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.BooleanControl;
 import javax.sound.sampled.Clip;
+import javax.sound.sampled.FloatControl;
+
 import java.io.File;
 
 
@@ -36,7 +39,33 @@ public class AudioKudeatzailea {
             fondoMusika.stop();
         }
     }
-
+    public void bolumenaJaitsi(float dB) {
+        try {
+            if (fondoMusika != null) {
+                FloatControl gainControl = (FloatControl) fondoMusika.getControl(FloatControl.Type.MASTER_GAIN);
+                float newValue = gainControl.getValue() - dB;
+                
+                float min = gainControl.getMinimum();
+                float max = gainControl.getMaximum();
+                newValue = Math.max(min, Math.min(max, newValue));
+                
+                gainControl.setValue(newValue);
+            }
+        } catch (Exception e) {
+            System.out.println("Errorea bolumena aldatzean: " + e.getMessage());
+        }
+    }
+    
+    public void musikaMuteatu(boolean muteatu) {
+    	try {
+    		if(fondoMusika != null) {
+    			BooleanControl muteControl= (BooleanControl) fondoMusika.getControl(BooleanControl.Type.MUTE);
+    			muteControl.setValue(muteatu);
+    		}
+    	}catch (Exception e) {
+    		System.out.println("Errorea muteatzen: " + e.getMessage());
+    	}
+    }
     public void soinuaErreproduzitu(String bidea) {
         new Thread(() -> {
             try {

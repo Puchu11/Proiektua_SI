@@ -3,11 +3,13 @@ package Eredua;
 public class PowerUpObjektua {
     private int x, y;
     private PowerUp efektua;
+    private String izena;
 
-    public PowerUpObjektua(int x, int y, PowerUp efektua) {
+    public PowerUpObjektua(int x, int y, String izena, PowerUp efektua) {
         this.efektua = efektua;
         this.x = x;
         this.y = y;
+        this.izena=izena;
         MatrizeE.getEma().gelaxkaEguneratu(x, y, new PowerUpEgoera());    }
     
     public void jaitsi() {
@@ -31,6 +33,7 @@ public class PowerUpObjektua {
     
     public int getX() { return x; }
     public int getY() { return y; }
+    public String getIzena() {return izena;}
     
     public void aplikatuEfektua(Espaziontzia e) { 
         if (efektua != null) {
