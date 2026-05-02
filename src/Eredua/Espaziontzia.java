@@ -7,6 +7,7 @@ public abstract class Espaziontzia extends Entitatea {
 	private int geziMunizioa=30;
 	private int erronboMunizioa=20;
 	private TiroPortaera tiroPortaera;
+	private boolean babesa= false;
 	
 	Espaziontzia(int x, int y) {
 		super(x, y);
@@ -82,4 +83,12 @@ public abstract class Espaziontzia extends Entitatea {
 	
 	public int getErronboMunizioa() { return erronboMunizioa;}
 	public void setErronboMunizioa(int pM) {this.erronboMunizioa=pM;} 
+	
+	public boolean isBabesa() {
+		return babesa;
+	}
+	public void setBabesa(boolean babesa) {
+		this.babesa=babesa;
+	}
 }
+	
