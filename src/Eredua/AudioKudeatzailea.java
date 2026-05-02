@@ -10,7 +10,7 @@ public class AudioKudeatzailea {
     private static AudioKudeatzailea nireAudioKudeatzailea;
     private Clip fondoMusika;
 
-    private AudioKudeatzailea() {} // Konstruktore pribatua (Singleton)
+    private AudioKudeatzailea() {} 
 
     public static AudioKudeatzailea getAudioKudeatzailea() {
         if (nireAudioKudeatzailea == null) {
