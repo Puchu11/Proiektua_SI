@@ -75,41 +75,39 @@ public class MatrizeB extends JFrame implements Observer {
 		addKeyListener(getController());
 		setFocusable(true);
 		
-		bizitzaPanela = new JPanel(new BorderLayout());
+		bizitzaPanela = new JPanel(new GridLayout(1, 3));
 		bizitzaPanela.setBackground(Color.BLACK);
 
 		// BALAK
 		JPanel ezkerPanela = new JPanel(new FlowLayout(FlowLayout.LEFT));
 		ezkerPanela.setBackground(Color.BLACK);
-
-		balakLabel = new JLabel("● ∞");
-		balakLabel.setForeground(Color.WHITE);
-		balakLabel.setFont(new Font("Arial", Font.BOLD, 20));
-
+		balakLabel = new JLabel("BALAK: --");
+		balakLabel.setForeground(Color.CYAN);
+		balakLabel.setFont(new Font("Monospaced", Font.BOLD, 18));
 		ezkerPanela.add(balakLabel);
-		bizitzaPanela.add(ezkerPanela, BorderLayout.WEST);
 
 		// MEZUA
-		bizitzaMezuaLabel = new JLabel("", SwingConstants.CENTER);
-		bizitzaMezuaLabel.setForeground(Color.RED);
-		bizitzaMezuaLabel.setFont(new Font("Arial", Font.BOLD, 18));
-
-		bizitzaPanela.add(bizitzaMezuaLabel, BorderLayout.CENTER);
-
+		JPanel erdiPanela = new JPanel(new FlowLayout(FlowLayout.CENTER));
+		erdiPanela.setBackground(Color.BLACK);
+		bizitzaMezuaLabel = new JLabel(""); 
+		bizitzaMezuaLabel.setForeground(Color.YELLOW);
+		bizitzaMezuaLabel.setFont(new Font("Arial", Font.BOLD, 14));
+		erdiPanela.add(bizitzaMezuaLabel);
+		
 		// BIZITZAK
-		JPanel bihotzenEremua = new JPanel(new FlowLayout(FlowLayout.RIGHT));
-		bihotzenEremua.setBackground(Color.BLACK);
-
+		JPanel eskuinPanela = new JPanel(new FlowLayout(FlowLayout.RIGHT));
+		eskuinPanela.setBackground(Color.BLACK);
 		bihotzEtiketak = new JLabel[3];
-
 		for (int i = 0; i < 3; i++) {
 		    bihotzEtiketak[i] = new JLabel("♥");
-		    bihotzEtiketak[i].setForeground(new Color(255, 105, 180));
-		    bihotzEtiketak[i].setFont(new Font("Arial", Font.BOLD, 30));
-		    bihotzenEremua.add(bihotzEtiketak[i]);
+		    bihotzEtiketak[i].setForeground(Color.RED);
+		    bihotzEtiketak[i].setFont(new Font("Arial", Font.BOLD, 25));
+		    eskuinPanela.add(bihotzEtiketak[i]);
 		}
 
-		bizitzaPanela.add(bihotzenEremua, BorderLayout.EAST);
+		bizitzaPanela.add(ezkerPanela);
+		bizitzaPanela.add(erdiPanela);
+		bizitzaPanela.add(eskuinPanela);
 
 		this.add(bizitzaPanela, BorderLayout.NORTH);
 	}
@@ -160,32 +158,30 @@ public class MatrizeB extends JFrame implements Observer {
 	        	this.requestFocusInWindow();
 	        	this.repaint();
 	        }
-	    } 
+	    }
 	    
-	    else if (arg instanceof Integer) {
-	        int geratzenDirenBizitzak = (Integer) arg;
+	    else if (arg instanceof Integer geratzenDirenBizitzak) {
 	        for (int i = 0; i < 3; i++) {
 	            bihotzEtiketak[i].setVisible(i < geratzenDirenBizitzak);
 	        }
-	        if (geratzenDirenBizitzak < 3 && geratzenDirenBizitzak > 0) {
-	        	bizitzaMezuaLabel.setText("BIZITZA BAT GALDU DUZU!");
-	        	Timer t = new Timer(3000, e -> bizitzaMezuaLabel.setText(""));
+	    } 
+
+	    else if (arg instanceof String mezuaString) {
+	        if (mezuaString.startsWith("BALAK_INFO:")) {
+	            balakLabel.setText(mezuaString.replace("BALAK_INFO:", ""));
+	        } 
+	        else if (mezuaString.startsWith("PUNTUAK:")) {
+	        }
+	        else if (mezuaString.contains("Power-up") || mezuaString.contains("PowerUp") || mezuaString.contains("LORTUTA")) {
+	            bizitzaMezuaLabel.setForeground(Color.GREEN);
+	            bizitzaMezuaLabel.setText(mezuaString.toUpperCase());
+	            
+	            Timer t = new Timer(2000, e -> bizitzaMezuaLabel.setText(""));
 	            t.setRepeats(false);
 	            t.start();
 	        }
-	        for (int i = 0; i < 3; i++) {
-	            if (i >= geratzenDirenBizitzak) {
-	                bihotzEtiketak[i].setVisible(false); // Bihotza desagertu
-	            }
-	        }	        
-	    } 
-	    else if (arg instanceof String mezuaString) {
-	        if (mezuaString.startsWith("BALAK:")) {
-	            balakLabel.setText(mezuaString);
-	        } else {
-	            mezuaErakutsi(mezuaString);
-	        }
 	    }
+	    
 	}
 
 	private JPanel getPanel() {

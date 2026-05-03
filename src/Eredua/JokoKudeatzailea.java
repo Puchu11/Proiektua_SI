@@ -48,8 +48,8 @@ public class JokoKudeatzailea extends Observable {
 			
 		}else if (berria == Egoera.JOKATZEN) {
 			this.bizitzak = 3;
-			this.puntuazioTotala = 0;
 			MatrizeE.getEma().matrizeaSortu();
+			this.balakEguneratu(0);
 			audio.musikaErreproduzitu("src/res/joko_musika.wav");
 		}else if (berria == Egoera.IRABAZI || berria == Egoera.GALDU) {
 			audio.musikaGelditu();
@@ -84,35 +84,35 @@ public class JokoKudeatzailea extends Observable {
 	}
 	
 	public void balakEguneratu(int balak) {
-	    
-		String ikurra = MatrizeE.getEma().getEspaziontzia().getBalarenIkurra();
-		
-		String testua;
+	    // Obtenemos el símbolo actual para saber qué tipo de bala es
+	    String ikurra = MatrizeE.getEma().getEspaziontzia().getBalarenIkurra();
+	    String motaIzena = "";
 
+	    // Mapeamos el símbolo al nombre en euskera que quieres
 	    if (ikurra.equals("●")) {
-	        testua = ikurra + "● ● ● ● ● ● ...";
+	        motaIzena = "BALA NORMALAK: ∞";
+	    } else if (ikurra.equals("▲")) {
+	        motaIzena = "GEZI BALAK: " + balak;
+	    } else if (ikurra.equals("◆")) {
+	        motaIzena = "ERRONBO BALAK: " + balak;
 	    } else {
-	    	System.out.println("hola");
-	        StringBuilder sb = new StringBuilder();
-
-	        for (int i = 0; i < balak; i++) {
-	            sb.append(ikurra).append(" ");
-	        }
-
-	        testua = sb.toString();
+	        motaIzena = "BALAK: " + balak;
 	    }
 
 	    setChanged();
-	    notifyObservers("BALAK:  " + testua);
+	    notifyObservers("BALAK_INFO:" + motaIzena);
 	}
+	
 	
 	public int getBizitzak() {
 	    return this.bizitzak;
 	}
 	public void bizitzaBatGehitu() {
-		this.bizitzak++;
-		this.setChanged();
-		this.notifyObservers(this.bizitzak);
+	    if (this.bizitzak < 3) {
+	        this.bizitzak++;
+	        this.setChanged();
+	        this.notifyObservers(this.bizitzak);
+	    }
 	}
 
 
@@ -120,8 +120,9 @@ public class JokoKudeatzailea extends Observable {
 		return puntuazioTotala; 
 	}
 	public void puntuazioaGehitu(int p) {
-		this.puntuazioTotala = this.puntuazioTotala + p;
-	
+	    this.puntuazioTotala = this.puntuazioTotala + p;
+	    setChanged();
+	    notifyObservers("PUNTUAK:" + this.puntuazioTotala); 
 	}
 	public Egoera getEgoera() {
 	    return this.egoera;

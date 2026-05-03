@@ -216,6 +216,7 @@ public class MatrizeE extends Observable {
     	            );
 
     	    etsaiak.remove(nodoEzabatu);
+    	    JokoKudeatzailea.getNireJokoKudeatzailea().puntuazioaGehitu(1);
     	    
     	    //PowerUp berria sortu eta gehitu
     	    if (rnd.nextDouble()<0.3) {
