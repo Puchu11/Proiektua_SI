@@ -24,6 +24,7 @@ public class AudioKudeatzailea {
 
     public void musikaErreproduzitu(String bidea) {
         try {
+        	musikaGelditu();
             AudioInputStream audioStream = AudioSystem.getAudioInputStream(new File(bidea));
             fondoMusika = AudioSystem.getClip();
             fondoMusika.open(audioStream);
@@ -35,8 +36,12 @@ public class AudioKudeatzailea {
     }
 
     public void musikaGelditu() {
-        if (fondoMusika != null && fondoMusika.isRunning()) {
-            fondoMusika.stop();
+        if (fondoMusika != null) {
+        	if (fondoMusika.isRunning()) {
+        		fondoMusika.stop();
+        	}
+        	fondoMusika.close();
+        	fondoMusika = null; 
         }
     }
     public void bolumenaJaitsi(float dB) {

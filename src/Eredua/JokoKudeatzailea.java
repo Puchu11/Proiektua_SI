@@ -34,18 +34,33 @@ public class JokoKudeatzailea extends Observable {
 	
 	public void hasiJokoa() {
 		this.egoera = Egoera.HASIERA;
+		this.puntuazioTotala = 0;
 		setChanged();
-		notifyObservers(Egoera.HASIERA); 
+		notifyObservers(Egoera.HASIERA);
 	}
 	
 	public void egoeraAldatu(Egoera berria) {
 		this.egoera=berria;
-		if(this.egoera==Egoera.JOKATZEN) {
+		AudioKudeatzailea audio = AudioKudeatzailea.getAudioKudeatzailea();
+		
+		if (berria == Egoera.HASIERA) {
+			audio.musikaErreproduzitu("src/res/intro_musika.wav");
+			
+		}else if (berria == Egoera.JOKATZEN) {
 			this.bizitzak = 3;
+			this.puntuazioTotala = 0;
 			MatrizeE.getEma().matrizeaSortu();
-		}
-		if(this.egoera==Egoera.IRABAZI||this.egoera==Egoera.GALDU) {
+			audio.musikaErreproduzitu("src/res/joko_musika.wav");
+		}else if (berria == Egoera.IRABAZI || berria == Egoera.GALDU) {
+			audio.musikaGelditu();
 			MatrizeE.getEma().jokoaAmaitu();
+			
+			if (berria == Egoera.IRABAZI) {
+				audio.musikaErreproduzitu("src/res/irabazi.wav");
+			} else {
+				audio.musikaErreproduzitu("src/res/galdu.wav");
+			}
+	
 		}
 		this.setChanged();
 		this.notifyObservers(this.egoera);
