@@ -33,4 +33,8 @@ public class GelaxkaE extends Observable{
 	public Posizioa getPosizioa() {
 		return posizioa; 
 	}
+	
+	public void setEgoera(GelaxkaEgoera berria) {
+		this.egoera = berria;
+	}
 }

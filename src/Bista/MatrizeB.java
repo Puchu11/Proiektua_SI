@@ -117,17 +117,46 @@ public class MatrizeB extends JFrame implements Observer {
 		for (int i = 0; i < 60; i++) {
 			for (int j = 0; j < 100; j++) {
 				GelaxkaB gelaxkaB = new GelaxkaB();
-				GelaxkaE gelaxkaE = MatrizeE.getEma().getGelaxka(j, i);
-				gelaxkaE.addObserver(gelaxkaB);
+				MatrizeE.getEma().getGelaxka(j, i).addObserver(gelaxkaB);
 				labelN[i][j] = gelaxkaB;
 				jokoPanela.add(gelaxkaB);	
-				gelaxkaB.setBackground(gelaxkaE.getEgoera().lortuKolorea());
+				String kolorea = MatrizeE.getEma().getGelaxka(j, i).getEgoera().lortuKolorea();
+				Color color = koloreaLortu(kolorea);
+				gelaxkaB.setBackground(color);
 			}
 		}
 		jokoPanela.revalidate();
 	    jokoPanela.repaint();
 	}
+	
+	private Color koloreaLortu(String kolorea) {
 
+		if (kolorea == null) return Color.BLACK;
+
+		switch (kolorea.toLowerCase()) {
+			case "berdea":
+				return Color.GREEN;
+
+			case "urdina":
+				return Color.BLUE;
+
+			case "gorria":
+				return Color.RED;
+
+			case "horia":
+				return Color.YELLOW;
+
+			case "zuria":
+				return Color.WHITE;
+
+			case "beltza":
+				return Color.BLACK;
+
+			default:
+				return Color.BLACK;
+		}
+	}
+	
 	@Override
 	public void update(Observable o, Object arg) {
 	    if (arg instanceof Egoera) {
@@ -170,7 +199,9 @@ public class MatrizeB extends JFrame implements Observer {
 	        if (mezuaString.startsWith("BALAK_INFO:")) {
 	            balakLabel.setText(mezuaString.replace("BALAK_INFO:", ""));
 	        } 
+	        
 	        else if (mezuaString.startsWith("PUNTUAK:")) {
+	        	
 	        }
 	        else if (mezuaString.contains("Power-up") || mezuaString.contains("PowerUp") || mezuaString.contains("LORTUTA")) {
 	            bizitzaMezuaLabel.setForeground(Color.GREEN);

@@ -13,7 +13,7 @@ public abstract class Espaziontzia extends Entitatea {
 		super(x, y);
 		tiroPortaera= new TiroNormala();
 	}
-	public abstract Color getKolorea();
+	public abstract String getKolorea();
 	public void mugituGora() {
 		this.getPosizioa().setY(this.getPosizioa().getY()-1);
 	}
@@ -78,6 +78,7 @@ public abstract class Espaziontzia extends Entitatea {
 			JokoKudeatzailea.getNireJokoKudeatzailea().balakEguneratu(0);
 		}
 	}
+	
 	public int getGeziMunizioa() {return geziMunizioa; }
 	public void setGeziMunizioa(int pM) { this.geziMunizioa = pM;}
 	
@@ -87,6 +88,7 @@ public abstract class Espaziontzia extends Entitatea {
 	public boolean isBabesa() {
 		return babesa;
 	}
+	
 	public void setBabesa(boolean babesa) {
 		this.babesa=babesa;
 	}

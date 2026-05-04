@@ -15,11 +15,10 @@ public class Tiro implements TiroInterfazea{
 
     public void mugituGora() {
     	pos.setY(pos.getY() - 1);
-
     }
-
+    
     public void hil() {
         bizirik = false;
         MatrizeE.getEma().getMatrizea()[this.getPosizioa().getY()][this.getPosizioa().getX()].gelaxkaEguneratu(new HutsaEgoera());
-    }    
+    }   
 }

@@ -1,50 +1,43 @@
 package Eredua;
 
-import java.awt.Color;
-
 public interface GelaxkaEgoera {
 
-	Color lortuKolorea();
+	String lortuKolorea();
 	String lortuMota();
-	
 
 }
 
 class HutsaEgoera implements GelaxkaEgoera {
 	@Override
-	public Color lortuKolorea() {
-		return Color.BLACK;
-		
-		
+	public String lortuKolorea() {
+		return "beltza";
 	}
+
 	@Override
 	public String lortuMota() {
 		return "hutsa";
 	}
-	
 }
 
 class EtsaiaEgoera implements GelaxkaEgoera {
 	@Override
-	public Color lortuKolorea() {
-		return Color.GREEN;
-		
+	public String lortuKolorea() {
+		return "berdea";
 	}
-	
+
 	@Override
 	public String lortuMota() {
 		return "etsaia";
 	}
-	
 }
 
-class EspaziontziaEgoera implements GelaxkaEgoera{
-	
+class EspaziontziaEgoera implements GelaxkaEgoera {
+
 	@Override
-	public Color lortuKolorea() {
-		return MatrizeE.getEma().getEspaziontzia().getKolorea();
-		
-	} 
+	public String lortuKolorea() {
+		return MatrizeE.getEma().getEspaziontzia().getKolorea(); 
+	}
+
 	@Override
 	public String lortuMota() {
 		return "espaziontzia";
@@ -53,14 +46,12 @@ class EspaziontziaEgoera implements GelaxkaEgoera{
 
 class TiroaEgoera implements GelaxkaEgoera {
 	@Override
-	public Color lortuKolorea() {
-		return Color.YELLOW;
-				
-		
+	public String lortuKolorea() {
+		return "horia";
 	}
+
 	@Override
 	public String lortuMota() {
 		return "tiro";
 	}
-	
 }

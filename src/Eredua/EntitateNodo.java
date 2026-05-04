@@ -19,22 +19,13 @@ public class EntitateNodo implements EntitateInterfazea {
 		}
 		
 		public boolean mugituDaiteke(String norabidea) {
-			for(EntitateInterfazea a: entitateLista) {
-				if(!a.mugituDaiteke(norabidea)) {
-					return false;
-				}
-			}
-			return true;
+			return entitateLista.stream().allMatch(a->a.mugituDaiteke(norabidea));
 		}
 		
 		public void mugitu(String norabidea) {
-		    if (mugituDaiteke(norabidea)) {	        
-		        // Mugitu dena
-		        List<EntitateInterfazea> lista = ordenatuNorabidearenArabera(norabidea);
-		        
-		        for (EntitateInterfazea a : lista) {
-		            a.mugitu(norabidea);
-		        }
+		    if (mugituDaiteke(norabidea)) {
+		        ordenatuNorabidearenArabera(norabidea)
+		            .forEach(a -> a.mugitu(norabidea));
 		    }
 		}
 		
@@ -47,31 +38,28 @@ public class EntitateNodo implements EntitateInterfazea {
 		    List<EntitateInterfazea> listaOrdenatuta = new ArrayList<>(entitateLista);
 
 		    switch (norabidea) {
-
-		        case "eskuinera": // eskuinera → X handienetik txikienera
-		            listaOrdenatuta.sort((a, b) ->
-		                ((Entitatea)b).getPosizioa().getX() - ((Entitatea)a).getPosizioa().getX()
-		            );
-		            break;
-		        
+		        case "eskuinera": // eskuinera → X handienetik txikienera		        	
+		        	listaOrdenatuta=entitateLista.stream().
+		        	sorted(java.util.Comparator.comparing(a->((Entitatea) a).
+		        			getPosizioa().getX()).reversed()).toList();
+		        	break;	        
 		        case "ezkerrera": // ezkerrera → X txikienetik handienera
-		            listaOrdenatuta.sort((a, b) ->
-		                ((Entitatea)a).getPosizioa().getX() - ((Entitatea)b).getPosizioa().getX()
-		            );
-		            break;
+		            
+		        	listaOrdenatuta=entitateLista.stream().
+		        	sorted(java.util.Comparator.comparing(a->((Entitatea) a).
+		        			getPosizioa().getX())).toList();
+		        	break;
 
 		        case "behera": // behera → Y handienetik txikienera
-		            listaOrdenatuta.sort((a, b) ->
-		                ((Entitatea)b).getPosizioa().getY() - ((Entitatea)a).getPosizioa().getY()
-		            );
-		            break;
-		            
-
+		        	listaOrdenatuta=entitateLista.stream().
+		        	sorted(java.util.Comparator.comparing(a->((Entitatea) a).
+		        			getPosizioa().getY()).reversed()).toList();
+		        	break;
 		        case "gora": // gora → Y txikienetik handienera
-		            listaOrdenatuta.sort((a, b) ->
-		                ((Entitatea)a).getPosizioa().getY() - ((Entitatea)b).getPosizioa().getY()
-		            );
-		            break;
+		        	listaOrdenatuta=entitateLista.stream().
+		        	sorted(java.util.Comparator.comparing(a->((Entitatea) a).
+		        			getPosizioa().getY())).toList();
+		        	break;
 		    }
 
 		    return listaOrdenatuta;

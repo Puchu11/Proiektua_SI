@@ -8,8 +8,8 @@ public class EspaziontziaBlue extends Espaziontzia {
         super(x, y);
     }
     
-    public Color getKolorea() {
-        return Color.BLUE;
+    public String getKolorea() {
+        return "urdina";
     }
     
     @Override

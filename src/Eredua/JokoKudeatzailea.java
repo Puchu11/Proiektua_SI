@@ -28,6 +28,7 @@ public class JokoKudeatzailea extends Observable {
 	public void setEspaziontziMota(String motaBerria) {
 		this.espaziontziMota = motaBerria;
 	}
+	
 	public String getEspaziontziMota() {
 		return this.espaziontziMota;
 	}
@@ -119,6 +120,7 @@ public class JokoKudeatzailea extends Observable {
 	public int getPuntuazioTotala() { 
 		return puntuazioTotala; 
 	}
+	
 	public void puntuazioaGehitu(int p) {
 	    this.puntuazioTotala = this.puntuazioTotala + p;
 	    setChanged();

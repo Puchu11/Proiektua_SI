@@ -13,6 +13,7 @@ public class TiroNodoa extends Thread implements TiroInterfazea {
 	public void gehituTiroa(TiroInterfazea t) {
         tiroLista.add(t);
     }
+	
 	@Override
 	public void run() {
 		while(bizirik) {
@@ -48,12 +49,14 @@ public class TiroNodoa extends Thread implements TiroInterfazea {
 						break; 						
 					}
 					MatrizeE.getEma().getMatrizea()[t.getPosizioa().getY()][t.getPosizioa().getX()].gelaxkaEguneratu(new TiroaEgoera());
-				}
+			}
 		}
 	}
+	
 	public void mugituGora() {
 	    tiroLista.forEach(TiroInterfazea::mugituGora);
 	}
+	
 	public void hil() {
 	    tiroLista.forEach(TiroInterfazea::hil);
 	    bizirik = false;

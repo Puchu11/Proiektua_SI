@@ -40,11 +40,10 @@ public class MatrizeE extends Observable {
             }   
     	}
     	
-    	String espaziontziMota= JokoKudeatzailea.getNireJokoKudeatzailea().getEspaziontziMota(); 
-    	espaziontziaSortu(espaziontziMota);
+    	String espaziontziMota = JokoKudeatzailea.getNireJokoKudeatzailea().getEspaziontziMota(); 
+    	espaziontzia = EspaziontziaFactory.getEspaziontziaFactory().sortuEspaziontzia(espaziontziMota);
     	etsaiakSortu();
-    	hasieratuEtsaienMugimendua();
-    	
+    	hasieratuEtsaienMugimendua();    	
     	hasieratuPowerUpErorikoa();
     }
     public void mugituEspaziontzia(String norabidea) {
@@ -82,49 +81,38 @@ public class MatrizeE extends Observable {
     }
     
     private void etsaiakSortu() {
-        int kopurua = 6 + rnd.nextInt(4);   
-        int sortuta 	= 0;                    
-        int saiakerak = 0;                 
-        int maxSaiakerak = 500;
+    	int kopurua = 8	;
+    	int tartea = zabalera / (kopurua + 1);
+    	int id = 0;
 
-        while (sortuta < kopurua && saiakerak < maxSaiakerak) {
-            saiakerak++;
-            int x = rnd.nextInt(zabalera);
-            boolean okupatuta = false;
+    	for (int i = 0; i < kopurua; i++) {
+    		int x = tartea * (i + 1);
 
-            for (int j = -2; j < 3; j++) {
-                if (x + j < 0 || x + j >= zabalera || getGelaxka(x + j, 5).getEntitateMota().equals("etsaia")) {
-                    okupatuta = true;
-                    break;
-                }
-            }
+    		EntitateNodo e1 = EtsaiFactory.getEtsaiFactory()
+    				.sortuEtsaia("ertaina", x, 5, id++);
+    		etsaiak.add(e1);
+    		marraztu(e1);
 
-            if (!okupatuta) {
-            	int[][] koordenatuak = {
-            		    {0, 5},{-2, 3},{-2, 5},{2, 3},{2, 5},
-            		    {0, 4},{-1, 4},{1, 4},
-            		    {-1, 6},{1, 6},{-2, 6},{2, 6},
-            		    {1, 7},{0, 7},{-1, 7},
-            		    {-2, 4},{2, 4}
-            		};
+    		String mota = (i % 2 == 0) ? "handia" : "txikia";
+    		EntitateNodo e2 = EtsaiFactory.getEtsaiFactory()
+    				.sortuEtsaia(mota, x, 10, id++);
+    		etsaiak.add(e2);
+    		marraztu(e2);
 
-            		EntitateNodo etsaiNodo = new EntitateNodo();
-            		etsaiak.add(etsaiNodo);
+    		EntitateNodo e3 = EtsaiFactory.getEtsaiFactory()
+    				.sortuEtsaia("tiratzailea", x, 15, id++);
+    		etsaiak.add(e3);
+    		marraztu(e3);
+    	}
+    }
 
-            		for (int[] pos : koordenatuak) {
-            		    int posX = x + pos[0];
-            		    int posY = pos[1];
+    private void marraztu(EntitateNodo nodo) {
+    	nodo.getLista().forEach(ent -> {
+    		Etsaia e = (Etsaia) ent;
 
-            		    Etsaia etsaia = new Etsaia(posX, posY, sortuta);
-
-            		    matrizea[posY][posX]
-            		            .gelaxkaEguneratu(new EtsaiaEgoera());
-
-            		    etsaiNodo.gehituEntitate(etsaia);
-            		}
-            		sortuta++;
-            }
-        }
+    		matrizea[e.getPosizioa().getY()][e.getPosizioa().getX()]
+    				.gelaxkaEguneratu(new EtsaiaEgoera());
+    	});
     }
     
     private void hasieratuEtsaienMugimendua() {
@@ -242,12 +230,8 @@ public class MatrizeE extends Observable {
     	if (etsaiak.isEmpty()) {
     		JokoKudeatzailea.getNireJokoKudeatzailea().egoeraAldatu(Egoera.IRABAZI);
     		
-    	}
-    	
+    	}   	
     }
-
-    
-
 
     public void jokoaAmaitu() {
     	if (etsaienTimer != null) {
@@ -260,28 +244,6 @@ public class MatrizeE extends Observable {
     
     public ArrayList<EntitateNodo> getEtsaiak(){
     	return etsaiak;
-    }
-    
-    private void espaziontziaSortu(String mota) {
-
-        int[][] koordenatuak = {
-            {50, 55},{51, 55},{49, 55},
-            {49, 54},{51, 54},
-            {50, 56},{50, 54},{50, 53},{50, 52},
-            {51, 53},{49, 53},
-            {52, 55},{52, 56},{52, 57},
-            {48, 55},{48, 56},{48, 57}
-        };
-
-        for (int[] pos : koordenatuak) {
-            Espaziontzia pixel = EspaziontziaFactory.getEspaziontziaFactory()
-                    .sortuEspaziontzia(mota, pos[0], pos[1]);
-
-            espaziontzia.gehituEntitate(pixel);
-
-            matrizea[pos[1]][pos[0]]
-                    .gelaxkaEguneratu(new EspaziontziaEgoera());
-        }
     }
     
     private boolean espaziontziaTalka(String norabidea,int x, int y) {
@@ -344,6 +306,6 @@ public class MatrizeE extends Observable {
                     }
                 });
             }
-        }, 0, 300); // 300ms-tik behin mugituko da
+        }, 0, 300); //300ms-tik behin mugituko da
     }
 }
