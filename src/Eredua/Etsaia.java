@@ -3,15 +3,11 @@ package Eredua;
 public class Etsaia extends Entitatea {
 
     private int indizea;
-    private int abiadura; 
-	private int kontagailua;
 
 
     Etsaia(int x, int y, int indizea, int pAbiadura) {
         super(x, y);
         this.indizea = indizea;
-        this.abiadura=pAbiadura;
-        this.kontagailua=0;
     }
 
     public int getIndizea() {
@@ -19,12 +15,7 @@ public class Etsaia extends Entitatea {
     }
 
     @Override
-    public boolean mugituDaiteke(String norabidea) {
-    	kontagailua++;
-    	if (kontagailua < abiadura) {
-			kontagailua = 0;
-			return false;
-		}
+    public boolean mugituDaiteke(String norabidea) {   	
 		
     	int posX = this.getPosizioa().getX();
         int posY = this.getPosizioa().getY();
@@ -53,7 +44,7 @@ public class Etsaia extends Entitatea {
         if (xBerria < 0 || xBerria >= 100 || yBerria < 0 || yBerria >= 60) {
             return false;
         }
-        
+ 
         final int xFinal = xBerria;
         final int yFinal = yBerria;
         

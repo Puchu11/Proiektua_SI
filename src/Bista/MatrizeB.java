@@ -87,7 +87,7 @@ public class MatrizeB extends JFrame implements Observer {
 		ezkerPanela.add(balakLabel);
 
 		// MEZUA
-		JPanel erdiPanela = new JPanel(new FlowLayout(FlowLayout.CENTER));
+		JPanel erdiPanela = new JPanel(new FlowLayout(FlowLayout.CENTER, 5, 15));
 		erdiPanela.setBackground(Color.BLACK);
 		bizitzaMezuaLabel = new JLabel(""); 
 		bizitzaMezuaLabel.setForeground(Color.YELLOW);
@@ -196,7 +196,7 @@ public class MatrizeB extends JFrame implements Observer {
 	    } 
 
 	    else if (arg instanceof String mezuaString) {
-	        if (mezuaString.startsWith("BALAK_INFO:")) {
+	        if (mezuaString.startsWith("BALAK:")) {
 	            balakLabel.setText(mezuaString.replace("BALAK_INFO:", ""));
 	        } 
 	        

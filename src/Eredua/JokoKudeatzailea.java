@@ -85,23 +85,19 @@ public class JokoKudeatzailea extends Observable {
 	}
 	
 	public void balakEguneratu(int balak) {
-	    // Obtenemos el símbolo actual para saber qué tipo de bala es
+
 	    String ikurra = MatrizeE.getEma().getEspaziontzia().getBalarenIkurra();
-	    String motaIzena = "";
-
-	    // Mapeamos el símbolo al nombre en euskera que quieres
+	    StringBuilder sb = new StringBuilder();
 	    if (ikurra.equals("●")) {
-	        motaIzena = "BALA NORMALAK: ∞";
-	    } else if (ikurra.equals("▲")) {
-	        motaIzena = "GEZI BALAK: " + balak;
-	    } else if (ikurra.equals("◆")) {
-	        motaIzena = "ERRONBO BALAK: " + balak;
-	    } else {
-	        motaIzena = "BALAK: " + balak;
-	    }
 
+	        sb.append("● ∞");
+	    } else {
+	        for (int i = 0; i < balak; i++) {
+	            sb.append(ikurra).append(" ");
+	        }
+	    }
 	    setChanged();
-	    notifyObservers("BALAK_INFO:" + motaIzena);
+	    notifyObservers("BALAK:" + sb.toString());
 	}
 	
 	
