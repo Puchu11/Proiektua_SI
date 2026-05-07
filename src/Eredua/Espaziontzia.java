@@ -28,7 +28,10 @@ public abstract class Espaziontzia extends Entitatea {
 		}
 	}
 	
-	public void tiroEgin() {		
+	public void tiroEgin() {
+		if (JokoKudeatzailea.getNireJokoKudeatzailea().getEgoera() != Egoera.JOKATZEN) {
+		        return;
+		}
 		if(tiroPortaera instanceof TiroGezi && geziMunizioa>0) {
 			tiroPortaera.tiroEgin(this.getPosizioa().getX(), this.getPosizioa().getY()-4);
 			geziMunizioa--;
@@ -40,8 +43,8 @@ public abstract class Espaziontzia extends Entitatea {
 			tiroPortaera.tiroEgin(this.getPosizioa().getX(), this.getPosizioa().getY()-4);
 			erronboMunizioa--;
 			balakEguneratu(2);
-		}else if(tiroPortaera instanceof TiroErronboa && geziMunizioa<=0) {
-			JokoKudeatzailea.getNireJokoKudeatzailea().mezuaErakutsi("Ez da geratzen Gezi Erronboa");
+		}else if(tiroPortaera instanceof TiroErronboa && erronboMunizioa <= 0) {
+			JokoKudeatzailea.getNireJokoKudeatzailea().mezuaErakutsi("Ez da geratzen Erronbo munizioa");
 		}
 		else if(tiroPortaera instanceof TiroNormala) {
 			tiroPortaera.tiroEgin(this.getPosizioa().getX(), this.getPosizioa().getY()-4);

@@ -94,7 +94,11 @@ public class MatrizeE extends Observable {
             marraztu(e1);
             hasiEtsaiThread(e1, "ertaina");
 
-            String mota = (i % 2 == 0) ? "handia" : "txikia";
+            String mota = "txikia";
+            if(i % 2 == 0) {
+            	mota="handia";
+            }
+            
             EntitateNodo e2 = EtsaiFactory.getEtsaiFactory()
                     .sortuEtsaia(mota, x, 10, id++);
             etsaiak.add(e2);
@@ -125,10 +129,16 @@ public class MatrizeE extends Observable {
                     if (!etsaiak.contains(etsaia)) {
                         break;
                     }
-                    String[] norabideak = {"ezkerrera", "behera", "eskuinera"};
-                    String norabidea = norabideak[rnd.nextInt(3)];
+                    String[] norabideak = {"ezkerrera", "behera", "eskuinera","behera","behera"};
+                    String norabidea = norabideak[rnd.nextInt(norabideak.length)];
 
                     mugituEtsaia(etsaia, norabidea);
+                    
+                    if (mota.equals("tiratzailea") && rnd.nextInt(5) == 0) {
+                        EtsaiTiro tiratzailea = (EtsaiTiro) etsaia.getLista().get(etsaia.getLista().size()-1);
+                        tiratzailea.tiroEgin();
+                    }
+                    
                 }
                 try {
                     Thread.sleep(abiadura(mota));
@@ -188,7 +198,7 @@ public class MatrizeE extends Observable {
         }
         
     }
-
+   
     private int abiadura(String mota) {
         switch (mota) {
             case "txikia": return 100;
@@ -306,8 +316,6 @@ public class MatrizeE extends Observable {
                         p.aplikatuEfektua(getEspaziontzia());
                         erortzenDirenPowerUpak.remove(p);
                         JokoKudeatzailea.getNireJokoKudeatzailea().mezuaErakutsi("Power-up aplikatua: " + p.getIzena() + "!");
-                        
-                        // Nabearen egoera eta kolorea berrezarri (piezak ezabatu gabe)
                         gelaxkaEguneratu(p.getX(), p.getY(), new EspaziontziaEgoera());
                         return;
                     }

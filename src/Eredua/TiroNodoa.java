@@ -24,46 +24,45 @@ public class TiroNodoa extends Thread implements TiroInterfazea {
 				break;
 			}
 			
-			//mugitu eta kolisioa egiaztatu
-			for(TiroInterfazea tInterfazea: tiroLista) {
-				Tiro t = (Tiro) tInterfazea;
-				MatrizeE.getEma().getMatrizea()[t.getPosizioa().getY()][t.getPosizioa().getX()].gelaxkaEguneratu(new HutsaEgoera());
-					t.mugituGora();
-					
-					if (t.getPosizioa().getY() <= 0) {
-						try {
-							Thread.sleep(50);
-						}catch (InterruptedException e) {
-							bizirik=false;
-							break;
-						}
-						
-						hil();
-						break;
-					}
-					
-					GelaxkaE gelaxka = MatrizeE.getEma().getGelaxka(t.getPosizioa().getX(), t.getPosizioa().getY());
-					if (gelaxka != null && gelaxka.getEntitateMota().equals("etsaia")) {
-						MatrizeE.getEma().etsaiakEzabatu(t.getPosizioa().getX(), t.getPosizioa().getY());
-						hil();
-						break; 						
-					}
-					MatrizeE.getEma().getMatrizea()[t.getPosizioa().getY()][t.getPosizioa().getX()].gelaxkaEguneratu(new TiroaEgoera());
-			}
+			if(kolizioa()) {
+				hil();
+			}else {
+				mugitu();
+			}				
 		}
 	}
 	
-	public void mugituGora() {
-	    tiroLista.forEach(TiroInterfazea::mugituGora);
+	public void mugitu(){
+		String norabidea = ((Tiro) tiroLista.get(0)).getNorabidea();
+		tiroLista=ordenatuNorabidearenArabera(norabidea);
+	    tiroLista.forEach(TiroInterfazea::mugitu);
 	}
-	
+	private boolean kolizioa() {
+	    return new ArrayList<>(tiroLista)
+	            .stream()
+	            .map(t -> (Tiro) t)
+	            .anyMatch(Tiro::kolizioa);
+	}
 	public void hil() {
 	    tiroLista.forEach(TiroInterfazea::hil);
 	    bizirik = false;
 	}
-	public boolean bizirikDaude() {
-	    return tiroLista.stream()
-	            .map(t -> (Tiro) t)
-	            .allMatch(t -> t.getPosizioa().getY() > 0);
+	public List<TiroInterfazea> ordenatuNorabidearenArabera(String norabidea) {
+
+	    List<TiroInterfazea> listaOrdenatuta = new ArrayList<>(tiroLista);
+
+	    switch (norabidea) {
+	        case "behera": // behera → Y handienetik txikienera
+	        	listaOrdenatuta=tiroLista.stream().
+	        	sorted(java.util.Comparator.comparing(a->((Tiro) a).
+	        			getPosizioa().getY()).reversed()).toList();
+	        	break;
+	        case "gora": // gora → Y txikienetik handienera
+	        	listaOrdenatuta=tiroLista.stream().
+	        	sorted(java.util.Comparator.comparing(a->((Tiro) a).
+	        			getPosizioa().getY())).toList();
+	        	break;
+	    }
+	    return listaOrdenatuta;
 	}
 }

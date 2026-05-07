@@ -52,6 +52,18 @@ class TiroaEgoera implements GelaxkaEgoera {
 
 	@Override
 	public String lortuMota() {
-		return "tiro";
+		return "tiroJokalaria";
 	}
+}
+
+class TiroEtsaiaEgoera implements GelaxkaEgoera {
+    @Override
+    public String lortuKolorea() {
+        return "gorria";
+    }
+
+    @Override
+    public String lortuMota() {
+        return "tiroEtsaia";
+    }
 }
