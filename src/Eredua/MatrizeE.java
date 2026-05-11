@@ -209,6 +209,76 @@ public class MatrizeE extends Observable {
         }
     }
     
+<<<<<<< HEAD
+=======
+    private void hasieratuEtsaienMugimendua() {
+    	etsaienTimer = new Timer();
+        TimerTask ataza = new TimerTask() {
+            public void run() {
+                etsaiakMugitu();
+            }
+        };
+
+        etsaienTimer.schedule(ataza, 0, 200);
+    }
+    private void etsaiakMugitu() {
+        ArrayList<EntitateNodo> kopiaEtsaiak = new ArrayList<>(etsaiak);
+
+        for (EntitateNodo entNodo : kopiaEtsaiak) {
+            // Norabidea ausaz aukeratu nodo bakoitzeko
+            int aukera = rnd.nextInt(3);
+            String norabideHautatuta = (aukera == 0) ? "ezkerrera" : (aukera == 1) ? "eskuinera" : "behera";
+            final String norabideaFinal = norabideHautatuta;
+
+            // 2. TALKA DETEKZIOA
+            boolean talka = entNodo.getLista().stream()
+                    .map(ent -> (Etsaia) ent)
+                    .anyMatch(etsaia -> espaziontziaTalka(
+                            norabideaFinal,
+                            etsaia.getPosizioa().getX(),
+                            etsaia.getPosizioa().getY()
+                    ));
+
+            if (talka) {
+                System.out.println("!! TALKA: Bizitza bat galdu duzu !!");
+                JokoKudeatzailea.getNireJokoKudeatzailea().bizitzaBatKendu();
+
+                if (!entNodo.getLista().isEmpty()) {
+                    Etsaia lehenengoa = (Etsaia) entNodo.getLista().get(0);
+                    etsaiakEzabatu(
+                            lehenengoa.getPosizioa().getX(),
+                            lehenengoa.getPosizioa().getY()
+                    );
+                }
+                continue; 
+            }
+
+            // 3. MUGIMENDUA
+            if (entNodo.mugituDaiteke(norabideaFinal)) {
+                entNodo.mugitu(norabideaFinal);
+            }
+
+            // 4. BEHERA IRITSI DEN EGIAZTATU
+            boolean iritsiDaBehera = entNodo.getLista().stream()
+                    .map(ent -> (Etsaia) ent)
+                    .anyMatch(enemy -> enemy.getPosizioa().getY() >= 59);
+
+            if (iritsiDaBehera) {
+                System.out.println("!!! Etsaia behera iritsi da !!!");
+                JokoKudeatzailea.getNireJokoKudeatzailea().bizitzaBatKendu();
+                
+                if (!entNodo.getLista().isEmpty()) {
+                    Etsaia lehenengoa = (Etsaia) entNodo.getLista().get(0);
+                    etsaiakEzabatu(
+                            lehenengoa.getPosizioa().getX(),
+                            lehenengoa.getPosizioa().getY()
+                    );
+                }
+            }
+        }
+    }
+   
+>>>>>>> branch 'Jara' of https://github.com/Puchu11/Proiektua_SI.git
     public void etsaiakEzabatu(int x, int y) {	
     	EntitateNodo nodoEzabatu = etsaiak.stream().filter(nodo -> nodo.getLista().stream()
     	                .map(ent -> (Etsaia) ent)
