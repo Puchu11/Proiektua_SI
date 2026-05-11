@@ -19,8 +19,9 @@ public class EntitateNodo implements EntitateInterfazea {
 		}
 		
 		public boolean mugituDaiteke(String norabidea) {
-			return entitateLista.stream().allMatch(a->a.mugituDaiteke(norabidea));
-		}
+			return new ArrayList<>(entitateLista)
+			        .stream()
+			        .allMatch(a -> a.mugituDaiteke(norabidea));		}
 		
 		public void mugitu(String norabidea) {
 		    if (mugituDaiteke(norabidea)) {

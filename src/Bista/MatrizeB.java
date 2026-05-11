@@ -37,8 +37,9 @@ public class MatrizeB extends JFrame implements Observer {
 	private Timer mezuaTimer;
 	private JLabel[] bihotzEtiketak;
 	private JPanel bizitzaPanela;
-	private JLabel bizitzaMezuaLabel;
 	private JLabel balakLabel;
+	private JLabel puntuakLabel;
+	private Timer repaintTimer;
 
 	private Controller controller = null;
 	
@@ -75,41 +76,46 @@ public class MatrizeB extends JFrame implements Observer {
 		addKeyListener(getController());
 		setFocusable(true);
 		
-		bizitzaPanela = new JPanel(new GridLayout(1, 3));
+		bizitzaPanela = new JPanel(new BorderLayout());
 		bizitzaPanela.setBackground(Color.BLACK);
 
-		// BALAK
-		JPanel ezkerPanela = new JPanel(new FlowLayout(FlowLayout.LEFT));
-		ezkerPanela.setBackground(Color.BLACK);
+		// PANEL BALAK
+		JPanel balakPanela = new JPanel(new FlowLayout(FlowLayout.LEFT, 5, 5));
+		balakPanela.setBackground(Color.BLACK);
+		balakPanela.setPreferredSize(new java.awt.Dimension(500, 40));
+		
 		balakLabel = new JLabel("BALAK: --");
 		balakLabel.setForeground(Color.CYAN);
 		balakLabel.setFont(new Font("Monospaced", Font.BOLD, 18));
-		ezkerPanela.add(balakLabel);
+		balakPanela.add(balakLabel);
 
-		// MEZUA
-		JPanel erdiPanela = new JPanel(new FlowLayout(FlowLayout.CENTER, 5, 15));
-		erdiPanela.setBackground(Color.BLACK);
-		bizitzaMezuaLabel = new JLabel(""); 
-		bizitzaMezuaLabel.setForeground(Color.YELLOW);
-		bizitzaMezuaLabel.setFont(new Font("Arial", Font.BOLD, 14));
-		erdiPanela.add(bizitzaMezuaLabel);
+		// PANEL PUNTUAK
+		JPanel puntuakPanela = new JPanel(new FlowLayout(FlowLayout.RIGHT, 40, 5));
+		puntuakPanela.setBackground(Color.BLACK);
+
+		puntuakLabel = new JLabel("PUNTUAK: 0");
+		puntuakLabel.setForeground(Color.YELLOW);
+		puntuakLabel.setFont(new Font("Arial", Font.BOLD, 18));
+		puntuakPanela.add(puntuakLabel);
 		
-		// BIZITZAK
-		JPanel eskuinPanela = new JPanel(new FlowLayout(FlowLayout.RIGHT));
-		eskuinPanela.setBackground(Color.BLACK);
+		// PANEL BIZITZAK
+		JPanel bizitzakPanela = new JPanel(new FlowLayout(FlowLayout.RIGHT, 15, 5));
+		bizitzakPanela.setBackground(Color.BLACK);
+
 		bihotzEtiketak = new JLabel[3];
 		for (int i = 0; i < 3; i++) {
 		    bihotzEtiketak[i] = new JLabel("♥");
 		    bihotzEtiketak[i].setForeground(Color.RED);
 		    bihotzEtiketak[i].setFont(new Font("Arial", Font.BOLD, 25));
-		    eskuinPanela.add(bihotzEtiketak[i]);
+		    bizitzakPanela.add(bihotzEtiketak[i]);
 		}
 
-		bizitzaPanela.add(ezkerPanela);
-		bizitzaPanela.add(erdiPanela);
-		bizitzaPanela.add(eskuinPanela);
+		bizitzaPanela.add(balakPanela, BorderLayout.WEST);
+		bizitzaPanela.add(puntuakPanela, BorderLayout.CENTER);
+		bizitzaPanela.add(bizitzakPanela, BorderLayout.EAST);
 
 		this.add(bizitzaPanela, BorderLayout.NORTH);
+		repaintTimer = new Timer(16, ev -> jokoPanela.repaint());
 	}
 	
 	private void matrizeaSortu() {
@@ -170,22 +176,33 @@ public class MatrizeB extends JFrame implements Observer {
 	            }
 	            matrizeaSortu();
 	            setVisible(true);    
-	            new Timer(16, ev -> {jokoPanela.repaint();}).start();
+	            if (!repaintTimer.isRunning()) {
+	                repaintTimer.start();
+	            }
 	            nabegadorea.show(kontenedorea, "JOKOA");
 	            this.requestFocusInWindow();
 	            getController().hasi();
-	        } else if (e == Egoera.IRABAZI || e==Egoera.GALDU) {
-	        	bizitzaPanela.setVisible(false);
-	        	int puntuak= JokoKudeatzailea.getNireJokoKudeatzailea().getPuntuazioTotala();
-	        	if (e==Egoera.IRABAZI) {
-	        		irabaziPantaila.eguneratuTestua(puntuak);
-	        		nabegadorea.show(kontenedorea, "IRABAZI_PANTAILA");
-	        	} else {
-	        		galduPantaila.eguneratuTestua(puntuak);
-	        		nabegadorea.show(kontenedorea, "GALDU_PANTAILA");
-	        	}
-	        	this.requestFocusInWindow();
-	        	this.repaint();
+	        } else if (e == Egoera.IRABAZI || e == Egoera.GALDU) {
+
+	            bizitzaPanela.setVisible(false);
+
+	            if (repaintTimer != null && repaintTimer.isRunning()) {
+	                repaintTimer.stop();
+	            }
+	            mezua.setText("");
+	            balakLabel.setText("");            
+	            int puntuak = JokoKudeatzailea
+	                    .getNireJokoKudeatzailea()
+	                    .getPuntuazioTotala();
+	            if (e == Egoera.IRABAZI) {
+	                irabaziPantaila.eguneratuTestua(puntuak);
+	                nabegadorea.show(kontenedorea, "IRABAZI_PANTAILA");
+	            } else {
+	                galduPantaila.eguneratuTestua(puntuak);
+	                nabegadorea.show(kontenedorea, "GALDU_PANTAILA");
+	            }
+	            this.requestFocusInWindow();
+	            this.repaint();
 	        }
 	    }
 	    
@@ -196,23 +213,18 @@ public class MatrizeB extends JFrame implements Observer {
 	    } 
 
 	    else if (arg instanceof String mezuaString) {
+
 	        if (mezuaString.startsWith("BALAK:")) {
 	            balakLabel.setText(mezuaString.replace("BALAK_INFO:", ""));
 	        } 
 	        
 	        else if (mezuaString.startsWith("PUNTUAK:")) {
-	        	
+	            puntuakLabel.setText(mezuaString);
 	        }
-	        else if (mezuaString.contains("Power-up") || mezuaString.contains("PowerUp") || mezuaString.contains("LORTUTA")) {
-	            bizitzaMezuaLabel.setForeground(Color.GREEN);
-	            bizitzaMezuaLabel.setText(mezuaString.toUpperCase());
-	            
-	            Timer t = new Timer(2000, e -> bizitzaMezuaLabel.setText(""));
-	            t.setRepeats(false);
-	            t.start();
+	        else {
+	            mezuaErakutsi(mezuaString);
 	        }
-	    }
-	    
+	    }    
 	}
 
 	private JPanel getPanel() {
@@ -285,28 +297,25 @@ public class MatrizeB extends JFrame implements Observer {
 	    }
  
 	    @Override
-	    public void keyPressed(KeyEvent e) {
-	    	Egoera unekoEgoera = JokoKudeatzailea.getNireJokoKudeatzailea().getEgoera();
+	    public void keyPressed(KeyEvent e) {        
+	    	switch (e.getKeyCode()) {
 
-	        if (unekoEgoera == Egoera.IRABAZI || unekoEgoera == Egoera.GALDU) {
-	            if (e.getKeyCode() == KeyEvent.VK_R) {
-	                // Berriz jokoa hasten da baina puntuazioa gordetzen da
-	                JokoKudeatzailea.getNireJokoKudeatzailea().egoeraAldatu(Egoera.JOKATZEN);
-	                return;
-	            } else if (e.getKeyCode() == KeyEvent.VK_ESCAPE) {
-	                System.exit(0); // amaitu
-	            }
-	        }
-	        switch (e.getKeyCode()) {
-	            case KeyEvent.VK_LEFT  -> ezkerra = true;
-	            case KeyEvent.VK_RIGHT -> eskuma = true;
-	            case KeyEvent.VK_UP    -> gora = true;
-	            case KeyEvent.VK_DOWN  -> behera = true;
-	            case KeyEvent.VK_SPACE -> tiro = true;
-	            case KeyEvent.VK_1 -> MatrizeE.getEma().getEspaziontzia().portaeraAldatu(0);
-	            case KeyEvent.VK_2 -> MatrizeE.getEma().getEspaziontzia().portaeraAldatu(1);
-	            case KeyEvent.VK_3 -> MatrizeE.getEma().getEspaziontzia().portaeraAldatu(2);
-	        }
+	        case KeyEvent.VK_R ->JokoKudeatzailea.getNireJokoKudeatzailea().berriroJolastu("jolastu");
+	        case KeyEvent.VK_ESCAPE -> JokoKudeatzailea.getNireJokoKudeatzailea().berriroJolastu("amatatu");
+	        case KeyEvent.VK_SPACE ->tiro = true;
+	        case KeyEvent.VK_LEFT  -> ezkerra = true;
+	        case KeyEvent.VK_RIGHT -> eskuma = true;
+	        case KeyEvent.VK_UP    -> gora = true;
+	        case KeyEvent.VK_DOWN  -> behera = true;
+	        case KeyEvent.VK_1 ->
+	            MatrizeE.getEma().getEspaziontzia().portaeraAldatu(0);
+
+	        case KeyEvent.VK_2 ->
+	            MatrizeE.getEma().getEspaziontzia().portaeraAldatu(1);
+
+	        case KeyEvent.VK_3 ->
+	            MatrizeE.getEma().getEspaziontzia().portaeraAldatu(2);
+	    }
 	    }
 
 	    @Override

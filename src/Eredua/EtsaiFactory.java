@@ -40,7 +40,7 @@ public class EtsaiFactory {
 		};
 
 		for (int[] pos : koordenatuak) {
-			nodo.gehituEntitate(new Etsaia(x + pos[0], y + pos[1], id,2));
+			nodo.gehituEntitate(new Etsaia(x + pos[0], y + pos[1], id));
 		}
 
 		return nodo;
@@ -58,7 +58,7 @@ public class EtsaiFactory {
 		};
 
 		for (int[] pos : koordenatuak) {
-			nodo.gehituEntitate(new Etsaia(x + pos[0], y + pos[1], id,4));
+			nodo.gehituEntitate(new Etsaia(x + pos[0], y + pos[1], id));
 		}
 
 		return nodo;
@@ -76,7 +76,7 @@ public class EtsaiFactory {
 		};
 
 		for (int[] pos : koordenatuak) {
-			nodo.gehituEntitate(new Etsaia(x + pos[0], y + pos[1], id,6));
+			nodo.gehituEntitate(new Etsaia(x + pos[0], y + pos[1], id));
 		}
 
 		return nodo;
@@ -94,7 +94,7 @@ public class EtsaiFactory {
 		};
 
 		for (int[] pos : koordenatuak) {
-			nodo.gehituEntitate(new Etsaia(x + pos[0], y + pos[1], id,3));
+			nodo.gehituEntitate(new EtsaiTiro	(x + pos[0], y + pos[1], id));
 		}
 
 		return nodo;

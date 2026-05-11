@@ -68,8 +68,10 @@ public class JokoKudeatzailea extends Observable {
 	}
 	
 	public void mezuaErakutsi(String mezua) {
-		this.setChanged();
-		this.notifyObservers(mezua);
+		if (this.egoera==Egoera.JOKATZEN) {
+			this.setChanged();
+			this.notifyObservers(mezua);
+		}
 	}
 
 	public void bizitzaBatKendu() {
@@ -112,11 +114,26 @@ public class JokoKudeatzailea extends Observable {
 	    }
 	}
 
-
+	public void berriroJolastu(String Jolastu) {
+		if(this.egoera==Egoera.IRABAZI || this.egoera==Egoera.GALDU) {
+			if(Jolastu.equals("jolastu")) {
+				if(this.egoera==Egoera.GALDU) {
+					resetPuntuazioTotala();
+				}
+				egoeraAldatu(Egoera.JOKATZEN);		
+			}else {
+				System.exit(0);
+			}
+		}
+	}
 	public int getPuntuazioTotala() { 
 		return puntuazioTotala; 
 	}
-	
+	public void resetPuntuazioTotala() { 
+		puntuazioTotala=0;
+		 setChanged();
+		 notifyObservers("PUNTUAK:" + this.puntuazioTotala); 
+	}
 	public void puntuazioaGehitu(int p) {
 	    this.puntuazioTotala = this.puntuazioTotala + p;
 	    setChanged();
