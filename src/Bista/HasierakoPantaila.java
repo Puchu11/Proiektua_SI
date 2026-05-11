@@ -10,6 +10,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
+import Eredua.AudioKudeatzailea;
 import Eredua.Egoera;
 import Eredua.JokoKudeatzailea;
 
@@ -61,6 +62,11 @@ public class HasierakoPantaila extends JFrame implements Observer {
         protected void paintComponent(Graphics g) {
             super.paintComponent(g);
             g.drawImage(fondo, 0, 0, getWidth(), getHeight(), this);
+            
+            //Laguntza testua marraztu pantailan musika menurako
+            g.setColor(java.awt.Color.WHITE);
+            g.setFont(new java.awt.Font("Arial", java.awt.Font.BOLD, 14));
+            g.drawString("Audio Kontrola_ [M] Mute |[+] Bolumena igo | [-] Bolumena jaitsi" ,20 , 540);
         }
     }
 
@@ -82,6 +88,16 @@ public class HasierakoPantaila extends JFrame implements Observer {
 
             if (e.getKeyCode() == KeyEvent.VK_R) {
                 JokoKudeatzailea.getNireJokoKudeatzailea().setEspaziontziMota("red");
+            }
+            if (e.getKeyCode()==KeyEvent.VK_M) {
+            	AudioKudeatzailea.getAudioKudeatzailea().musikaMuteatu();
+            }
+            if (e.getKeyCode()==KeyEvent.VK_PLUS|| e.getKeyCode() == KeyEvent.VK_ADD) {
+            	AudioKudeatzailea.getAudioKudeatzailea().bolumenaJaitsi(-3.0f);
+            }
+            if (e.getKeyCode() == KeyEvent.VK_MINUS || e.getKeyCode() == KeyEvent.VK_SUBTRACT) {
+
+                AudioKudeatzailea.getAudioKudeatzailea().bolumenaJaitsi(3.0f);
             }
         }
 
