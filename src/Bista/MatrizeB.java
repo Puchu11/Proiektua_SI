@@ -297,32 +297,25 @@ public class MatrizeB extends JFrame implements Observer {
 	    }
  
 	    @Override
-	    public void keyPressed(KeyEvent e) {
-	    	Egoera unekoEgoera = JokoKudeatzailea.getNireJokoKudeatzailea().getEgoera();
+	    public void keyPressed(KeyEvent e) {        
+	    	switch (e.getKeyCode()) {
 
-	        if (unekoEgoera == Egoera.IRABAZI || unekoEgoera == Egoera.GALDU) {
-	            if (e.getKeyCode() == KeyEvent.VK_R) {
-	                // Berriz jokoa hasten da baina puntuazioa gordetzen da
-	            	if(unekoEgoera == Egoera.GALDU) {
-	            		JokoKudeatzailea.getNireJokoKudeatzailea().resetPuntuazioTotala();
-	            	}
-	                JokoKudeatzailea.getNireJokoKudeatzailea().egoeraAldatu(Egoera.JOKATZEN);
-	                return;
-	            } else if (e.getKeyCode() == KeyEvent.VK_ESCAPE) {
-	                System.exit(0); // amaitu
-	            }
-	        }
-	        
-	        switch (e.getKeyCode()) {
-	            case KeyEvent.VK_LEFT  -> ezkerra = true;
-	            case KeyEvent.VK_RIGHT -> eskuma = true;
-	            case KeyEvent.VK_UP    -> gora = true;
-	            case KeyEvent.VK_DOWN  -> behera = true;
-	            case KeyEvent.VK_SPACE -> tiro = true;
-	            case KeyEvent.VK_1 -> MatrizeE.getEma().getEspaziontzia().portaeraAldatu(0);
-	            case KeyEvent.VK_2 -> MatrizeE.getEma().getEspaziontzia().portaeraAldatu(1);
-	            case KeyEvent.VK_3 -> MatrizeE.getEma().getEspaziontzia().portaeraAldatu(2);
-	        }
+	        case KeyEvent.VK_R ->JokoKudeatzailea.getNireJokoKudeatzailea().berriroJolastu("jolastu");
+	        case KeyEvent.VK_ESCAPE -> JokoKudeatzailea.getNireJokoKudeatzailea().berriroJolastu("amatatu");
+	        case KeyEvent.VK_SPACE ->tiro = true;
+	        case KeyEvent.VK_LEFT  -> ezkerra = true;
+	        case KeyEvent.VK_RIGHT -> eskuma = true;
+	        case KeyEvent.VK_UP    -> gora = true;
+	        case KeyEvent.VK_DOWN  -> behera = true;
+	        case KeyEvent.VK_1 ->
+	            MatrizeE.getEma().getEspaziontzia().portaeraAldatu(0);
+
+	        case KeyEvent.VK_2 ->
+	            MatrizeE.getEma().getEspaziontzia().portaeraAldatu(1);
+
+	        case KeyEvent.VK_3 ->
+	            MatrizeE.getEma().getEspaziontzia().portaeraAldatu(2);
+	    }
 	    }
 
 	    @Override

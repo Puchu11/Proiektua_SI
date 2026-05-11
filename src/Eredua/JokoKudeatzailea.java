@@ -114,7 +114,18 @@ public class JokoKudeatzailea extends Observable {
 	    }
 	}
 
-
+	public void berriroJolastu(String Jolastu) {
+		if(this.egoera==Egoera.IRABAZI || this.egoera==Egoera.GALDU) {
+			if(Jolastu.equals("jolastu")) {
+				if(this.egoera==Egoera.GALDU) {
+					resetPuntuazioTotala();
+				}
+				egoeraAldatu(Egoera.JOKATZEN);		
+			}else {
+				System.exit(0);
+			}
+		}
+	}
 	public int getPuntuazioTotala() { 
 		return puntuazioTotala; 
 	}
