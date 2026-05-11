@@ -18,6 +18,7 @@ public class JokoKudeatzailea extends Observable {
 	
 	private String espaziontziMota = "green";
 	private int puntuazioTotala = 0;
+	private int puntuazioMaximoa=0;
 	
 	public static JokoKudeatzailea getNireJokoKudeatzailea() {
 		if(ema==null) {
@@ -136,8 +137,13 @@ public class JokoKudeatzailea extends Observable {
 	}
 	public void puntuazioaGehitu(int p) {
 	    this.puntuazioTotala = this.puntuazioTotala + p;
+	    if (this.puntuazioTotala > this.puntuazioMaximoa) {
+	    	this.puntuazioMaximoa=this.puntuazioTotala;
+	    }
 	    setChanged();
-	    notifyObservers("PUNTUAK:" + this.puntuazioTotala); 
+	    notifyObservers("PUNTUAK:" + this.puntuazioTotala);
+	    setChanged();
+	    notifyObservers("RECORD:"+ this.puntuazioMaximoa);
 	}
 	public Egoera getEgoera() {
 	    return this.egoera;

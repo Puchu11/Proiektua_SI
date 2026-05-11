@@ -39,6 +39,7 @@ public class MatrizeB extends JFrame implements Observer {
 	private JPanel bizitzaPanela;
 	private JLabel balakLabel;
 	private JLabel puntuakLabel;
+	private JLabel recordLabel;
 	private Timer repaintTimer;
 
 	private Controller controller = null;
@@ -97,7 +98,11 @@ public class MatrizeB extends JFrame implements Observer {
 		puntuakLabel.setForeground(Color.YELLOW);
 		puntuakLabel.setFont(new Font("Arial", Font.BOLD, 18));
 		puntuakPanela.add(puntuakLabel);
-		
+		//PANEL RECORD
+		recordLabel = new JLabel("RECORD: 0");
+		recordLabel.setForeground(Color.ORANGE);
+		recordLabel.setFont(new Font("Arial", Font.BOLD, 18));
+		puntuakPanela.add(recordLabel);
 		// PANEL BIZITZAK
 		JPanel bizitzakPanela = new JPanel(new FlowLayout(FlowLayout.RIGHT, 15, 5));
 		bizitzakPanela.setBackground(Color.BLACK);
@@ -221,6 +226,9 @@ public class MatrizeB extends JFrame implements Observer {
 	        else if (mezuaString.startsWith("PUNTUAK:")) {
 	            puntuakLabel.setText(mezuaString);
 	        }
+	        else if (mezuaString.startsWith("RECORD:")) {
+	            recordLabel.setText(mezuaString);
+	        }
 	        else {
 	            mezuaErakutsi(mezuaString);
 	        }
@@ -267,6 +275,7 @@ public class MatrizeB extends JFrame implements Observer {
 	    private long azkenMugimenduKontrola = 0;
 	    private long azkenTiroKontrola = 0;
 
+	    
 	    private final Timer mugimenduaEguneratu = new Timer(JOLAS_TICK_MS, e -> jolasEguneratu());   
 
 	    private void hasi() {
