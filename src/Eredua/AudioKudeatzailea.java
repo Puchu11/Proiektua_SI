@@ -12,7 +12,7 @@ import java.io.File;
 public class AudioKudeatzailea {
     private static AudioKudeatzailea nireAudioKudeatzailea;
     private Clip fondoMusika;
-    private boolean isMuted=false;
+    private boolean Muted=false;
     private AudioKudeatzailea() {} 
 
     public static AudioKudeatzailea getAudioKudeatzailea() {
@@ -62,7 +62,7 @@ public class AudioKudeatzailea {
     }
     
     public void musikaMuteatu(boolean muteatu) {
-    	this.isMuted=!this.isMuted;
+    	this.Muted=!this.Muted;
     	try {
     		if(fondoMusika != null) {
     			BooleanControl muteControl= (BooleanControl) fondoMusika.getControl(BooleanControl.Type.MUTE);
