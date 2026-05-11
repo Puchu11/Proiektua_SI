@@ -13,6 +13,9 @@ public class PowerUpObjektua {
         MatrizeE.getEma().gelaxkaEguneratu(x, y, new PowerUpEgoera());    }
     
     public void jaitsi() {
+    	if (JokoKudeatzailea.getNireJokoKudeatzailea().getEgoera() == Egoera.PAUSA) {
+            return;
+        }
         GelaxkaE g= MatrizeE.getEma().getGelaxka(x, y);
         
         //nabearen gelaxka bada, ez dago hustu behar

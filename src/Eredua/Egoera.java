@@ -1,5 +1,5 @@
 package Eredua;
 
 public enum Egoera {
-	 HASIERA, JOKATZEN, IRABAZI, GALDU
+	 HASIERA, JOKATZEN, IRABAZI, GALDU, PAUSA
 }

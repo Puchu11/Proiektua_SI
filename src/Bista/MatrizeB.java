@@ -172,8 +172,10 @@ public class MatrizeB extends JFrame implements Observer {
 	public void update(Observable o, Object arg) {
 	    if (arg instanceof Egoera) {
 	        Egoera e = (Egoera) arg;
-	        
-	        if (e == Egoera.JOKATZEN) {
+	        if (e == Egoera.PAUSA) {
+	        	jokoPanela.repaint();
+	        }
+	        else if (e == Egoera.JOKATZEN) {
 	        	bizitzaPanela.setVisible(true);
 	        	//bizitzak jokoa berriz hastean berriz marraztu
 	            for (int i = 0; i < 3; i++) {
@@ -187,6 +189,7 @@ public class MatrizeB extends JFrame implements Observer {
 	            nabegadorea.show(kontenedorea, "JOKOA");
 	            this.requestFocusInWindow();
 	            getController().hasi();
+	            jokoPanela.repaint();
 	        } else if (e == Egoera.IRABAZI || e == Egoera.GALDU) {
 
 	            bizitzaPanela.setVisible(false);
@@ -236,11 +239,36 @@ public class MatrizeB extends JFrame implements Observer {
 	}
 
 	private JPanel getPanel() {
-		if (jokoPanela == null) {
-			jokoPanela = new JPanel();
-			jokoPanela.setLayout(new GridLayout(60, 100, 0, 0));
-		}
-		return jokoPanela;
+	    if (jokoPanela == null) {
+	        
+	        jokoPanela = new JPanel() {
+	            @Override
+	            protected void paintChildren(java.awt.Graphics g) {
+	                super.paintChildren(g); 
+	                if (JokoKudeatzailea.getNireJokoKudeatzailea().getEgoera() == Egoera.PAUSA) {
+	                    java.awt.Graphics2D g2 = (java.awt.Graphics2D) g;
+	                    g2.setColor(new java.awt.Color(0, 0, 0, 150));
+	                    g2.fillRect(0, 0, getWidth(), getHeight());
+
+	                    g2.setColor(java.awt.Color.WHITE);
+	                    g2.setFont(new java.awt.Font("Arial", java.awt.Font.BOLD, 60));
+	                    
+	                    String texto = "PAUSA";
+	                    java.awt.FontMetrics fm = g2.getFontMetrics();
+	                    int x = (getWidth() - fm.stringWidth(texto)) / 2;
+	                    int y = (getHeight() / 2);
+	                    g2.drawString(texto, x, y);
+
+	                    g2.setFont(new java.awt.Font("Arial", java.awt.Font.PLAIN, 20));
+	                    String subTexto = "Sakatu 'P' jarraitzeko";
+	                    int xSub = (getWidth() - g2.getFontMetrics().stringWidth(subTexto)) / 2;
+	                    g2.drawString(subTexto, xSub, y + 50);
+	                }
+	            }
+	        };
+	        jokoPanela.setLayout(new GridLayout(60, 100, 0, 0));
+	    }
+	    return jokoPanela;
 	}
 	
 	private void mezuaErakutsi(String m) {
@@ -254,6 +282,7 @@ public class MatrizeB extends JFrame implements Observer {
 
 	    mezuaTimer.restart();
 	}
+	
 
 	private Controller getController() {
 		if (controller == null) controller = new Controller();
@@ -283,6 +312,9 @@ public class MatrizeB extends JFrame implements Observer {
 	    }
 
 	    private void jolasEguneratu() {
+	    	if (JokoKudeatzailea.getNireJokoKudeatzailea().getEgoera() == Egoera.PAUSA) {
+	            return;
+	    	}
 	        long orain = System.currentTimeMillis();
 
 	        if (orain - azkenMugimenduKontrola >= MUGIMENDU_DELAY_MS) {
@@ -307,37 +339,38 @@ public class MatrizeB extends JFrame implements Observer {
  
 	    @Override
 	    public void keyPressed(KeyEvent e) {        
-	    	switch (e.getKeyCode()) {
+	        switch (e.getKeyCode()) {
+	            // --- JOKOAREN KONTROL OROKORRAK ---
+	            case KeyEvent.VK_R      -> JokoKudeatzailea.getNireJokoKudeatzailea().berriroJolastu("jolastu");
+	            case KeyEvent.VK_ESCAPE -> JokoKudeatzailea.getNireJokoKudeatzailea().berriroJolastu("amatatu");
+	            case KeyEvent.VK_P      -> JokoKudeatzailea.getNireJokoKudeatzailea().pausaAldatu(); // PAUSA BERRIA
 
-	        case KeyEvent.VK_R ->JokoKudeatzailea.getNireJokoKudeatzailea().berriroJolastu("jolastu");
-	        case KeyEvent.VK_ESCAPE -> JokoKudeatzailea.getNireJokoKudeatzailea().berriroJolastu("amatatu");
-	        case KeyEvent.VK_SPACE ->tiro = true;
-	        case KeyEvent.VK_LEFT  -> ezkerra = true;
-	        case KeyEvent.VK_RIGHT -> eskuma = true;
-	        case KeyEvent.VK_UP    -> gora = true;
-	        case KeyEvent.VK_DOWN  -> behera = true;
-	        // --- AUDIO KONTROLAK JOKOAN ZEHAR ---
-	        case KeyEvent.VK_M -> {
-	            AudioKudeatzailea.getAudioKudeatzailea().musikaMuteatu();
-	            JokoKudeatzailea.getNireJokoKudeatzailea().mezuaErakutsi("Musika mututu/aktibatu da");
-	        }
-	        case KeyEvent.VK_PLUS, KeyEvent.VK_ADD -> {
-	            AudioKudeatzailea.getAudioKudeatzailea().bolumenaJaitsi(-3.0f);
-	            JokoKudeatzailea.getNireJokoKudeatzailea().mezuaErakutsi("Bolumena igota");
-	        }
-	        case KeyEvent.VK_MINUS, KeyEvent.VK_SUBTRACT -> {
-	            AudioKudeatzailea.getAudioKudeatzailea().bolumenaJaitsi(3.0f);
-	            JokoKudeatzailea.getNireJokoKudeatzailea().mezuaErakutsi("Bolumena jaitsita");
-	        }
-	        case KeyEvent.VK_1 ->
-	            MatrizeE.getEma().getEspaziontzia().portaeraAldatu(0);
+	            // --- MUGIMENDUA ETA TIROA ---
+	            case KeyEvent.VK_SPACE  -> tiro = true;
+	            case KeyEvent.VK_LEFT   -> ezkerra = true;
+	            case KeyEvent.VK_RIGHT  -> eskuma = true;
+	            case KeyEvent.VK_UP     -> gora = true;
+	            case KeyEvent.VK_DOWN   -> behera = true;
 
-	        case KeyEvent.VK_2 ->
-	            MatrizeE.getEma().getEspaziontzia().portaeraAldatu(1);
+	            // --- AUDIO KONTROLAK ---
+	            case KeyEvent.VK_M -> {
+	                AudioKudeatzailea.getAudioKudeatzailea().musikaMuteatu();
+	                JokoKudeatzailea.getNireJokoKudeatzailea().mezuaErakutsi("Musika mututu/aktibatu da");
+	            }
+	            case KeyEvent.VK_PLUS, KeyEvent.VK_ADD -> {
+	                AudioKudeatzailea.getAudioKudeatzailea().bolumenaJaitsi(-3.0f);
+	                JokoKudeatzailea.getNireJokoKudeatzailea().mezuaErakutsi("Bolumena igota");
+	            }
+	            case KeyEvent.VK_MINUS, KeyEvent.VK_SUBTRACT -> {
+	                AudioKudeatzailea.getAudioKudeatzailea().bolumenaJaitsi(3.0f);
+	                JokoKudeatzailea.getNireJokoKudeatzailea().mezuaErakutsi("Bolumena jaitsita");
+	            }
 
-	        case KeyEvent.VK_3 ->
-	            MatrizeE.getEma().getEspaziontzia().portaeraAldatu(2);
-	    }
+	            // --- ARMA ALDAKETA ---
+	            case KeyEvent.VK_1 -> MatrizeE.getEma().getEspaziontzia().portaeraAldatu(0);
+	            case KeyEvent.VK_2 -> MatrizeE.getEma().getEspaziontzia().portaeraAldatu(1);
+	            case KeyEvent.VK_3 -> MatrizeE.getEma().getEspaziontzia().portaeraAldatu(2);
+	        }
 	    }
 
 	    @Override

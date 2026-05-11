@@ -151,6 +151,9 @@ public class MatrizeE extends Observable {
     }
 
     private void mugituEtsaia(EntitateNodo entNodo, String norabidea) {
+    	if (JokoKudeatzailea.getNireJokoKudeatzailea().getEgoera() == Egoera.PAUSA) {
+            return;
+        }
         boolean talka = entNodo.getLista().stream()
                 .map(ent -> (Etsaia) ent)
                 .anyMatch(etsaia -> espaziontziaTalka(
