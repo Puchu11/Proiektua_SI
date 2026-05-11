@@ -61,12 +61,12 @@ public class AudioKudeatzailea {
         }
     }
     
-    public void musikaMuteatu(boolean muteatu) {
+    public void musikaMuteatu() {
     	this.isMuted=!this.isMuted;
     	try {
     		if(fondoMusika != null) {
     			BooleanControl muteControl= (BooleanControl) fondoMusika.getControl(BooleanControl.Type.MUTE);
-    			muteControl.setValue(muteatu);
+    			muteControl.setValue(isMuted);
     		}
     	}catch (Exception e) {
     		System.out.println("Errorea muteatzen: " + e.getMessage());
