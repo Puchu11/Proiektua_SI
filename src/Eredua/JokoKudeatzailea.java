@@ -148,4 +148,19 @@ public class JokoKudeatzailea extends Observable {
 	public Egoera getEgoera() {
 	    return this.egoera;
 	}
+
+	public void pausaAldatu() {
+	    if (this.egoera == Egoera.JOKATZEN) {
+	        this.egoera = Egoera.PAUSA;
+	        AudioKudeatzailea.getAudioKudeatzailea().musikaMuteatu();
+	        setChanged();
+	        notifyObservers(Egoera.PAUSA);
+	    } 
+	    else if (this.egoera == Egoera.PAUSA) {
+	        this.egoera = Egoera.JOKATZEN;
+	        AudioKudeatzailea.getAudioKudeatzailea().musikaMuteatu();
+	        setChanged();
+	        notifyObservers(Egoera.JOKATZEN);
+	    }
+	}
 }
