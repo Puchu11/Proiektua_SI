@@ -55,6 +55,13 @@ public class AudioKudeatzailea {
                 newValue = Math.max(min, Math.min(max, newValue));
                 
                 gainControl.setValue(newValue);
+
+                // BISTARI ABISATU JOKOKUDEATZAILEAREN BIDEZ (ZUZENEKO DEIAK SAIHESTUZ)
+                if (dB > 0) {
+                    JokoKudeatzailea.getNireJokoKudeatzailea().mezuaErakutsi("BOLUMENA JAITSI DA");
+                } else {
+                    JokoKudeatzailea.getNireJokoKudeatzailea().mezuaErakutsi("BOLUMENA IGOTZE DA");
+                }
             }
         } catch (Exception e) {
             System.out.println("Errorea bolumena aldatzean: " + e.getMessage());
@@ -62,15 +69,22 @@ public class AudioKudeatzailea {
     }
     
     public void musikaMuteatu() {
-    	this.isMuted=!this.isMuted;
-    	try {
-    		if(fondoMusika != null) {
-    			BooleanControl muteControl= (BooleanControl) fondoMusika.getControl(BooleanControl.Type.MUTE);
-    			muteControl.setValue(isMuted);
-    		}
-    	}catch (Exception e) {
-    		System.out.println("Errorea muteatzen: " + e.getMessage());
-    	}
+        this.isMuted = !this.isMuted;
+        try {
+            if (fondoMusika != null) {
+                BooleanControl muteControl = (BooleanControl) fondoMusika.getControl(BooleanControl.Type.MUTE);
+                muteControl.setValue(isMuted);
+
+                // BISTARI ABISATU JOKOKUDEATZAILEAREN BIDEZ
+                if (isMuted) {
+                    JokoKudeatzailea.getNireJokoKudeatzailea().mezuaErakutsi("MUSIKA MUTUTUTA");
+                } else {
+                    JokoKudeatzailea.getNireJokoKudeatzailea().mezuaErakutsi("MUSIKA AKTIBATUTA");
+                }
+            }
+        } catch (Exception e) {
+            System.out.println("Errorea muteatzen: " + e.getMessage());
+        }
     }
     public void soinuaErreproduzitu(String bidea) {
         new Thread(() -> {
