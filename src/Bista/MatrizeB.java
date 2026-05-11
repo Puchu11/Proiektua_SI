@@ -23,7 +23,7 @@ import Eredua.Egoera;
 import Eredua.GelaxkaE;
 import Eredua.JokoKudeatzailea;
 import Eredua.MatrizeE;
-
+import Eredua.AudioKudeatzailea;
 public class MatrizeB extends JFrame implements Observer {
 	
 	private static final long serialVersionUID = 1L;
@@ -307,6 +307,19 @@ public class MatrizeB extends JFrame implements Observer {
 	        case KeyEvent.VK_RIGHT -> eskuma = true;
 	        case KeyEvent.VK_UP    -> gora = true;
 	        case KeyEvent.VK_DOWN  -> behera = true;
+	        // --- AUDIO KONTROLAK JOKOAN ZEHAR ---
+	        case KeyEvent.VK_M -> {
+	            AudioKudeatzailea.getAudioKudeatzailea().musikaMuteatu();
+	            JokoKudeatzailea.getNireJokoKudeatzailea().mezuaErakutsi("Musika mututu/aktibatu da");
+	        }
+	        case KeyEvent.VK_PLUS, KeyEvent.VK_ADD -> {
+	            AudioKudeatzailea.getAudioKudeatzailea().bolumenaJaitsi(-3.0f);
+	            JokoKudeatzailea.getNireJokoKudeatzailea().mezuaErakutsi("Bolumena igota");
+	        }
+	        case KeyEvent.VK_MINUS, KeyEvent.VK_SUBTRACT -> {
+	            AudioKudeatzailea.getAudioKudeatzailea().bolumenaJaitsi(3.0f);
+	            JokoKudeatzailea.getNireJokoKudeatzailea().mezuaErakutsi("Bolumena jaitsita");
+	        }
 	        case KeyEvent.VK_1 ->
 	            MatrizeE.getEma().getEspaziontzia().portaeraAldatu(0);
 
