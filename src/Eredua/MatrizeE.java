@@ -37,7 +37,6 @@ public class MatrizeE extends Observable {
     	for (int i = 0; i < altuera; i++) {
             for (int j = 0; j < zabalera; j++) {
             	matrizea[i][j] = new GelaxkaE(j, i, new HutsaEgoera());
-				
             }   
     	}
     	
@@ -46,10 +45,9 @@ public class MatrizeE extends Observable {
     	etsaiakSortu();  	
     	hasieratuPowerUpErorikoa();
     }
+
     public void mugituEspaziontzia(String norabidea) {
-    	
     	espaziontzia.mugitu(norabidea);
-    	
     }
     
     public GelaxkaE[][] getMatrizea(){
@@ -73,6 +71,8 @@ public class MatrizeE extends Observable {
     	Espaziontzia erdikoa = (Espaziontzia) espaziontzia.getLista().get(0);
     	erdikoa.tiroEgin();
     	AudioKudeatzailea.getAudioKudeatzailea().soinuaErreproduzitu("src/res/laser.wav");
+    	JokoKudeatzailea.getNireJokoKudeatzailea().tiroaZenbatu(); 
+;
     }
     
     public Espaziontzia getEspaziontzia() {
@@ -116,7 +116,6 @@ public class MatrizeE extends Observable {
     private void marraztu(EntitateNodo nodo) {
     	nodo.getLista().forEach(ent -> {
     		Etsaia e = (Etsaia) ent;
-
     		matrizea[e.getPosizioa().getY()][e.getPosizioa().getX()]
     				.gelaxkaEguneratu(new EtsaiaEgoera());
     	});
@@ -138,7 +137,6 @@ public class MatrizeE extends Observable {
                         EtsaiTiro tiratzailea = (EtsaiTiro) etsaia.getLista().get(etsaia.getLista().size()-1);
                         tiratzailea.tiroEgin();
                     }
-                    
                 }
                 try {
                     Thread.sleep(abiadura(mota));
@@ -146,7 +144,6 @@ public class MatrizeE extends Observable {
                     break;
                 }
             }
-
         }).start();
     }
 
@@ -172,7 +169,6 @@ public class MatrizeE extends Observable {
                         lehenengoa.getPosizioa().getY()
                 );
             }
-
             return;
         }
 
@@ -199,7 +195,6 @@ public class MatrizeE extends Observable {
         if(JokoKudeatzailea.getNireJokoKudeatzailea().getBizitzak()<=0) {
         	JokoKudeatzailea.getNireJokoKudeatzailea().egoeraAldatu(Egoera.GALDU);
         }
-        
     }
    
     private int abiadura(String mota) {
@@ -212,76 +207,6 @@ public class MatrizeE extends Observable {
         }
     }
     
-<<<<<<< HEAD
-=======
-    private void hasieratuEtsaienMugimendua() {
-    	etsaienTimer = new Timer();
-        TimerTask ataza = new TimerTask() {
-            public void run() {
-                etsaiakMugitu();
-            }
-        };
-
-        etsaienTimer.schedule(ataza, 0, 200);
-    }
-    private void etsaiakMugitu() {
-        ArrayList<EntitateNodo> kopiaEtsaiak = new ArrayList<>(etsaiak);
-
-        for (EntitateNodo entNodo : kopiaEtsaiak) {
-            // Norabidea ausaz aukeratu nodo bakoitzeko
-            int aukera = rnd.nextInt(3);
-            String norabideHautatuta = (aukera == 0) ? "ezkerrera" : (aukera == 1) ? "eskuinera" : "behera";
-            final String norabideaFinal = norabideHautatuta;
-
-            // 2. TALKA DETEKZIOA
-            boolean talka = entNodo.getLista().stream()
-                    .map(ent -> (Etsaia) ent)
-                    .anyMatch(etsaia -> espaziontziaTalka(
-                            norabideaFinal,
-                            etsaia.getPosizioa().getX(),
-                            etsaia.getPosizioa().getY()
-                    ));
-
-            if (talka) {
-                System.out.println("!! TALKA: Bizitza bat galdu duzu !!");
-                JokoKudeatzailea.getNireJokoKudeatzailea().bizitzaBatKendu();
-
-                if (!entNodo.getLista().isEmpty()) {
-                    Etsaia lehenengoa = (Etsaia) entNodo.getLista().get(0);
-                    etsaiakEzabatu(
-                            lehenengoa.getPosizioa().getX(),
-                            lehenengoa.getPosizioa().getY()
-                    );
-                }
-                continue; 
-            }
-
-            // 3. MUGIMENDUA
-            if (entNodo.mugituDaiteke(norabideaFinal)) {
-                entNodo.mugitu(norabideaFinal);
-            }
-
-            // 4. BEHERA IRITSI DEN EGIAZTATU
-            boolean iritsiDaBehera = entNodo.getLista().stream()
-                    .map(ent -> (Etsaia) ent)
-                    .anyMatch(enemy -> enemy.getPosizioa().getY() >= 59);
-
-            if (iritsiDaBehera) {
-                System.out.println("!!! Etsaia behera iritsi da !!!");
-                JokoKudeatzailea.getNireJokoKudeatzailea().bizitzaBatKendu();
-                
-                if (!entNodo.getLista().isEmpty()) {
-                    Etsaia lehenengoa = (Etsaia) entNodo.getLista().get(0);
-                    etsaiakEzabatu(
-                            lehenengoa.getPosizioa().getX(),
-                            lehenengoa.getPosizioa().getY()
-                    );
-                }
-            }
-        }
-    }
-   
->>>>>>> branch 'Jara' of https://github.com/Puchu11/Proiektua_SI.git
     public void etsaiakEzabatu(int x, int y) {	
     	EntitateNodo nodoEzabatu = etsaiak.stream().filter(nodo -> nodo.getLista().stream()
     	                .map(ent -> (Etsaia) ent)
@@ -306,38 +231,34 @@ public class MatrizeE extends Observable {
     	    //PowerUp berria sortu eta gehitu
     	    if (rnd.nextDouble()<0.3) {
     	    	java.util.List<PowerUp> Lista= PowerUpFactory.lortuPowerUpGuztiak();
-        	    	int indizea= rnd.nextInt(Lista.size());
-    	    		PowerUp aukeratua = Lista.get(rnd.nextInt(Lista.size()));
-        	    
-        	    	String izena = "";
-	        	    	switch (indizea) {
-	        	    	case 0: izena = "Gezi Tiroa"; break;
-	        	    	case 1: izena = "Erronbo Tiroa"; break;
-	        	    	case 2: izena = "Bizitza extra"; break;
-	        	    	case 3: izena = "Gezi Munizioa(+20)"; break;
-	        	    	case 4: izena = "Erronbo Munizioa (+10)"; break;
-	        	    	default: izena = "Power-up";
-        	    	}
-	        	erortzenDirenPowerUpak.add(new PowerUpObjektua(x, y,  izena, aukeratua));
-        	    JokoKudeatzailea.getNireJokoKudeatzailea().mezuaErakutsi("PowerUp erortzen hari da!");	
+    	    	int indizea= rnd.nextInt(Lista.size());
+    	    	PowerUp aukeratua = Lista.get(rnd.nextInt(Lista.size()));
+    	        
+    	    	String izena = "";
+    	    	switch (indizea) {
+    	    	case 0: izena = "Gezi Tiroa"; break;
+    	    	case 1: izena = "Erronbo Tiroa"; break;
+    	    	case 2: izena = "Bizitza extra"; break;
+    	    	case 3: izena = "Gezi Munizioa(+20)"; break;
+    	    	case 4: izena = "Erronbo Munizioa (+10)"; break;
+    	    	default: izena = "Power-up";
+    	    	}
+    	    	erortzenDirenPowerUpak.add(new PowerUpObjektua(x, y,  izena, aukeratua));
+    	    	JokoKudeatzailea.getNireJokoKudeatzailea().mezuaErakutsi("PowerUp erortzen hari da!");	
     	    }
-    	    
     	}
     	
     	if (etsaiak.isEmpty()) {
     		JokoKudeatzailea.getNireJokoKudeatzailea().egoeraAldatu(Egoera.IRABAZI);
-    		
     	}   	
     }
 
     public void jokoaAmaitu() {
         jokoaMartxan = false;
         if (powerUpTimer != null) {
-            powerUpTimer
-            .cancel();
+            powerUpTimer.cancel();
             powerUpTimer.purge();
         }
-
         System.out.println("Matrize amatatuta");
     }
     
@@ -352,9 +273,7 @@ public class MatrizeE extends Observable {
         return false;
     }
     
-    
     private boolean espaziontziaDago(String norabidea,int x, int y) {
-    	
     	if(norabidea.equals("ezkerrera")) {
     		x--;
     	}else if (norabidea.equals("eskuinera")){
@@ -368,7 +287,6 @@ public class MatrizeE extends Observable {
 
         return g.getEntitateMota().equals("espaziontzia");
     }
-
 
     public void hasieratuPowerUpErorikoa() {
         powerUpTimer = new java.util.Timer();
