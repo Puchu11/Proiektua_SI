@@ -283,6 +283,9 @@ public class MatrizeB extends JFrame implements Observer {
 	    }
 
 	    private void jolasEguneratu() {
+	    	if (JokoKudeatzailea.getNireJokoKudeatzailea().getEgoera() == Egoera.PAUSA) {
+	            return;
+	    	}
 	        long orain = System.currentTimeMillis();
 
 	        if (orain - azkenMugimenduKontrola >= MUGIMENDU_DELAY_MS) {
