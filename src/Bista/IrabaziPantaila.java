@@ -11,6 +11,7 @@ import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 
 public class IrabaziPantaila extends JPanel {
+<<<<<<< HEAD
 
     private JLabel puntuazioa;
     private Image fondo;
@@ -23,6 +24,21 @@ public class IrabaziPantaila extends JPanel {
 
         puntuazioa = new JLabel("", SwingConstants.CENTER);
         puntuazioa.setBounds(0, 300, 900, 50); // ← ajusta altura aquí
+=======
+	private JLabel puntuazioa;
+	private JLabel instrukzioa;
+	
+	public IrabaziPantaila() {
+		this.setBackground(Color.BLACK);
+		this.setLayout(new GridLayout(3,1));
+		
+		JLabel titulua = new JLabel ("IRABAZI DOZU", SwingConstants.CENTER);
+		titulua.setForeground(Color.WHITE);
+		titulua.setFont(new Font("Arial", Font.BOLD, 40)); 
+		this.add(titulua);
+		
+		puntuazioa = new JLabel("", SwingConstants.CENTER);
+>>>>>>> branch 'Jara' of https://github.com/Puchu11/Proiektua_SI.git
         puntuazioa.setForeground(Color.YELLOW);
         puntuazioa.setFont(new Font("Arial", Font.BOLD, 30));
         add(puntuazioa);
