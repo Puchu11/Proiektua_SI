@@ -172,8 +172,10 @@ public class MatrizeB extends JFrame implements Observer {
 	public void update(Observable o, Object arg) {
 	    if (arg instanceof Egoera) {
 	        Egoera e = (Egoera) arg;
-	        
-	        if (e == Egoera.JOKATZEN) {
+	        if (e == Egoera.PAUSA) {
+	        	jokoPanela.repaint();
+	        }
+	        else if (e == Egoera.JOKATZEN) {
 	        	bizitzaPanela.setVisible(true);
 	        	//bizitzak jokoa berriz hastean berriz marraztu
 	            for (int i = 0; i < 3; i++) {
@@ -187,6 +189,7 @@ public class MatrizeB extends JFrame implements Observer {
 	            nabegadorea.show(kontenedorea, "JOKOA");
 	            this.requestFocusInWindow();
 	            getController().hasi();
+	            jokoPanela.repaint();
 	        } else if (e == Egoera.IRABAZI || e == Egoera.GALDU) {
 
 	            bizitzaPanela.setVisible(false);
@@ -236,11 +239,38 @@ public class MatrizeB extends JFrame implements Observer {
 	}
 
 	private JPanel getPanel() {
-		if (jokoPanela == null) {
-			jokoPanela = new JPanel();
-			jokoPanela.setLayout(new GridLayout(60, 100, 0, 0));
-		}
-		return jokoPanela;
+	    if (jokoPanela == null) {
+	        // Sobreescribimos paintChildren para que la pausa se dibuje ENCIMA de las etiquetas GelaxkaB
+	        jokoPanela = new JPanel() {
+	            @Override
+	            protected void paintChildren(java.awt.Graphics g) {
+	                super.paintChildren(g); // Dibuja primero las celdas
+	                
+	                // Si está en pausa, dibujamos el overlay aquí
+	                if (JokoKudeatzailea.getNireJokoKudeatzailea().getEgoera() == Egoera.PAUSA) {
+	                    java.awt.Graphics2D g2 = (java.awt.Graphics2D) g;
+	                    g2.setColor(new java.awt.Color(0, 0, 0, 150));
+	                    g2.fillRect(0, 0, getWidth(), getHeight());
+
+	                    g2.setColor(java.awt.Color.WHITE);
+	                    g2.setFont(new java.awt.Font("Arial", java.awt.Font.BOLD, 60));
+	                    
+	                    String texto = "PAUSA";
+	                    java.awt.FontMetrics fm = g2.getFontMetrics();
+	                    int x = (getWidth() - fm.stringWidth(texto)) / 2;
+	                    int y = (getHeight() / 2);
+	                    g2.drawString(texto, x, y);
+
+	                    g2.setFont(new java.awt.Font("Arial", java.awt.Font.PLAIN, 20));
+	                    String subTexto = "Sakatu 'P' jarraitzeko";
+	                    int xSub = (getWidth() - g2.getFontMetrics().stringWidth(subTexto)) / 2;
+	                    g2.drawString(subTexto, xSub, y + 50);
+	                }
+	            }
+	        };
+	        jokoPanela.setLayout(new GridLayout(60, 100, 0, 0));
+	    }
+	    return jokoPanela;
 	}
 	
 	private void mezuaErakutsi(String m) {
@@ -254,6 +284,7 @@ public class MatrizeB extends JFrame implements Observer {
 
 	    mezuaTimer.restart();
 	}
+	
 
 	private Controller getController() {
 		if (controller == null) controller = new Controller();
