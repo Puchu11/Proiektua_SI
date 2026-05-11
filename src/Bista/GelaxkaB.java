@@ -40,7 +40,7 @@ public class GelaxkaB extends JLabel implements Observer {
 					setBackground(Color.BLACK);
 					break;
 				case "larrosa":
-					setBackground(Color.BLACK);
+					setBackground(Color.PINK);
 					break;
 				default:
 					setBackground(Color.BLACK);
