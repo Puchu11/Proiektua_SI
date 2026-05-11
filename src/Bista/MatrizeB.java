@@ -307,37 +307,38 @@ public class MatrizeB extends JFrame implements Observer {
  
 	    @Override
 	    public void keyPressed(KeyEvent e) {        
-	    	switch (e.getKeyCode()) {
+	        switch (e.getKeyCode()) {
+	            // --- JOKOAREN KONTROL OROKORRAK ---
+	            case KeyEvent.VK_R      -> JokoKudeatzailea.getNireJokoKudeatzailea().berriroJolastu("jolastu");
+	            case KeyEvent.VK_ESCAPE -> JokoKudeatzailea.getNireJokoKudeatzailea().berriroJolastu("amatatu");
+	            case KeyEvent.VK_P      -> JokoKudeatzailea.getNireJokoKudeatzailea().pausaAldatu(); // PAUSA BERRIA
 
-	        case KeyEvent.VK_R ->JokoKudeatzailea.getNireJokoKudeatzailea().berriroJolastu("jolastu");
-	        case KeyEvent.VK_ESCAPE -> JokoKudeatzailea.getNireJokoKudeatzailea().berriroJolastu("amatatu");
-	        case KeyEvent.VK_SPACE ->tiro = true;
-	        case KeyEvent.VK_LEFT  -> ezkerra = true;
-	        case KeyEvent.VK_RIGHT -> eskuma = true;
-	        case KeyEvent.VK_UP    -> gora = true;
-	        case KeyEvent.VK_DOWN  -> behera = true;
-	        // --- AUDIO KONTROLAK JOKOAN ZEHAR ---
-	        case KeyEvent.VK_M -> {
-	            AudioKudeatzailea.getAudioKudeatzailea().musikaMuteatu();
-	            JokoKudeatzailea.getNireJokoKudeatzailea().mezuaErakutsi("Musika mututu/aktibatu da");
-	        }
-	        case KeyEvent.VK_PLUS, KeyEvent.VK_ADD -> {
-	            AudioKudeatzailea.getAudioKudeatzailea().bolumenaJaitsi(-3.0f);
-	            JokoKudeatzailea.getNireJokoKudeatzailea().mezuaErakutsi("Bolumena igota");
-	        }
-	        case KeyEvent.VK_MINUS, KeyEvent.VK_SUBTRACT -> {
-	            AudioKudeatzailea.getAudioKudeatzailea().bolumenaJaitsi(3.0f);
-	            JokoKudeatzailea.getNireJokoKudeatzailea().mezuaErakutsi("Bolumena jaitsita");
-	        }
-	        case KeyEvent.VK_1 ->
-	            MatrizeE.getEma().getEspaziontzia().portaeraAldatu(0);
+	            // --- MUGIMENDUA ETA TIROA ---
+	            case KeyEvent.VK_SPACE  -> tiro = true;
+	            case KeyEvent.VK_LEFT   -> ezkerra = true;
+	            case KeyEvent.VK_RIGHT  -> eskuma = true;
+	            case KeyEvent.VK_UP     -> gora = true;
+	            case KeyEvent.VK_DOWN   -> behera = true;
 
-	        case KeyEvent.VK_2 ->
-	            MatrizeE.getEma().getEspaziontzia().portaeraAldatu(1);
+	            // --- AUDIO KONTROLAK ---
+	            case KeyEvent.VK_M -> {
+	                AudioKudeatzailea.getAudioKudeatzailea().musikaMuteatu();
+	                JokoKudeatzailea.getNireJokoKudeatzailea().mezuaErakutsi("Musika mututu/aktibatu da");
+	            }
+	            case KeyEvent.VK_PLUS, KeyEvent.VK_ADD -> {
+	                AudioKudeatzailea.getAudioKudeatzailea().bolumenaJaitsi(-3.0f);
+	                JokoKudeatzailea.getNireJokoKudeatzailea().mezuaErakutsi("Bolumena igota");
+	            }
+	            case KeyEvent.VK_MINUS, KeyEvent.VK_SUBTRACT -> {
+	                AudioKudeatzailea.getAudioKudeatzailea().bolumenaJaitsi(3.0f);
+	                JokoKudeatzailea.getNireJokoKudeatzailea().mezuaErakutsi("Bolumena jaitsita");
+	            }
 
-	        case KeyEvent.VK_3 ->
-	            MatrizeE.getEma().getEspaziontzia().portaeraAldatu(2);
-	    }
+	            // --- ARMA ALDAKETA ---
+	            case KeyEvent.VK_1 -> MatrizeE.getEma().getEspaziontzia().portaeraAldatu(0);
+	            case KeyEvent.VK_2 -> MatrizeE.getEma().getEspaziontzia().portaeraAldatu(1);
+	            case KeyEvent.VK_3 -> MatrizeE.getEma().getEspaziontzia().portaeraAldatu(2);
+	        }
 	    }
 
 	    @Override
