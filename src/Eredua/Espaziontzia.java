@@ -19,13 +19,23 @@ public abstract class Espaziontzia extends Entitatea {
 	}
 	
 	public void portaeraAldatu(int pMota) {
-		if(pMota==1) {
-			tiroPortaera= new TiroGezi();
-		}else if (pMota==2) {
-			tiroPortaera = new TiroErronboa();
-		}else {
-			tiroPortaera = new TiroNormala();
-		}
+	    if (pMota == 1) {
+	        // Gezi tiroa: jatorrizko baimena badu EDO power-up bidez munizioa lortu badu
+	        if (getKolorea().equals("urdina") && geziMunizioa <= 0) {
+	            JokoKudeatzailea.getNireJokoKudeatzailea().mezuaErakutsi("Blue ezin du gezirik bota muniziorik gabe!");
+	        } else {
+	            setTiroPortaera(1);
+	        }
+	    } else if (pMota == 2) {
+	        // Erronbo tiroa: jatorrizko baimena badu EDO power-up bidez munizioa lortu badu
+	        if (getKolorea().equals("berdea") && erronboMunizioa <= 0) {
+	            JokoKudeatzailea.getNireJokoKudeatzailea().mezuaErakutsi("Green ezin du erronborik bota muniziorik gabe!");
+	        } else {
+	            setTiroPortaera(2);
+	        }
+	    } else {
+	        setTiroPortaera(0); // Tiro normala beti libre
+	    }
 	}
 	
 	public void tiroEgin() {

@@ -23,7 +23,7 @@ import Eredua.Egoera;
 import Eredua.GelaxkaE;
 import Eredua.JokoKudeatzailea;
 import Eredua.MatrizeE;
-
+import Eredua.AudioKudeatzailea;
 public class MatrizeB extends JFrame implements Observer {
 	
 	private static final long serialVersionUID = 1L;
@@ -39,6 +39,7 @@ public class MatrizeB extends JFrame implements Observer {
 	private JPanel bizitzaPanela;
 	private JLabel balakLabel;
 	private JLabel puntuakLabel;
+	private JLabel recordLabel;
 	private Timer repaintTimer;
 
 	private Controller controller = null;
@@ -97,7 +98,11 @@ public class MatrizeB extends JFrame implements Observer {
 		puntuakLabel.setForeground(Color.YELLOW);
 		puntuakLabel.setFont(new Font("Arial", Font.BOLD, 18));
 		puntuakPanela.add(puntuakLabel);
-		
+		//PANEL RECORD
+		recordLabel = new JLabel("RECORD: 0");
+		recordLabel.setForeground(Color.ORANGE);
+		recordLabel.setFont(new Font("Arial", Font.BOLD, 18));
+		puntuakPanela.add(recordLabel);
 		// PANEL BIZITZAK
 		JPanel bizitzakPanela = new JPanel(new FlowLayout(FlowLayout.RIGHT, 15, 5));
 		bizitzakPanela.setBackground(Color.BLACK);
@@ -221,6 +226,9 @@ public class MatrizeB extends JFrame implements Observer {
 	        else if (mezuaString.startsWith("PUNTUAK:")) {
 	            puntuakLabel.setText(mezuaString);
 	        }
+	        else if (mezuaString.startsWith("RECORD:")) {
+	            recordLabel.setText(mezuaString);
+	        }
 	        else {
 	            mezuaErakutsi(mezuaString);
 	        }
@@ -267,6 +275,7 @@ public class MatrizeB extends JFrame implements Observer {
 	    private long azkenMugimenduKontrola = 0;
 	    private long azkenTiroKontrola = 0;
 
+	    
 	    private final Timer mugimenduaEguneratu = new Timer(JOLAS_TICK_MS, e -> jolasEguneratu());   
 
 	    private void hasi() {
@@ -307,6 +316,19 @@ public class MatrizeB extends JFrame implements Observer {
 	        case KeyEvent.VK_RIGHT -> eskuma = true;
 	        case KeyEvent.VK_UP    -> gora = true;
 	        case KeyEvent.VK_DOWN  -> behera = true;
+	        // --- AUDIO KONTROLAK JOKOAN ZEHAR ---
+	        case KeyEvent.VK_M -> {
+	            AudioKudeatzailea.getAudioKudeatzailea().musikaMuteatu();
+	            JokoKudeatzailea.getNireJokoKudeatzailea().mezuaErakutsi("Musika mututu/aktibatu da");
+	        }
+	        case KeyEvent.VK_PLUS, KeyEvent.VK_ADD -> {
+	            AudioKudeatzailea.getAudioKudeatzailea().bolumenaJaitsi(-3.0f);
+	            JokoKudeatzailea.getNireJokoKudeatzailea().mezuaErakutsi("Bolumena igota");
+	        }
+	        case KeyEvent.VK_MINUS, KeyEvent.VK_SUBTRACT -> {
+	            AudioKudeatzailea.getAudioKudeatzailea().bolumenaJaitsi(3.0f);
+	            JokoKudeatzailea.getNireJokoKudeatzailea().mezuaErakutsi("Bolumena jaitsita");
+	        }
 	        case KeyEvent.VK_1 ->
 	            MatrizeE.getEma().getEspaziontzia().portaeraAldatu(0);
 
