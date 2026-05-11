@@ -23,6 +23,9 @@ public class TiroNodoa extends Thread implements TiroInterfazea {
 				bizirik=false;
 				break;
 			}
+			if (JokoKudeatzailea.getNireJokoKudeatzailea().getEgoera() == Egoera.PAUSA) {
+	            continue;
+	        }
 			
 			if(kolizioa()) {
 				hil();
