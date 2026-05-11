@@ -19,7 +19,7 @@ public class JokoKudeatzailea extends Observable {
 	private String espaziontziMota = "green";
 	private int puntuazioTotala = 0;
 	private int puntuazioMaximoa=0;
-	
+	private int tiroKopurua = 0;
 	public static JokoKudeatzailea getNireJokoKudeatzailea() {
 		if(ema==null) {
 			ema=new JokoKudeatzailea();
@@ -37,6 +37,7 @@ public class JokoKudeatzailea extends Observable {
 	public void hasiJokoa() {
 		this.egoera = Egoera.HASIERA;
 		this.puntuazioTotala = 0;
+		this.resetTiroKopurua();
 		setChanged();
 		notifyObservers(Egoera.HASIERA);
 	}
@@ -51,6 +52,7 @@ public class JokoKudeatzailea extends Observable {
 		}else if (berria == Egoera.JOKATZEN) {
 			this.bizitzak = 3;
 			MatrizeE.getEma().matrizeaSortu();
+			this.resetTiroKopurua();
 			this.balakEguneratu(0);
 			audio.musikaErreproduzitu("src/res/joko_musika.wav");
 		}else if (berria == Egoera.IRABAZI || berria == Egoera.GALDU) {
@@ -162,6 +164,18 @@ public class JokoKudeatzailea extends Observable {
 	        setChanged();
 	        notifyObservers(Egoera.JOKATZEN);
 	    }
+	}
+
+	public void tiroaZenbatu() {
+	    this.tiroKopurua++;
+	}
+
+	public int getTiroKopurua() {
+	    return this.tiroKopurua;
+	}
+
+	public void resetTiroKopurua() {
+	    this.tiroKopurua = 0;
 	}
 
 }
