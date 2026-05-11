@@ -240,13 +240,11 @@ public class MatrizeB extends JFrame implements Observer {
 
 	private JPanel getPanel() {
 	    if (jokoPanela == null) {
-	        // Sobreescribimos paintChildren para que la pausa se dibuje ENCIMA de las etiquetas GelaxkaB
+	        
 	        jokoPanela = new JPanel() {
 	            @Override
 	            protected void paintChildren(java.awt.Graphics g) {
-	                super.paintChildren(g); // Dibuja primero las celdas
-	                
-	                // Si está en pausa, dibujamos el overlay aquí
+	                super.paintChildren(g); 
 	                if (JokoKudeatzailea.getNireJokoKudeatzailea().getEgoera() == Egoera.PAUSA) {
 	                    java.awt.Graphics2D g2 = (java.awt.Graphics2D) g;
 	                    g2.setColor(new java.awt.Color(0, 0, 0, 150));
