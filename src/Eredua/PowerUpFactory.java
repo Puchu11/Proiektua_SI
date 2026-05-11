@@ -7,9 +7,9 @@ import java.util.List;
 public class PowerUpFactory {
     public static List<PowerUp> lortuPowerUpGuztiak() {
         return Arrays.asList(
-            esp -> esp.portaeraAldatu(1),
-            esp -> esp.portaeraAldatu(2),
-            // esp -> JokoKudeatzailea.getNireJokoKudeatzailea().puntuakGehitu(500),
+            esp -> esp.setTiroPortaera(1),
+            esp -> esp.setTiroPortaera(2),
+            esp -> JokoKudeatzailea.getNireJokoKudeatzailea().puntuazioaGehitu(500),
             esp -> JokoKudeatzailea.getNireJokoKudeatzailea().bizitzaBatGehitu(),
             esp -> esp.setGeziMunizioa(esp.getGeziMunizioa() + 20),
             esp -> esp.setErronboMunizioa(esp.getErronboMunizioa() + 10),
